@@ -103,7 +103,8 @@
     "INVALID_CREDENTIALS": "Invalid email or password",
     "ACCEPT_TERMS": "You must agree to the Terms and Conditions",
     "INVALID_DATA": "Invalid data or the user already exists",
-    "EMAIL_IN_USE": "Email already in use"
+    "EMAIL_IN_USE": "Email already in use",
+    "DUPLICATE_PLAYER": "Ya hay un jugador con ese nombre desde esta red"
   },
   "footer": {
     "product": "Product",

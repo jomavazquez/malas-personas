@@ -19,9 +19,9 @@ export const LobbyPage = () => {
   const [selectedLang, setSelectedLang] = useState<"ES" | "EN">(
     i18n.language.startsWith("es") ? "ES" : "EN"
   );
-  const [ selectedDeck, setSelectedDeck ] = useState("");
-  const [ maxPlayers, setMaxPlayers ] = useState(10);
-  const [ pointsToWin, setPointsToWin] = useState(7);
+  const [selectedDeck, setSelectedDeck] = useState("");
+  const [maxPlayers, setMaxPlayers] = useState(10);
+  const [pointsToWin, setPointsToWin] = useState(7);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -42,7 +42,7 @@ export const LobbyPage = () => {
   }, [selectedLang]);
 
   const handleCreate = async () => {
-    if (!selectedDeck) return;
+    if (!selectedDeck || !roomName.trim()) return;
     setError("");
     setLoading(true);
     try {
@@ -50,7 +50,7 @@ export const LobbyPage = () => {
         deckId: selectedDeck,
         maxPlayers,
         pointsToWin,
-        name: roomName.trim() || undefined,
+        name: roomName.trim(),
       });
       navigate(`/room/${data.room.code}`, {
         state: { guestId: user!.id, guestName: user!.username },
@@ -64,7 +64,7 @@ export const LobbyPage = () => {
   };
 
   const handleJoin = () => {
-    if( joinCode.length < 6 || !guestName.trim() ) return;
+    if (joinCode.length < 6 || !guestName.trim()) return;
     const guestId = user ? user.id : getOrCreateGuestId();
     navigate(`/room/${joinCode.toUpperCase()}`, {
       state: { guestId, guestName: guestName.trim() },
@@ -99,10 +99,7 @@ export const LobbyPage = () => {
 
             {/* Room name */}
             <div style={{ marginBottom: 20 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-                <label style={labelStyle}>{t("lobby.roomName", "Nombre de la sala")}</label>
-                <span style={{ fontFamily: F.body, fontSize: 11, color: C.faint, fontStyle: "italic" }}>{t("lobby.optional", "opcional")}</span>
-              </div>
+              <label style={labelStyle}>{t("lobby.roomName", "Nombre de la sala")}</label>
               <input
                 className="input"
                 style={{ border: `1.5px solid ${C.border}`, color: C.base }}
@@ -111,9 +108,7 @@ export const LobbyPage = () => {
                 onChange={(e) => setRoomName(e.target.value)}
                 maxLength={40}
               />
-              <p style={{ fontFamily: F.body, fontSize: 12, color: C.faint, marginTop: 6 }}>
-                {t("lobby.roomNameHint", "Si la dejas en blanco, se identifica por el código.")}
-              </p>
+
             </div>
 
             {/* Language selector */}
@@ -179,8 +174,8 @@ export const LobbyPage = () => {
 
             <button
               onClick={handleCreate}
-              disabled={loading || !selectedDeck}
-              style={{ width: "100%", background: loading || !selectedDeck ? "#ccc" : C.accent, color: C.base, borderRadius: 14, padding: "17px 0", fontFamily: F.display, fontWeight: 700, fontSize: 16, border: "none", cursor: loading || !selectedDeck ? "not-allowed" : "pointer", boxShadow: !loading && selectedDeck ? `0 16px 30px -14px color-mix(in srgb, ${C.accent} 60%, transparent)` : "none", letterSpacing: "-0.01em" }}
+              disabled={loading || !selectedDeck || !roomName.trim()}
+              style={{ width: "100%", background: loading || !selectedDeck || !roomName.trim() ? "#ccc" : C.accent, color: C.base, borderRadius: 14, padding: "17px 0", fontFamily: F.display, fontWeight: 700, fontSize: 16, border: "none", cursor: loading || !selectedDeck || !roomName.trim() ? "not-allowed" : "pointer", boxShadow: !loading && selectedDeck && roomName.trim() ? `0 16px 30px -14px color-mix(in srgb, ${C.accent} 60%, transparent)` : "none", letterSpacing: "-0.01em" }}
             >
               {loading ? "..." : `${t("lobby.create")} →`}
             </button>

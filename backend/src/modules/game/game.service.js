@@ -54,8 +54,14 @@ export const addPlayer = (session, { socketId, userId, username, isGuest }) => {
     return { session, player: existing, isReconnect: true };
   }
 
+  if (session.status === "playing") {
+    const error = new Error("GAME_ALREADY_STARTED");
+    error.code = "GAME_ALREADY_STARTED";
+    throw error;
+  }
+
   if (session.players.length >= session.maxPlayers) {
-    const error = new Error("La sala está llena");
+    const error = new Error("ROOM_FULL");
     error.code = "ROOM_FULL";
     throw error;
   }

@@ -56,7 +56,7 @@ export const registerGameHandlers = (io, socket) => {
   });
 
   // ─── game:start ──────────────────────────────────────────────────────────────
-  socket.on("game:start", ({ roomCode }, callback) => {
+  socket.on("game:start", async ({ roomCode }, callback) => {
     try {
       const code = roomCode.toUpperCase();
       const session = getSession(code);
@@ -69,6 +69,12 @@ export const registerGameHandlers = (io, socket) => {
 
       const { session: updated, blackCard } = startGame(session);
       const judge = updated.players[0];
+
+      // Persist status to DB
+      await prisma.room.update({
+        where: { code },
+        data: { status: "PLAYING" },
+      }).catch(console.error);
 
       io.to(code).emit("game:started", {
         judge: { userId: judge.userId, username: judge.username },
