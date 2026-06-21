@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─────────────────────────────────────────
+// USERS
+// ─────────────────────────────────────────
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  username     String   @unique
+  createdAt    DateTime @default(now())
+
+  hostedRooms Room[]
+
+  @@map("users")
+}
+
+// ─────────────────────────────────────────
+// ROOMS
+// ─────────────────────────────────────────
+
+model Room {
+  id           String     @id @default(cuid())
+  code         String     @unique @db.VarChar(6)
+  name         String?
+  status       RoomStatus @default(WAITING)
+  isActive     Boolean    @default(true)
+  maxPlayers   Int        @default(10)
+  pointsToWin  Int        @default(5)
+  createdAt    DateTime   @default(now())
+  finishedAt   DateTime?
+
+  // Host — registered user (required to create a room)
+  hostId String
+  host   User   @relation(fields: [hostId], references: [id])
+
+  // Deck used in this room
+  deckId String
+  deck   Deck   @relation(fields: [deckId], references: [id])
+
+  @@map("rooms")
+}
+
+enum RoomStatus {
+  WAITING
+  PLAYING
+  FINISHED
+}
+
+// ─────────────────────────────────────────
+// DECKS
+// ─────────────────────────────────────────
+
+model Deck {
+  id        String   @id @default(cuid())
+  name      String
+  language  Language @default(ES)
+  createdAt DateTime @default(now())
+
+  cards Card[]
+  rooms Room[]
+
+  @@map("decks")
+}
+
+enum Language {
+  ES
+  EN
+}
+
+// ─────────────────────────────────────────
+// CARDS
+// ─────────────────────────────────────────
+
+model Card {
+  id     String   @id @default(cuid())
+  type   CardType
+  text   String
+  blanks Int      @default(1)
+
+  deckId String
+  deck   Deck   @relation(fields: [deckId], references: [id])
+
+  @@map("cards")
+}
+
+enum CardType {
+  BLACK
+  WHITE
+}

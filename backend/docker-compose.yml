@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16
+    container_name: malas-personas-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: malas
+      POSTGRES_PASSWORD: malas
+      POSTGRES_DB: malas_personas
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
