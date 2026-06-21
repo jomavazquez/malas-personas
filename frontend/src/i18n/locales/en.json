@@ -1,0 +1,149 @@
+{
+  "nav": {
+    "howItWorks": "How it works",
+    "login": "Log in",
+    "createRoom": "Create room",
+    "myAccount": "My account"
+  },
+  "auth": {
+    "email": "Email",
+    "emailOrUsername": "Email / Username",
+    "username": "Username",
+    "password": "Password",
+    "register": "Create your account",
+    "login": "Log in",
+    "logout": "Log out",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "registerLink": "Sign up",
+    "loginLink": "Log in",
+    "emailPlaceholder": "your@email.com"
+  },
+  "hero": {
+    "eyebrow": "The team card game",
+    "headline": "Bring out the wild side of your team.",
+    "sub": "Create a room, share a 6-character code and break the ice with your team — remote or in the office. Up to 20 players, in English or Spanish.",
+    "haveCode": "I have a code",
+    "alreadyHaveAnAccount": "Already have an account?",
+    "sampleQuestion": "My superpower in meetings is ______.",
+    "question": "Question",
+    "answer1": "Replying all by mistake.",
+    "answer2": "The office Wi-Fi.",
+    "answer3": "A meeting that could have been an email.",
+    "answer4": "We'll circle back on Monday.",
+    "yourmove": "Your move"
+  },
+  "lobby": {
+    "createRoom": "Create room",
+    "joinRoom": "Join with a code",
+    "roomCode": "Room code",
+    "roomCodePlaceholder": "e.g. C6CAHR",
+    "join": "Join",
+    "selectDeck": "Choose a deck",
+    "create": "Create room",
+    "orJoin": "or join an existing room",
+    "maxPlayers": "Max players",
+    "pointsToWin": "Points to win",
+    "code": "Code"
+  },
+  "room": {
+    "waiting": "Waiting for players...",
+    "players": "Players",
+    "start": "Start game",
+    "minPlayers": "You need at least 2 players",
+    "shareCode": "Share this code",
+    "copyCode": "Copy",
+    "copied": "Copied!",
+    "you": "You",
+    "host": "Host",
+    "judge": "Judge"
+  },
+  "game": {
+    "judge": "Judge this round",
+    "youAreJudge": "You are the judge this round",
+    "pickCard": "Pick your answer",
+    "waitingForPlayers": "Waiting for answers...",
+    "played": "{{count}} of {{total}} players have answered",
+    "pickWinner": "Pick the best answer",
+    "roundWinner": "{{username}} wins the round!",
+    "winningCard": "With the card:",
+    "gameOver": "Game over!",
+    "winner": "{{username}} wins with {{score}} points!",
+    "backToLobby": "Back to home",
+    "pointsToWin": "Points to win"
+  },
+  "how": {
+    "eyebrow": "How to play",
+    "title": "A game in three steps",
+    "step1": { "title": "Create the room", "desc": "Choose the game language (English or Spanish) and get a 6-character code instantly." },
+    "step2": { "title": "Gather the team", "desc": "Share the code and up to 20 people join with their name from mobile or browser. No install needed." },
+    "step3": { "title": "Play and vote", "desc": "Each round a question card comes out, everyone plays their answer and the judge crowns the funniest.", "card": "The reason for the delay: ______.", "answer": "A Slack of 47 messages" }
+  },
+  "stats": {
+    "teams": "Teams playing",
+    "players": "Players per room (judge included)",
+    "time": "To set up a game"
+  },
+  "pricing": {
+    "eyebrow": "Your account · optional",
+    "title": "Save your games. Come back anytime.",
+    "sub": "You can play without an account — you just need the code. But if you sign up (free), we save your rooms, favourite decks and match history.",
+    "startFree": "Create free account",
+    "free": "Free · No credit card required"
+  },
+  "cta": {
+    "title": "Ready for the first game?",
+    "button": "Create room free →",
+    "sub": "Free, no downloads required. Create a room and share the code."
+  },
+  "errors": {
+    "roomNotFound": "Room not found",
+    "roomFull": "Room is full",
+    "generic": "Something went wrong. Please try again.",
+    "INVALID_CREDENTIALS": "Invalid email or password",
+    "ACCEPT_TERMS": "You must agree to the Terms and Conditions",
+    "INVALID_DATA": "Invalid data or the user already exists",
+    "EMAIL_IN_USE": "Email already in use"
+  },
+  "footer": {
+    "product": "Product",
+    "joinWithCode": "Join with a code",
+    "resources": "Resources",
+    "helpCenter": "Help Center",
+    "teamIdeas": "Ideas for teams",
+    "contact": "Contact",
+    "legal": "Legal",
+    "legalNotice": "Legal notice - Terms of use",
+    "privacyPolicy": "Privacy policy",
+    "cookiePolicy": "Cookies policy",
+    "tagline": "The card game that brings out the wild side of your teams. Made for laughs and good company." 
+  },
+  "login": {
+    "welcome": "Welcome back to the wild side.",
+    "welcomeSub": "Your rooms, decks, and match history are waiting. Sign in and jump right back in.",
+    "badge": "My account",
+    "forgot": "Forgot your password?",
+    "show": "Show",
+    "hide": "Hide",
+    "keepSession": "Stay signed in",
+    "submit": "Submit",
+    "justPlay": "Just want to play?",
+    "joinWithCode": "Join a game with a code",
+    "noAccount2": "no account needed.",
+    "createFree": "Create one for free"
+  },
+  "register": {
+    "headline": "Your account, for free.",
+    "cardTitle": "Always free",
+    "cardSub": "No credit card, no ads. Just playing with your team.",
+    "submit": "Create account",
+    "passwordHint": "At least 8 characters, including one uppercase letter and one number.",
+    "freeNote": "Free forever · no credit card required"
+  },
+  "features": {
+    "1": "Save your rooms and reopen them in one click.",
+    "2": "All decks at hand · Spanish and English.",
+    "3": "Your match history and winners",
+    "4": "Your name and avatar, ready for the next game."
+  }
+}

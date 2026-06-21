@@ -1,0 +1,40 @@
+.welcome_sub {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.6em;
+    margin-top: 25px;
+    max-width: 375px;
+    position: relative;
+    z-index: 1
+}
+
+.forgot_pwd {
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none
+}
+
+.keepme_container {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    gap: 10px
+}
+
+.keepme_checkbox {
+    align-items: center;
+    border-radius: 6px;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    height: 25px;
+    transition: all 0.25s ease;
+    width: 25px
+}
+
+.just_play {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 25px
+}

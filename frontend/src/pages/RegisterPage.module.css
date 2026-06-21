@@ -1,0 +1,43 @@
+.list_sub {
+    display: flex;
+    flex-direction: column;
+    gap: 15;
+    margin: 25px 0 35px 0;
+    position: relative;
+    z-index: 1 
+}
+
+.dark_box {
+    border-radius: 20px;
+    padding: 20px;
+    position: relative;
+    z-index: 1
+}
+
+.dark_title {
+    color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 10px
+}
+
+.dark_sub {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5em
+}
+
+.pwd_hint {
+    font-size: 13px;
+    font-weight: 500;
+    margin: 10px 0 0;
+    line-height: 1.4
+}
+
+.terms_container {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer
+}

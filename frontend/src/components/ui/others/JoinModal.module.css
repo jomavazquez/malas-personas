@@ -1,0 +1,40 @@
+.box {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 40px 80px -20px rgba(47,52,58,.5);
+    max-width: 360px;
+    padding: 30px;
+    width: '100%'
+}
+
+.box_title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px
+}
+
+.input_code {
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    margin-bottom: 20px;
+    outline: none;
+    padding: 15px;
+    text-align: center;
+    width: 100%
+}
+
+.box_btn {
+    border: none;
+    border-radius: 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 16px 0;
+    width: 100%
+}

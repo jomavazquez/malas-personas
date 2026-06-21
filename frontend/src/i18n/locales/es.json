@@ -1,0 +1,149 @@
+{
+  "nav": {
+    "howItWorks": "Cómo funciona",
+    "login": "Iniciar sesión",
+    "createRoom": "Crear sala",
+    "myAccount": "Mi cuenta"
+  },
+  "auth": {
+    "email": "Email",
+    "emailOrUsername": "Email / Nombre de usuario",
+    "username": "Nombre de usuario",
+    "password": "Contraseña",
+    "register": "Crea tu cuenta",
+    "login": "Iniciar sesión",
+    "logout": "Salir",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "registerLink": "Regístrate",
+    "loginLink": "Inicia sesión",
+    "emailPlaceholder": "tu@email.com"
+  },
+  "hero": {
+    "eyebrow": "El juego de cartas de equipo definitivo",
+    "headline": "Saca el lado salvaje del equipo.",
+    "sub": "Crea una sala, comparte un código de 6 caracteres y rompe el hielo con tu equipo —en remoto o en la oficina—. Hasta 20 jugadores, en español o inglés.",
+    "haveCode": "Tengo un código",
+    "alreadyHaveAnAccount": "¿Ya tienes cuenta?",
+    "sampleQuestion": "Telepizza: El secreto está en ______.",
+    "question": "Pregunta",
+    "answer1": "Ser gordo y estúpido.",
+    "answer2": "Bolas chinas usadas.",
+    "answer3": "Toda la hierba que pueda comprar con 20€.",
+    "answer4": "Callar para que pueda ver el partido.",
+    "yourmove": "Tu jugada"
+  },
+  "lobby": {
+    "createRoom": "Crear sala",
+    "joinRoom": "Únete con un código",
+    "roomCode": "Código de sala",
+    "roomCodePlaceholder": "Ej: C6CAHR",
+    "join": "Unirse",
+    "selectDeck": "Elige un mazo",
+    "create": "Crear sala",
+    "orJoin": "o únete a una sala existente",
+    "maxPlayers": "Jugadores máximos",
+    "pointsToWin": "Puntos para ganar",
+    "code": "Código"
+  },
+  "room": {
+    "waiting": "Esperando jugadores...",
+    "players": "Jugadores",
+    "start": "Empezar partida",
+    "minPlayers": "Se necesitan al menos 2 jugadores",
+    "shareCode": "Comparte este código",
+    "copyCode": "Copiar",
+    "copied": "¡Copiado!",
+    "you": "Tú",
+    "host": "Anfitrión",
+    "judge": "Juez"
+  },
+  "game": {
+    "judge": "Juez esta ronda",
+    "youAreJudge": "Eres el juez esta ronda",
+    "pickCard": "Elige tu respuesta",
+    "waitingForPlayers": "Esperando respuestas...",
+    "played": "{{count}} de {{total}} jugadores han respondido",
+    "pickWinner": "Elige la mejor respuesta",
+    "roundWinner": "¡{{username}} gana la ronda!",
+    "winningCard": "Con la carta:",
+    "gameOver": "¡Fin de la partida!",
+    "winner": "¡{{username}} gana con {{score}} puntos!",
+    "backToLobby": "Volver al inicio",
+    "pointsToWin": "Puntos para ganar"
+  },
+  "how": {
+    "eyebrow": "Cómo se juega",
+    "title": "Una partida en tres pasos",
+    "step1": { "title": "Crea la sala", "desc": "Elige el idioma de la partida (español o inglés) y recibe un código de 6 caracteres al instante." },
+    "step2": { "title": "Reúne al equipo", "desc": "Comparte el código y hasta 20 personas entran con su nombre desde el móvil o el navegador. Sin instalar nada." },
+    "step3": { "title": "Juega y vota", "desc": "Cada ronda sale una carta‑pregunta, todos juegan su respuesta y el juez de turno corona la más graciosa.", "card": "El motivo del retraso: ______.", "answer": "Un Slack de 47 mensajes" }
+  },
+  "stats": {
+    "teams": "Equipos jugando",
+    "players": "Jugadores por sala (juez incluido)",
+    "time": "Para montar una partida"
+  },
+  "pricing": {
+    "eyebrow": "Tu cuenta · opcional",
+    "title": "Guarda tus partidas. Vuelve cuando quieras.",
+    "sub": "Puedes jugar sin cuenta — solo necesitas el código. Pero si te registras (gratis), guardamos tus salas, tus mazos favoritos y el historial de partidas.",
+    "startFree": "Crear cuenta gratis",
+    "free": "Gratis · sin tarjeta"
+  },
+  "cta": {
+    "title": "¿Montamos la primera partida?",
+    "button": "Crear sala gratis →",
+    "sub": "Gratis, sin descargas. Crea la sala y comparte el código."
+  },
+  "errors": {
+    "roomNotFound": "Sala no encontrada",
+    "roomFull": "La sala está llena",
+    "generic": "Algo ha salido mal. Inténtalo de nuevo.",
+    "INVALID_CREDENTIALS": "Email o contraseña incorrectos",
+    "ACCEPT_TERMS": "Debes aceptar los términos y condiciones",
+    "INVALID_DATA": "Datos incorrectos o el usuario ya existe",
+    "EMAIL_IN_USE": "Este email ya se está usando"
+  },
+  "footer": {
+    "product": "Producto",
+    "joinWithCode": "Unirse con código",
+    "resources": "Recursos",
+    "helpCenter": "Centro de ayuda",
+    "teamIdeas": "Ideas para tus equipos",
+    "contact": "Contacto",
+    "legal": "Legal",
+    "legalNotice": "Aviso legal - Términos de uso",
+    "privacyPolicy": "Política de privacidad",
+    "cookiePolicy": "Política de cookies",
+    "tagline": "El juego de cartas para sacar el lado salvaje de tus equipos. Hecho con humor y estar en buena compañía."
+  },
+  "login": {
+    "welcome": "Bienvenido de vuelta al lado salvaje.",
+    "welcomeSub": "Tus salas, tus mazos y tu historial te están esperando. Inicia sesión para seguir donde lo dejaste.",
+    "badge": "Mi cuenta",
+    "forgot": "¿Olvidaste la contraseña?",
+    "show": "Mostrar",
+    "hide": "Ocultar",
+    "keepSession": "Mantener la sesión iniciada",
+    "submit": "Entrar",
+    "justPlay": "¿Solo quieres jugar?",
+    "joinWithCode": "Únete a una sala con código",
+    "noAccount2": "sin cuenta.",
+    "createFree": "Créala gratis"
+  },
+  "register": {
+    "headline": "Tu cuenta, gratis.",
+    "cardTitle": "Siempre gratis",
+    "cardSub": "Sin tarjeta, sin anuncios. Solo jugar con tu equipo.",
+    "submit": "Crear cuenta",
+    "passwordHint": "Mínimo 8 caracteres, con una mayúscula y un número.",
+    "freeNote": "Gratis para siempre · sin tarjeta de crédito"
+  },  
+  "features": {
+    "1": "Guarda tus salas y reábrelas con un click.",
+    "2": "Todos los mazos disponibles · español e inglés.",
+    "3": "Conserva tus mazos favoritos e historial.",
+    "4": "Tu nombre y avatar, listos para la próxima ronda."
+  }
+}

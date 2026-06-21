@@ -1,0 +1,83 @@
+.column_label {
+    color: #50545A;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.09em;
+    margin-bottom: 20px;
+    text-transform: uppercase
+}
+
+.link {
+    display: block;
+    color: #9AA3AB;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-decoration: none;
+    transition: color 0.15s ease    
+}
+
+.social_link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid #3C424A;
+    font-weight: 700;
+    font-size: 11px;
+    padding: 10px;
+    color: #9AA3AB;
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s
+}
+
+.social_link:hover {
+    border-color: #fff;
+    color: #fff
+}
+
+.tagline {
+    font-weight: 500;
+    font-size: 16px;
+    color: #9AA3AB;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    margin-top: 15px;
+    max-width: 260px
+}
+
+.copyright {
+    font-weight: 500;
+    font-size: 13px;
+    color: #888
+}
+
+.author_link {
+    text-decoration: none;
+    transition: color 0.15s
+}
+
+.author_link:hover {
+    color: #fff
+}
+
+.scroll_up {
+    align-items: center;
+    border-radius: 999px;
+    bottom: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    display: flex;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    justify-content: center;
+    height: 50px;
+    position: fixed;
+    right: 40px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    width: 50px;
+    z-index: 99
+}
