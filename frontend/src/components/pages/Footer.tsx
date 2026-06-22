@@ -59,7 +59,7 @@ export const Footer = () => {
                     </p>
                     <div className="flex flex-wrap gap-4 justify-center">
                         <Button to={ user ? "/lobby" : "/register"} bgColor={ C.accent } textColor="#000" size="md">
-                            { t("lobby.createRoom") } →
+                            { t("nav.createRoom") } →
                         </Button>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ export const Footer = () => {
                     <FooterLink onClick={() => goToSection(navigate, "how")}>
                         { t("nav.howItWorks") }
                     </FooterLink>
-                    <FooterLink to={ user ? "/lobby" : "/register" }>{ t("lobby.createRoom") }</FooterLink>
+                    <FooterLink to={ user ? "/lobby" : "/register" }>{ t("nav.createRoom") }</FooterLink>
                     <FooterLink onClick={ openJoinModal }>{ t("footer.joinWithCode") }</FooterLink>
                 </div>
                 <div>

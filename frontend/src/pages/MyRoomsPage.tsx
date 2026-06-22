@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../context/AuthContext";
-import { Footer, Logo, TopMenuMyAccount } from "../components";
+import { useAuth } from "../context";
+import { Button, Footer, Logo, TopMenuMyAccount } from "../components";
 import { api, C, F } from "../lib";
 import type { Room } from "../types";
+import styles from "./MyRoomsPage.module.css";
 
 type Filter = "all" | "active" | "finished";
 
@@ -13,10 +14,10 @@ export const MyRoomsPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const [rooms, setRooms] = useState<Room[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<Filter>("all");
-  const [search, setSearch] = useState("");
+  const [ rooms, setRooms ] = useState<Room[]>([]);
+  const [ loading, setLoading ] = useState(true);
+  const [ filter, setFilter ] = useState<Filter>("all");
+  const [ search, setSearch ] = useState("");
 
   useEffect(() => {
     api.get<{ rooms: Room[] }>("/rooms/my").then((data) => {
@@ -52,34 +53,28 @@ export const MyRoomsPage = () => {
   });
 
   return (
-    <div style={{ minHeight: "100vh", background: C.surface, fontFamily: F.body }}>
-
-      {/* Nav */}
-      <nav className="flex items-center px-4 md:px-14 pt-6 md:pt-8 pb-4">
+    <div style={{ background: C.surface, position: "relative" }}>
+      <nav className="flex items-center justify-between px-4 md:px-14 h-16 relative pt-6 md:pt-10" style={{ zIndex: 2 }}>
         <div className="max-w-360 mx-auto w-full flex items-center justify-between">
           <Logo />
           <TopMenuMyAccount />
         </div>
       </nav>
-
-      <div className="max-w-360 mx-auto px-4 md:px-14 py-8">
-
-        {/* Header */}
+      <div className="max-w-360 mx-auto px-4 md:px-14 2xl:px-0 py-6 md:py-16">
         <div className="flex items-start justify-between mb-6 flex-wrap gap-4">
           <div>
-            <h1 style={{ fontFamily: F.display, fontWeight: 800, fontSize: 36, letterSpacing: "-0.035em", color: C.base, margin: "0 0 6px" }}>
-              {t("myRooms.title", "Mis salas")}
-            </h1>
-            <p style={{ fontFamily: F.body, fontSize: 14, color: C.muted }}>
-              {rooms.length} {t("myRooms.saved", "salas guardadas")} · {activeCount} {t("myRooms.activeNow", "activas ahora mismo")}
+            <h1 className="heading_1" style={{ color: C.base }}>{ t("nav.myRooms") }</h1>
+            <p className={ styles.text } style={{ color: C.muted }}>
+              <strong>{ rooms.length }</strong> { t("myroom.saved") } · <strong>{ activeCount }</strong> { t("myroom.activeNow") }
             </p>
           </div>
-          <button
+          <Button
+            bgColor={ C.accent }
+            textColor="#000"
             onClick={() => navigate("/lobby")}
-            style={{ background: C.accent, color: C.base, borderRadius: 14, padding: "13px 22px", fontFamily: F.display, fontWeight: 700, fontSize: 15, border: "none", cursor: "pointer", boxShadow: `0 8px 20px -8px color-mix(in srgb, ${C.accent} 60%, transparent)` }}
           >
-            + {t("myRooms.createRoom", "Crear sala")}
-          </button>
+            { t("nav.createRoom") } →
+          </Button>
         </div>
 
         {/* Filters + Search */}

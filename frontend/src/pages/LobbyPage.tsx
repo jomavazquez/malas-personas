@@ -82,7 +82,7 @@ export const LobbyPage = () => {
           {/* ── CREATE ROOM ── */}
           <div className="cta_container" style={{ border: `1px solid ${C.borderMid}` }}>
             <Badge>{ t("lobby.newGame") }</Badge>
-            <h2 className="cta_title" style={{ color: C.base }}>{ t("lobby.createRoom") }</h2>
+            <h2 className="cta_title" style={{ color: C.base }}>{ t("nav.createRoom") }</h2>
             <div style={{ marginBottom: 15 }}>
               <label className="form_label">{ t("lobby.roomName") }</label>
               <input
@@ -174,7 +174,7 @@ export const LobbyPage = () => {
               disabled={ loading || !selectedDeck || !roomName.trim() }
               style={{ width: "100%"}}
             >
-              { loading ? "..." : `${t("lobby.create")} →`}
+              { loading ? "..." : `${t("nav.createRoom")} →`}
             </Button>
           </div>
           {/* ── JOIN ROOM ── */}

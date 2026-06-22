@@ -34,13 +34,11 @@
     "yourmove": "Tu jugada"
   },
   "lobby": {
-    "createRoom": "Crear sala",
     "joinRoom": "Únete con un código",
     "roomCode": "Código de sala",
     "roomCodePlaceholder": "Ej: C6CAHR",
     "join": "Unirse",
     "selectDeck": "Elige un mazo",
-    "create": "Crear sala",
     "orJoin": "o únete a una sala existente",
     "maxPlayers": "Jugadores máximos",
     "pointsToWin": "Puntos para ganar",
@@ -152,5 +150,9 @@
     "2": "Todos los mazos disponibles · español e inglés.",
     "3": "Conserva tus mazos favoritos e historial.",
     "4": "Tu nombre y avatar, listos para la próxima ronda."
+  },
+  "myroom": {
+    "saved": "salas guardadas",
+    "activeNow": "activas ahora mismo"
   }
 }

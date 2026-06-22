@@ -34,13 +34,11 @@
     "yourmove": "Your move"
   },
   "lobby": {
-    "createRoom": "Create room",
     "joinRoom": "Join with a code",
     "roomCode": "Room code",
     "roomCodePlaceholder": "e.g. C6CAHR",
     "join": "Join",
     "selectDeck": "Choose a deck",
-    "create": "Create room",
     "orJoin": "or join an existing room",
     "maxPlayers": "Max players",
     "pointsToWin": "Points to win",
@@ -48,9 +46,9 @@
     "newGame": "New game",
     "roomName": "Room name",
     "gameLang": "Game language",
-    "yourNameSub": "Así te verán el resto de jugadores en la partida.",
-    "invitedToRoom": "¿Te invitaron a una sala?",
-    "joinRoom2": "Unirse a la sala"
+    "yourNameSub": "This is how other players will see you in the game.",
+    "invitedToRoom": "Were you invited to a room?",
+    "joinRoom2": "Join room"
   },
   "room": {
     "waiting": "Waiting for players...",
@@ -110,7 +108,7 @@
     "ACCEPT_TERMS": "You must agree to the Terms and Conditions",
     "INVALID_DATA": "Invalid data or the user already exists",
     "EMAIL_IN_USE": "Email already in use",
-    "DUPLICATE_PLAYER": "Ya hay un jugador con ese nombre desde esta red"
+    "DUPLICATE_PLAYER": "A player with that name is already in the game from this network"
   },
   "footer": {
     "product": "Product",
@@ -152,5 +150,9 @@
     "2": "All decks at hand · Spanish and English.",
     "3": "Your match history and winners",
     "4": "Your name and avatar, ready for the next game."
+  },
+  "myroom": {
+    "saved": "saved rooms",
+    "activeNow": "active right now"
   }
 }

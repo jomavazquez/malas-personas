@@ -56,7 +56,7 @@ export const HomePage = () => {
             </p>
             <div className="flex flex-wrap gap-3">
               <Button to={ user ? "/lobby" : "/register" }>
-                { t("lobby.createRoom") } →
+                { t("nav.createRoom") } →
               </Button>
               <Button variant="outline" onClick={ openJoinModal }>
                 { t("hero.haveCode") }
