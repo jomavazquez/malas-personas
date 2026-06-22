@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context";
+import { C, F } from "../lib";
 import { connectSocket } from "../lib/socket";
 import { getOrCreateGuestId } from "../lib/guest";
-import { C, F } from "../lib/tokens";
 import type { Player, GameState } from "../types";
+import { Footer, Logo, TopMenu } from "../components";
 
 export const RoomPage = () => {
+
   const { t } = useTranslation();
   const { user } = useAuth();
   const { code } = useParams<{ code: string }>();
@@ -21,14 +23,14 @@ export const RoomPage = () => {
   const myName = user?.username ?? guestName ?? "";
   const isGuest = !user;
 
-  const [players, setPlayers] = useState<Player[]>([]);
-  const [hostId, setHostId] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
-  const [error, setError] = useState("");
-  const [connected, setConnected] = useState(false);
-  const [nameInput, setNameInput] = useState("");
-  const [resolvedName, setResolvedName] = useState(myName);
-  const [resolvedId, setResolvedId] = useState(myId);
+  const [ players, setPlayers ] = useState<Player[]>([]);
+  const [ hostId, setHostId ] = useState<string | null>(null);
+  const [ copied, setCopied ] = useState(false);
+  const [ error, setError ] = useState("");
+  const [ connected, setConnected ] = useState(false);
+  const [ nameInput, setNameInput ] = useState("");
+  const [ resolvedName, setResolvedName ] = useState(myName);
+  const [ resolvedId, setResolvedId ] = useState(myId);
 
   const isHost = resolvedId === hostId;
   const canStart = players.length >= 2;
@@ -84,7 +86,7 @@ export const RoomPage = () => {
     setResolvedName(nameInput.trim());
   };
 
-  if (needsName) {
+  if( needsName ){
     return (
       <div style={{ minHeight: "100vh", background: C.bg, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: F.body, padding: "0 24px" }}>
         <div style={{ background: "#fff", borderRadius: 24, padding: "38px 36px", width: "100%", maxWidth: 360, boxShadow: "0 30px 60px -34px rgba(47,52,58,.4)" }}>
@@ -126,20 +128,19 @@ export const RoomPage = () => {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: F.body }}>
-      <div style={{ maxWidth: 1340, margin: "0 auto", padding: "52px 44px" }}>
-
-        <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 52 }}>
-          <span style={{ fontFamily: F.display, fontWeight: 800, fontSize: 22, letterSpacing: "-0.03em", color: C.base, cursor: "pointer" }} onClick={() => navigate("/")}>
-            Malas Personas<span style={{ color: C.accent }}>.</span>
-          </span>
-          {!isGuest && (
+    <div style={{ background: C.surface, position: "relative" }}>
+      <nav className="flex items-center justify-between px-4 md:px-14 h-16 relative pt-6 md:pt-10" style={{ zIndex: 2 }}>
+        <div className="max-w-360 mx-auto w-full flex items-center justify-between">
+          <Logo />
+          {
+            !isGuest && (
             <button onClick={() => navigate("/lobby")} style={{ background: "none", border: "none", fontFamily: F.display, fontWeight: 600, fontSize: 14, color: C.muted, cursor: "pointer" }}>
               ← Lobby
             </button>
           )}
-        </nav>
-
+        </div>
+      </nav>
+      <div style={{ maxWidth: 1340, margin: "0 auto", padding: "52px 44px" }}>
         <div style={{ maxWidth: 480, margin: "0 auto" }}>
 
           {/* Code */}
@@ -189,6 +190,7 @@ export const RoomPage = () => {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
