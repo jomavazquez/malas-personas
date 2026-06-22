@@ -69,15 +69,9 @@ export const LobbyPage = () => {
     });
   };
 
-  const labelStyle: React.CSSProperties = {
-    fontFamily: F.display, fontWeight: 700, fontSize: 11,
-    letterSpacing: "0.08em", textTransform: "uppercase", color: C.muted,
-    marginBottom: 8, display: "block",
-  };
-
   return (
     <div style={{ background: C.surface, position: "relative" }}>
-      <nav className="flex items-center px-4 md:px-14 h-16 pt-6 md:pt-10" style={{ zIndex: 2 }}>
+      <nav className="flex items-center justify-between px-4 md:px-14 h-16 relative pt-6 md:pt-10" style={{ zIndex: 2 }}>
         <div className="max-w-360 mx-auto w-full flex items-center justify-between">
           <Logo />
           <TopMenuMyAccount />
@@ -187,7 +181,7 @@ export const LobbyPage = () => {
 
             {/* Name */}
             <div style={{ marginBottom: 28 }}>
-              <label style={{ ...labelStyle, color: "#9AA3AB" }}>{t("lobby.yourName", "Tu nombre")}</label>
+              <label style={{ color: "#9AA3AB" }}>{t("lobby.yourName", "Tu nombre")}</label>
               <p style={{ fontFamily: F.body, fontSize: 13, color: "#9AA3AB", marginBottom: 10 }}>
                 {t("lobby.yourNameSub", "Así te verán el resto de jugadores en la partida.")}
               </p>
@@ -213,7 +207,7 @@ export const LobbyPage = () => {
 
             {/* Code input */}
             <div style={{ marginBottom: 20 }}>
-              <label style={{ ...labelStyle, color: "#9AA3AB" }}>{t("lobby.roomCode")}</label>
+              <label style={{ color: "#9AA3AB" }}>{t("lobby.roomCode")}</label>
               <input
                 style={{
                   width: "100%", boxSizing: "border-box",
