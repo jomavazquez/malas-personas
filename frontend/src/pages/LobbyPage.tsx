@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
-import { Badge, Footer, Logo, TopMenu } from "../components";
+import { Badge, Button, Footer, Logo, TopMenu, TopMenuMyAccount } from "../components";
 import { api, C, F } from "../lib";
 import { getOrCreateGuestId } from "../lib/guest";
 import type { Deck } from "../types";
@@ -20,7 +20,7 @@ export const LobbyPage = () => {
   const [ selectedLang, setSelectedLang ] = useState<"ES" | "EN">( i18n.language.startsWith("es") ? "ES" : "EN" );
   const [ selectedDeck, setSelectedDeck ] = useState("");
   const [ maxPlayers, setMaxPlayers ] = useState(10);
-  const [ pointsToWin, setPointsToWin ] = useState(7);
+  const [ pointsToWin, setPointsToWin ] = useState(5);
   const [ error, setError ] = useState("");
   const [ loading, setLoading ] = useState(false);
 
@@ -40,10 +40,10 @@ export const LobbyPage = () => {
   }, [ selectedLang ]);
 
   const handleCreate = async () => {
-    if (!selectedDeck || !roomName.trim()) return;
+    if( !selectedDeck || !roomName.trim() ) return;
     setError("");
     setLoading(true);
-    try {
+    try{
       const data = await api.post<{ room: { code: string } }>("/rooms", {
         deckId: selectedDeck,
         maxPlayers,
@@ -53,16 +53,16 @@ export const LobbyPage = () => {
       navigate(`/room/${data.room.code}`, {
         state: { guestId: user!.id, guestName: user!.username },
       });
-    } catch (err: unknown) {
+    }catch( err: unknown ){
       const code = (err as Error).message;
       setError(t(`errors.${code}`, code));
-    } finally {
+    }finally{
       setLoading(false);
     }
   };
 
   const handleJoin = () => {
-    if (joinCode.length < 6 || !guestName.trim()) return;
+    if( joinCode.length < 6 || !guestName.trim() ) return;
     const guestId = user ? user.id : getOrCreateGuestId();
     navigate(`/room/${joinCode.toUpperCase()}`, {
       state: { guestId, guestName: guestName.trim() },
@@ -80,7 +80,7 @@ export const LobbyPage = () => {
       <nav className="flex items-center px-4 md:px-14 h-16 pt-6 md:pt-10" style={{ zIndex: 2 }}>
         <div className="max-w-360 mx-auto w-full flex items-center justify-between">
           <Logo />
-          <TopMenu />
+          <TopMenuMyAccount />
         </div>
       </nav>
       <div className="max-w-360 mx-auto px-4 md:px-14 py-12">
@@ -93,7 +93,7 @@ export const LobbyPage = () => {
               <label className="form_label">{ t("lobby.roomName") }</label>
               <input
                 className="input"
-                style={{ border: `1.5px solid ${C.border}`, color: C.faint }}
+                style={{ border: `1.5px solid ${C.border}`, color: C.base }}
                 placeholder="Squad A"
                 value={ roomName }
                 onChange={ (e) => setRoomName(e.target.value) }
@@ -137,57 +137,51 @@ export const LobbyPage = () => {
                 ))}
               </div>
             </div>
-
-            {/* Players + Points */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 24 }}>
+            {/* PLAYERS + POINTS */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 25 }}>
               <div>
-                <label style={labelStyle}>{t("lobby.maxPlayers")} <span style={{ color: C.faint, fontWeight: 400 }}>2-20</span></label>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <button 
-                    className={ styles.incdec }
+                <label className="form_label">{ t("lobby.maxPlayers") }{" "}<span style={{ color: C.faint, fontWeight: 400, marginLeft: 5 }}>2-20</span></label>
+                <div className={ styles.btn_container }>
+                  <Button 
                     onClick={ () => setMaxPlayers(Math.max(2, maxPlayers - 1)) } 
-                    style={{ border: `1.5px solid ${C.border}`, color: C.base }}>−</button>
-                  <span 
-                    className="input"
-                    style={{ flex: 1, textAlign: "center", fontFamily: F.display, fontWeight: 800, fontSize: 20, color: C.base, border: `1.5px solid ${C.border}` }}>
-                      { maxPlayers }
-                  </span>
-                  <button 
-                    className={ styles.incdec }
-                    onClick={() => setMaxPlayers(Math.min(20, maxPlayers + 1))} 
-                    style={{ border: `1.5px solid ${C.border}`, background: C.accent, color: C.base }}>+</button>
+                    style={{ fontSize: 20, padding: 15 }}>-</Button>
+                  <span className={`input ${ styles.span_input }`} style={{ color: C.base, border: `1.5px solid ${C.border}` }}>{ maxPlayers }</span>
+                  <Button 
+                    bgColor={ C.accent }
+                    textColor="#000"
+                    onClick={ () => setMaxPlayers(Math.min(20, maxPlayers + 1)) }
+                    style={{ fontSize: 20, padding: 15 }}>+</Button>
                 </div>
               </div>
               <div>
-                <label style={labelStyle}>{t("lobby.pointsToWin")}</label>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <button 
-                    className={ styles.incdec }
+                <label className="form_label">{t("lobby.pointsToWin")}</label>
+                <div className={ styles.btn_container }>
+                  <Button 
                     onClick={() => setPointsToWin(Math.max(1, pointsToWin - 1))} 
-                    style={{ border: `1.5px solid ${C.border}`, color: C.base }}>−</button>
-                  <span 
-                    className="input"
-                    style={{ flex: 1, textAlign: "center", fontFamily: F.display, fontWeight: 800, fontSize: 20, color: C.base, border: `1.5px solid ${C.border}` }}>
-                      { pointsToWin }</span>
-                  <button 
-                    className={ styles.incdec }
+                    style={{ fontSize: 20, padding: 15 }}>-</Button>
+                  <span className={`input ${ styles.span_input }`} style={{ color: C.base, border: `1.5px solid ${C.border}` }}>{ pointsToWin }</span>
+                  <Button 
+                    bgColor={ C.accent }
+                    textColor="#000"
                     onClick={() => setPointsToWin(Math.min(50, pointsToWin + 1))} 
-                    style={{ border: `1.5px solid ${C.border}`, background: C.accent, color: C.base }}>+</button>
+                    style={{ fontSize: 20, padding: 15 }}>+</Button>                      
                 </div>
               </div>
             </div>
-
-            {error && <p style={{ color: "#E5534B", fontSize: 14, marginBottom: 12 }}>{error}</p>}
-
-            <button
-              onClick={handleCreate}
-              disabled={loading || !selectedDeck || !roomName.trim()}
-              style={{ width: "100%", background: loading || !selectedDeck || !roomName.trim() ? "#ccc" : C.accent, color: C.base, borderRadius: 14, padding: "17px 0", fontFamily: F.display, fontWeight: 700, fontSize: 16, border: "none", cursor: loading || !selectedDeck || !roomName.trim() ? "not-allowed" : "pointer", boxShadow: !loading && selectedDeck && roomName.trim() ? `0 16px 30px -14px color-mix(in srgb, ${C.accent} 60%, transparent)` : "none", letterSpacing: "-0.01em" }}
+            {
+              error && 
+              <p className="error" style={{ marginBottom: 15, marginTop: -10 }}>{ error }</p>
+            }
+            <Button
+              bgColor={ C.accent }
+              textColor="#000"
+              onClick={ handleCreate }
+              disabled={ loading || !selectedDeck || !roomName.trim() }
+              style={{ width: "100%"}}
             >
-              {loading ? "..." : `${t("lobby.create")} →`}
-            </button>
+              { loading ? "..." : `${t("lobby.create")} →`}
+            </Button>
           </div>
-
           {/* ── JOIN ROOM ── */}
           <div style={{ background: C.base, borderRadius: 24, padding: "36px 34px", boxShadow: "0 20px 50px -20px rgba(47,52,58,.4)" }}>
 
