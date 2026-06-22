@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { AuthProvider, useAuth, JoinModalProvider } from "./context";
 import { useLenis } from "./hooks/useLenis";
 import { HomePage, GamePage, LobbyPage, LoginPage, RegisterPage, RoomPage, LegalPage } from "./pages";
 import "./i18n";
@@ -45,7 +45,9 @@ const AppInner = () => {
 const App = () => (
   <BrowserRouter>
     <AuthProvider>
-      <AppInner />
+      <JoinModalProvider>
+        <AppInner />
+      </JoinModalProvider>
     </AuthProvider>
   </BrowserRouter>
 );

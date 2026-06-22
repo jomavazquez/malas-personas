@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../context/AuthContext";
-import { Badge, FloatingQuestion, Footer, JoinModal, Logo, UnderlineLink } from "../components";
+import { useAuth, useJoinModal } from "../context";
+import { Badge, FloatingQuestion, Footer, Logo, UnderlineLink } from "../components";
 import { api, C, F } from "../lib";
 import type { User } from "../types";
 import styles from "./LoginPage.module.css";
@@ -11,8 +11,8 @@ export const LoginPage = () => {
 
   const { t } = useTranslation();
   const { login } = useAuth();
+  const { openJoinModal } = useJoinModal();
   const navigate = useNavigate();
-  const [ joinModalOpen, setJoinModalOpen ] = useState(false);
   const [ form, setForm ] = useState({ identifier: "", password: "" });
   const [ showPassword, setShowPassword ] = useState(false);
   const [ keepSession, setKeepSession ] = useState(true);
@@ -128,7 +128,7 @@ export const LoginPage = () => {
               <div className={ styles.just_play }>
                 <p className="just_play_text" style={{ color: C.muted }}>
                   { t("login.justPlay") }{" "}
-                  <UnderlineLink onClick={ () => setJoinModalOpen(true) }>{ t("login.joinWithCode") }</UnderlineLink>
+                  <UnderlineLink onClick={ openJoinModal }>{ t("login.joinWithCode") }</UnderlineLink>
                   {" "}— { t("login.noAccount2") }
                 </p>
                 <p className="just_play_text" style={{ color: C.muted }}>
@@ -140,7 +140,6 @@ export const LoginPage = () => {
           </div>
         </div>
       </div>
-      <JoinModal isOpen={ joinModalOpen } onClose={() => setJoinModalOpen(false)} />
       <Footer />
     </div>
   );

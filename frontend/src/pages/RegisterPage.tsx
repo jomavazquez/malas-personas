@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../context/AuthContext";
-import { Badge, Footer, JoinModal, Logo, UnderlineLink } from "../components";
+import { useAuth } from "../context";
+import { Badge, Footer, Logo, UnderlineLink } from "../components";
 import { api, C, F } from "../lib";
 import type { User } from "../types";
 import styles from "./RegisterPage.module.css";
@@ -11,7 +11,6 @@ export const RegisterPage = () => {
   const { t } = useTranslation();
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [ joinModalOpen, setJoinModalOpen ] = useState(false);
   const [ form, setForm] = useState({ username: "", email: "", password: "" });
   const [ showPassword, setShowPassword ] = useState(false);
   const [ acceptTerms, setAcceptTerms ] = useState(false);
@@ -158,8 +157,7 @@ export const RegisterPage = () => {
           </div>
         </div>
       </div>
-      <JoinModal isOpen={joinModalOpen} onClose={() => setJoinModalOpen(false)} />
-      <Footer onJoinClick={() => setJoinModalOpen(true)} />
+      <Footer />
     </div>
   );
 };

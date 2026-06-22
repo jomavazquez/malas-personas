@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../context/AuthContext";
-import { Blob, Logo, Button, UnderlineLink, Footer, TopMenu, JoinModal, Badge, FloatingQuestion } from "../components";
+import { useAuth, useJoinModal } from "../context";
+import { Blob, Logo, Button, UnderlineLink, Footer, TopMenu, Badge, FloatingQuestion } from "../components";
 import { C, F } from "../lib";
 import styles from "./HomePage.module.css";
 
@@ -9,7 +8,7 @@ export const HomePage = () => {
 
   const { t } = useTranslation();
   const { user } = useAuth();
-  const [ joinModalOpen, setJoinModalOpen ] = useState(false);
+  const { openJoinModal } = useJoinModal();
 
   return (
     <div style={{ background: C.surface, fontFamily: F.body, position: "relative" }}>
@@ -38,7 +37,7 @@ export const HomePage = () => {
               <Button to={ user ? "/lobby" : "/register" }>
                 { t("lobby.createRoom") } →
               </Button>
-              <Button variant="outline" onClick={ () => setJoinModalOpen(true) }>
+              <Button variant="outline" onClick={ openJoinModal }>
                 { t("hero.haveCode") }
               </Button>
             </div>
@@ -181,8 +180,7 @@ export const HomePage = () => {
           </div>
         </div>
       </div>
-      <JoinModal isOpen={ joinModalOpen } onClose={() => setJoinModalOpen(false)} />
-      <Footer onJoinClick={ () => setJoinModalOpen(true) } />
+      <Footer />
     </div>
   );
 };

@@ -4,17 +4,15 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/AuthContext";
 import { Blob, Button, Logo } from "../../components";
 import { C, F, scrollToTop } from "../../lib";
+import { useJoinModal } from "../../context/JoinModalContext";
 import { scrollTo } from "../../lib";
 import styles from "./Footer.module.css";
 
-interface FooterProps {
-    onJoinClick?: () => void;
-}
+export const Footer = () => {
 
-export const Footer = ({ onJoinClick }: FooterProps) => {
-    
     const { t } = useTranslation();
     const { user } = useAuth();
+    const { openJoinModal } = useJoinModal();
 
     const [ showScrollUp, setShowScrollUp ] = useState(false);
 
@@ -81,7 +79,7 @@ export const Footer = ({ onJoinClick }: FooterProps) => {
                     <div className={ styles.column_label }>{ t("footer.product") }</div>
                     <FooterLink onClick={ scrollTo("how") }>{ t("nav.howItWorks") }</FooterLink>
                     <FooterLink to={ user ? "/lobby" : "/register" }>{ t("lobby.createRoom") }</FooterLink>
-                    <FooterLink onClick={ onJoinClick }>{ t("footer.joinWithCode") }</FooterLink>
+                    <FooterLink onClick={ openJoinModal }>{ t("footer.joinWithCode") }</FooterLink>
                 </div>
                 <div>
                     <div className={ styles.column_label }>{ t("footer.resources") }</div>
