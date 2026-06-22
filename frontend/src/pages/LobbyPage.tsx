@@ -77,8 +77,8 @@ export const LobbyPage = () => {
           <TopMenuMyAccount />
         </div>
       </nav>
-      <div className="max-w-360 mx-auto px-4 md:px-14 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div className="max-w-360 mx-auto px-4 md:px-14 py-6 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start" style={{ minHeight: 520 }}>
           {/* ── CREATE ROOM ── */}
           <div className="cta_container" style={{ border: `1px solid ${C.borderMid}` }}>
             <Badge>{ t("lobby.newGame") }</Badge>
@@ -236,7 +236,6 @@ export const LobbyPage = () => {
               {t("lobby.joinRoom2", "Unirse a la sala")}
             </button>
           </div>
-
         </div>
       </div>
 
