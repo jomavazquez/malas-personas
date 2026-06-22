@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
-import { Badge, Button, Footer, Logo, TopMenu, TopMenuMyAccount } from "../components";
+import { Badge, Button, Footer, Logo, TopMenuMyAccount } from "../components";
 import { api, C, F } from "../lib";
 import { getOrCreateGuestId } from "../lib/guest";
 import type { Deck } from "../types";
