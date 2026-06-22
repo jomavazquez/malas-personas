@@ -25,3 +25,22 @@
     font-weight: 800;
     text-align: center
 }
+
+.form_label_sub {
+    color: rgba(255, 255, 255, 0.5); 
+    font-size: 15px;
+    margin-bottom: 10px
+}
+
+.dividerContainer {
+    align-items: center;
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px
+}
+
+.divider {
+    background: #3C424A;
+    flex: 1;
+    height: 1px
+}

@@ -47,7 +47,7 @@ export const JoinModal = ({ isOpen, onClose }: JoinModalProps) => {
             <div className={ styles.box } onClick={ (e) => e.stopPropagation() }>
                 <div className={ styles.box_title } style={{ color: C.base }}>{ t("lobby.joinRoom") }</div>
                 <input
-                    className={ styles.input_code }
+                    className="input_code"
                     style={{ border: `2px solid ${C.border}`, color: C.base }}
                     placeholder="XXXXXX"
                     value={ joinCode }
@@ -70,7 +70,7 @@ export const JoinModal = ({ isOpen, onClose }: JoinModalProps) => {
                     />
                 </div>
                 <button
-                    className={ styles.box_btn }
+                    className="box_btn"
                     onClick={ handleJoin }
                     disabled={ !canJoin }
                     style={{ background: !canJoin ? "#ccc" : C.accent, color: C.base, cursor: !canJoin ? "not-allowed" : "pointer" }}

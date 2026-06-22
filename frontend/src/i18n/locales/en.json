@@ -47,7 +47,10 @@
     "code": "Code",
     "newGame": "New game",
     "roomName": "Room name",
-    "gameLang": "Game language"
+    "gameLang": "Game language",
+    "yourNameSub": "Así te verán el resto de jugadores en la partida.",
+    "invitedToRoom": "¿Te invitaron a una sala?",
+    "joinRoom2": "Unirse a la sala"
   },
   "room": {
     "waiting": "Waiting for players...",

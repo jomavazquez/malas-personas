@@ -20,6 +20,10 @@ body {
   50% { transform: translateY(-10px); }
 }
 
+:root {
+    --primary: #9FCA28
+}
+
 .animate-floaty {
   animation: floaty 6s ease-in-out infinite;
 }
@@ -128,4 +132,36 @@ body {
     font-weight: 800;
     letter-spacing: -0.03em;
     margin-bottom: 25px
+}
+
+.input_code {
+    background: #fff;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    margin-bottom: 20px;
+    outline: none;
+    padding: 15px;
+    text-align: center;
+    width: 100%
+}
+
+.box_btn {
+    border: none;
+    border-radius: 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    padding: 16px 0;
+    transition: all 0.25s ease;
+    width: 100%
+}
+
+.box_btn:hover {
+    background: #000 !important;
+    color: var(--primary) !important
 }

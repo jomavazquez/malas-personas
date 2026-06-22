@@ -119,7 +119,8 @@ export const LobbyPage = () => {
             <div style={{ marginBottom: 25 }}>
               <label className="form_label">{ t("lobby.selectDeck") }</label>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                {decks.map((d) => (
+                {
+                  decks.map((d) => (
                   <button key={d.id} onClick={() => setSelectedDeck(d.id)} style={{
                     borderRadius: 999, padding: "8px 16px", fontFamily: F.display, fontWeight: 600, fontSize: 14,
                     border: `1.5px solid ${selectedDeck === d.id ? C.accent : C.border}`,
@@ -132,9 +133,9 @@ export const LobbyPage = () => {
               </div>
             </div>
             {/* PLAYERS + POINTS */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 25 }}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4" style={{ marginBottom: 25 }}>
               <div>
-                <label className="form_label">{ t("lobby.maxPlayers") }{" "}<span style={{ color: C.faint, fontWeight: 400, marginLeft: 5 }}>2-20</span></label>
+                <label className="form_label">{ t("lobby.maxPlayers") }</label>
                 <div className={ styles.btn_container }>
                   <Button 
                     onClick={ () => setMaxPlayers(Math.max(2, maxPlayers - 1)) } 
@@ -177,68 +178,56 @@ export const LobbyPage = () => {
             </Button>
           </div>
           {/* ── JOIN ROOM ── */}
-          <div style={{ background: C.base, borderRadius: 24, padding: "36px 34px", boxShadow: "0 20px 50px -20px rgba(47,52,58,.4)" }}>
-
-            {/* Name */}
-            <div style={{ marginBottom: 28 }}>
-              <label style={{ color: "#9AA3AB" }}>{t("lobby.yourName", "Tu nombre")}</label>
-              <p style={{ fontFamily: F.body, fontSize: 13, color: "#9AA3AB", marginBottom: 10 }}>
-                {t("lobby.yourNameSub", "Así te verán el resto de jugadores en la partida.")}
-              </p>
+          <div className="cta_container" style={{ background: C.base }}>
+            <div style={{ marginBottom: 25 }}>
+              <label className="form_label" style={{ color: "#fff", marginBottom: 5 }}>{ t("auth.username") }</label>
+              <p className={ styles.form_label_sub }>{ t("lobby.yourNameSub") }</p>
               <input
                 className="input"
-                style={{ border: "1.5px solid #3C424A", color: C.base, background: "#fff" }}
-                placeholder="Ej. Marina"
+                style={{ color: C.base, background: "#fff" }}
+                placeholder="Marina"
                 value={ guestName }
-                onChange={(e) => setGuestName(e.target.value)}
-                maxLength={20}
-                readOnly={!!user}
+                onChange={ (e) => setGuestName(e.target.value) }
+                maxLength={ 20 }
+                readOnly={ !!user }
               />
             </div>
-
-            {/* Divider */}
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-              <div style={{ flex: 1, height: 1, background: "#3C424A" }} />
-              <span style={{ fontFamily: F.body, fontSize: 12, color: "#9AA3AB" }}>
-                {t("lobby.invitedToRoom", "¿te invitaron a una sala?")}
-              </span>
-              <div style={{ flex: 1, height: 1, background: C.border }} />
+            {/* DIVIDER */}
+            <div className={ styles.dividerContainer }>
+              <div className={ styles.divider } />
+              <span style={{ fontSize: 13, color: "#9AA3AB" }}>{ t("lobby.invitedToRoom") }</span>
+              <div className={ styles.divider } />
             </div>
-
-            {/* Code input */}
             <div style={{ marginBottom: 20 }}>
-              <label style={{ color: "#9AA3AB" }}>{t("lobby.roomCode")}</label>
+              <label className="form_label" style={{ color: "#fff", marginBottom: 5 }}>{t("lobby.roomCode")}</label>
               <input
-                style={{
-                  width: "100%", boxSizing: "border-box",
-                  border: "2px solid #3C424A", borderRadius: 10,
-                  padding: 15, outline: "none",
-                  fontFamily: F.display, fontWeight: 800, fontSize: 28,
-                  letterSpacing: "0.12em", textAlign: "center",
-                  color: C.base, background: "#fff", marginBottom: 0,
-                }}
+                className="input_code"
+                style={{ color: C.base }}
                 placeholder="XXXXXX"
-                value={joinCode}
+                value={ joinCode }
                 onChange={(e) => {
                   const val = e.target.value.replace(/[^a-zA-Z0-9]/g, "").toUpperCase().slice(0, 6);
                   setCodeChars(val.padEnd(6, "").split("").slice(0, 6));
                 }}
-                maxLength={6}
-                onKeyDown={(e) => e.key === "Enter" && handleJoin()}
+                maxLength={ 6 }
+                onKeyDown={ (e) => e.key === "Enter" && handleJoin() }
               />
             </div>
-
             <button
-              onClick={handleJoin}
-              disabled={joinCode.length < 6 || !guestName.trim()}
-              style={{ width: "100%", background: joinCode.length < 6 || !guestName.trim() ? "#3C424A" : C.accent, color: joinCode.length < 6 || !guestName.trim() ? "#9AA3AB" : C.base, borderRadius: 14, padding: "17px 0", fontFamily: F.display, fontWeight: 700, fontSize: 16, border: "none", cursor: joinCode.length < 6 || !guestName.trim() ? "not-allowed" : "pointer", letterSpacing: "-0.01em" }}
+              className="box_btn"
+              onClick={ handleJoin }
+              disabled={ joinCode.length < 6 || !guestName.trim() }
+              style={{ 
+                background: joinCode.length < 6 || !guestName.trim() ? "#3C424A" : C.accent, 
+                color: joinCode.length < 6 || !guestName.trim() ? "#9AA3AB" : C.base, 
+                cursor: joinCode.length < 6 || !guestName.trim() ? "not-allowed" : "pointer", 
+              }}
             >
-              {t("lobby.joinRoom2", "Unirse a la sala")}
+              { t("lobby.joinRoom2") }
             </button>
           </div>
         </div>
       </div>
-
       <Footer />
     </div>
   );
