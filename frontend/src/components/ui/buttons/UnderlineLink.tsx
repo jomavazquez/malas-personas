@@ -20,19 +20,19 @@ interface ButtonProps extends BaseProps {
 type UnderlineLinkProps = LinkProps | ButtonProps;
 
 export const UnderlineLink = ({ color = C.accentDeep, children, ...props }: UnderlineLinkProps) => {
-    
     const [ hovered, setHovered ] = useState(false);
 
     const sharedStyle = {
         color,
-        borderColor: hovered ? color : "transparent",
-        transition: "border-color 0.25s ease",
+        border: "none",
+        borderBottom: `2px solid ${hovered ? color : "transparent"}`,
+        transition: "border-bottom-color 0.25s ease",
     };
 
     const sharedProps = {
         onMouseEnter: () => setHovered(true),
         onMouseLeave: () => setHovered(false),
-        className: "font-bold no-underline border-b-2 cursor-pointer",
+        className: "font-bold no-underline cursor-pointer",
         style: sharedStyle,
     };
 
@@ -41,15 +41,7 @@ export const UnderlineLink = ({ color = C.accentDeep, children, ...props }: Unde
             <button
                 { ...sharedProps }
                 onClick={ props.onClick }
-                style={{ 
-                    ...sharedStyle, 
-                    background: "none", 
-                    border: "none", 
-                    borderBottom: `2px solid ${ hovered ? color : "transparent" }`, 
-                    padding: 0, 
-                    fontFamily: "inherit", 
-                    fontSize: "inherit" 
-                }}
+                style={{ ...sharedStyle, background: "none", padding: 0, fontFamily: "inherit", fontSize: "inherit" }}
             >
                 { children }
             </button>
