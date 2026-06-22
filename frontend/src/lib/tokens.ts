@@ -1,7 +1,7 @@
 export const C = {
-  accent:     "#9FCA28",
-  accentDeep: "#3A4A12",
-  accentMid:  "#384011",
+  accent:     "#f39c12",
+  accentDeep: "#442816",
+  accentMid:  "#442816",
   base:       "#222222",
   surface:    "#E7EEEE",
   muted:      "#50545A",
