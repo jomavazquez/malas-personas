@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../context/AuthContext";
@@ -35,6 +35,10 @@ export const JoinModal = ({ isOpen, onClose }: JoinModalProps) => {
         setName(user?.username ?? "");
         onClose();
     };
+
+    useEffect(() => {
+        if( user?.username ) setName(user.username);
+    }, [ user?.username ]);
 
     if( !isOpen ) return null;
 
