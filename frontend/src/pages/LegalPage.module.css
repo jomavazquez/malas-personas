@@ -1,26 +1,38 @@
 .legal h1 {
+  color: #222;
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 800;
   font-size: 40px;
-  letter-spacing: -0.035em;
-  color: #222;
-  margin: 0 0 32px
+  letter-spacing: -0.035em  
 }
 
 .legal h2 {
+  color: #222;
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 700;
   font-size: 22px;
-  letter-spacing: -0.02em;
-  color: #222;
-  margin: 40px 0 12px;
+  letter-spacing: -0.02em  
 }
 
 .legal p {
+  color: #222;
   font-size: 16px;
-  line-height: 1.7;
-  color: #50545A;
-  margin: 0 0 16px;
+  line-height: 1.6
+}
+
+.legal ul li {
+  list-style: disc;
+  margin: 10px 20px;
+}
+
+.legal a {
+  color: var(--primary);
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.legal a:hover {
+  border-bottom: solid 1px var(--primary);
 }
 
 .legal table {
