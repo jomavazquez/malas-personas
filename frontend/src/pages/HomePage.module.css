@@ -39,21 +39,6 @@
     max-width: 420px
 }
 
-.cta_container {
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 30px 60px -34px rgba(47, 52, 58, .4);
-    padding: 36px
-}
-
-.cta_title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 26px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    margin-bottom: 25px
-}
-
 .cta_login {
     font-size: 14px;
     font-weight: 500;
@@ -83,4 +68,18 @@
     letter-spacing: 0.05em;
     margin-top: 15px;
     text-transform: uppercase;
+}
+
+.avatar_plus {
+    align-items: center;
+    background: #fff;
+    border: dashed 1.5px #C4CACA;
+    border-radius: 999px;
+    display: flex;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    justify-content: center;
+    height: 40px;
+    width: 40px
 }

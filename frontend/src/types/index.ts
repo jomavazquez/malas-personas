@@ -15,11 +15,13 @@ export interface Deck {
 export interface Room {
   id: string;
   code: string;
+  name?: string;
   status: "WAITING" | "PLAYING" | "FINISHED";
   isActive: boolean;
   maxPlayers: number;
   pointsToWin: number;
   createdAt: string;
+  finishedAt?: string;
   deck: { id: string; name: string; language: string };
 }
 

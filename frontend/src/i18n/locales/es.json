@@ -3,7 +3,7 @@
     "howItWorks": "Cómo funciona",
     "login": "Iniciar sesión",
     "createRoom": "Crear sala",
-    "myAccount": "Mi cuenta"
+    "myRooms": "Mis salas"
   },
   "auth": {
     "email": "Email",
@@ -44,7 +44,10 @@
     "orJoin": "o únete a una sala existente",
     "maxPlayers": "Jugadores máximos",
     "pointsToWin": "Puntos para ganar",
-    "code": "Código"
+    "code": "Código",
+    "newGame": "Nueva partida",
+    "roomName": "Nombre de la sala",
+    "gameLang": "Idioma de la partida"
   },
   "room": {
     "waiting": "Esperando jugadores...",

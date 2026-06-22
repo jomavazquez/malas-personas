@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
@@ -6,6 +6,7 @@ import { Badge, Footer, Logo, TopMenu } from "../components";
 import { api, C, F } from "../lib";
 import { getOrCreateGuestId } from "../lib/guest";
 import type { Deck } from "../types";
+import styles from "./LobbyPage.module.css";
 
 export const LobbyPage = () => {
 
@@ -14,21 +15,18 @@ export const LobbyPage = () => {
   const navigate = useNavigate();
 
   // Create room state
-  const [decks, setDecks] = useState<Deck[]>([]);
-  const [roomName, setRoomName] = useState("");
-  const [selectedLang, setSelectedLang] = useState<"ES" | "EN">(
-    i18n.language.startsWith("es") ? "ES" : "EN"
-  );
-  const [selectedDeck, setSelectedDeck] = useState("");
-  const [maxPlayers, setMaxPlayers] = useState(10);
-  const [pointsToWin, setPointsToWin] = useState(7);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [ decks, setDecks ] = useState<Deck[]>([]);
+  const [ roomName, setRoomName ] = useState("");
+  const [ selectedLang, setSelectedLang ] = useState<"ES" | "EN">( i18n.language.startsWith("es") ? "ES" : "EN" );
+  const [ selectedDeck, setSelectedDeck ] = useState("");
+  const [ maxPlayers, setMaxPlayers ] = useState(10);
+  const [ pointsToWin, setPointsToWin ] = useState(7);
+  const [ error, setError ] = useState("");
+  const [ loading, setLoading ] = useState(false);
 
   // Join room state
-  const [guestName, setGuestName] = useState(user?.username ?? "");
-  const [codeChars, setCodeChars] = useState<string[]>(Array(6).fill(""));
-  const codeRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [ guestName, setGuestName ] = useState(user?.username ?? "");
+  const [ codeChars, setCodeChars ] = useState<string[]>(Array(6).fill(""));
 
   const joinCode = codeChars.join("");
 
@@ -37,9 +35,9 @@ export const LobbyPage = () => {
       const filtered = data.decks.filter((d) => d.language === selectedLang);
       const list = filtered.length ? filtered : data.decks;
       setDecks(list);
-      if (list.length) setSelectedDeck(list[0].id);
+      if( list.length ) setSelectedDeck(list[0].id);
     });
-  }, [selectedLang]);
+  }, [ selectedLang ]);
 
   const handleCreate = async () => {
     if (!selectedDeck || !roomName.trim()) return;
@@ -78,61 +76,54 @@ export const LobbyPage = () => {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: C.surface, fontFamily: F.body }}>
-
+    <div style={{ background: C.surface, position: "relative" }}>
       <nav className="flex items-center px-4 md:px-14 h-16 pt-6 md:pt-10" style={{ zIndex: 2 }}>
         <div className="max-w-360 mx-auto w-full flex items-center justify-between">
           <Logo />
           <TopMenu />
         </div>
       </nav>
-
       <div className="max-w-360 mx-auto px-4 md:px-14 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-
           {/* ── CREATE ROOM ── */}
-          <div style={{ background: "#fff", borderRadius: 24, border: `1px solid ${C.borderMid}`, padding: "36px 34px", boxShadow: "0 20px 50px -20px rgba(47,52,58,.15)" }}>
-            <Badge>{t("lobby.newGame", "Nueva partida")}</Badge>
-            <h2 style={{ fontFamily: F.display, fontWeight: 800, fontSize: 28, letterSpacing: "-0.03em", color: C.base, margin: "14px 0 24px" }}>
-              {t("lobby.createRoom")}
-            </h2>
-
-            {/* Room name */}
-            <div style={{ marginBottom: 20 }}>
-              <label style={labelStyle}>{t("lobby.roomName", "Nombre de la sala")}</label>
+          <div className="cta_container" style={{ border: `1px solid ${C.borderMid}` }}>
+            <Badge>{ t("lobby.newGame") }</Badge>
+            <h2 className="cta_title" style={{ color: C.base }}>{ t("lobby.createRoom") }</h2>
+            <div style={{ marginBottom: 15 }}>
+              <label className="form_label">{ t("lobby.roomName") }</label>
               <input
                 className="input"
-                style={{ border: `1.5px solid ${C.border}`, color: C.base }}
-                placeholder={t("lobby.roomNamePlaceholder", "Retro del sprint Q3")}
-                value={roomName}
-                onChange={(e) => setRoomName(e.target.value)}
-                maxLength={40}
+                style={{ border: `1.5px solid ${C.border}`, color: C.faint }}
+                placeholder="Squad A"
+                value={ roomName }
+                onChange={ (e) => setRoomName(e.target.value) }
+                maxLength={ 40 }
               />
-
             </div>
-
-            {/* Language selector */}
-            <div style={{ marginBottom: 20 }}>
-              <label style={labelStyle}>{t("lobby.gameLang", "Idioma de la partida")}</label>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-                {(["EN", "ES"] as const).map((lang) => (
-                  <button key={lang} onClick={() => setSelectedLang(lang)} style={{
-                    borderRadius: 12, padding: "12px 0", fontFamily: F.display, fontWeight: 600, fontSize: 15,
-                    border: `1.5px solid ${selectedLang === lang ? C.accent : C.border}`,
-                    background: selectedLang === lang ? `color-mix(in srgb, ${C.accent} 10%, #fff)` : "#fff",
-                    color: C.base, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                    transition: "all 0.15s",
-                  }}>
-                    {selectedLang === lang && <span style={{ width: 7, height: 7, borderRadius: 999, background: C.accent, display: "inline-block" }} />}
-                    {lang === "EN" ? "English" : "Español"}
+            <div style={{ marginBottom: 25 }}>
+              <label className="form_label">{ t("lobby.gameLang") }</label>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                {
+                  (["EN", "ES"] as const).map((lang) => (
+                  <button 
+                    key={ lang } 
+                    className={ styles.langBt }
+                    onClick={ () => setSelectedLang(lang) } 
+                    style={{ border: `1.5px solid ${ selectedLang === lang ? C.accent : C.border }`, background: selectedLang === lang ? `color-mix(in srgb, ${ C.accent } 10%, #fff)` : "#fff", color: C.base }}>
+                    { 
+                      selectedLang === lang && 
+                      <span style={{ width: 7, height: 7, borderRadius: 999, background: C.accent, display: "inline-block" }} />
+                    }
+                    {
+                      lang === "EN" ? "English" : "Español"
+                    }
                   </button>
                 ))}
               </div>
             </div>
-
             {/* Deck chips */}
-            <div style={{ marginBottom: 20 }}>
-              <label style={labelStyle}>{t("lobby.selectDeck")}</label>
+            <div style={{ marginBottom: 25 }}>
+              <label className="form_label">{ t("lobby.selectDeck") }</label>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                 {decks.map((d) => (
                   <button key={d.id} onClick={() => setSelectedDeck(d.id)} style={{
@@ -152,20 +143,36 @@ export const LobbyPage = () => {
               <div>
                 <label style={labelStyle}>{t("lobby.maxPlayers")} <span style={{ color: C.faint, fontWeight: 400 }}>2-20</span></label>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <button onClick={() => setMaxPlayers(Math.max(2, maxPlayers - 1))} style={{ width: 36, height: 36, borderRadius: 10, border: `1.5px solid ${C.border}`, background: "#fff", fontFamily: F.display, fontWeight: 700, fontSize: 18, color: C.base, cursor: "pointer" }}>−</button>
-                  <span style={{ flex: 1, textAlign: "center", fontFamily: F.display, fontWeight: 800, fontSize: 20, color: C.base }}>{maxPlayers}</span>
-                  <button onClick={() => setMaxPlayers(Math.min(20, maxPlayers + 1))} style={{ width: 36, height: 36, borderRadius: 10, border: `1.5px solid ${C.border}`, background: C.accent, fontFamily: F.display, fontWeight: 700, fontSize: 18, color: C.base, cursor: "pointer" }}>+</button>
+                  <button 
+                    className={ styles.incdec }
+                    onClick={ () => setMaxPlayers(Math.max(2, maxPlayers - 1)) } 
+                    style={{ border: `1.5px solid ${C.border}`, color: C.base }}>−</button>
+                  <span 
+                    className="input"
+                    style={{ flex: 1, textAlign: "center", fontFamily: F.display, fontWeight: 800, fontSize: 20, color: C.base, border: `1.5px solid ${C.border}` }}>
+                      { maxPlayers }
+                  </span>
+                  <button 
+                    className={ styles.incdec }
+                    onClick={() => setMaxPlayers(Math.min(20, maxPlayers + 1))} 
+                    style={{ border: `1.5px solid ${C.border}`, background: C.accent, color: C.base }}>+</button>
                 </div>
               </div>
               <div>
                 <label style={labelStyle}>{t("lobby.pointsToWin")}</label>
-                <div style={{ position: "relative" }}>
-                  <input
-                    type="number" min={1} max={50} value={pointsToWin}
-                    onChange={(e) => setPointsToWin(Number(e.target.value))}
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <button 
+                    className={ styles.incdec }
+                    onClick={() => setPointsToWin(Math.max(1, pointsToWin - 1))} 
+                    style={{ border: `1.5px solid ${C.border}`, color: C.base }}>−</button>
+                  <span 
                     className="input"
-                    style={{ border: `1.5px solid ${C.border}`, color: C.base, fontFamily: F.display, fontWeight: 700, fontSize: 18 }}
-                  />
+                    style={{ flex: 1, textAlign: "center", fontFamily: F.display, fontWeight: 800, fontSize: 20, color: C.base, border: `1.5px solid ${C.border}` }}>
+                      { pointsToWin }</span>
+                  <button 
+                    className={ styles.incdec }
+                    onClick={() => setPointsToWin(Math.min(50, pointsToWin + 1))} 
+                    style={{ border: `1.5px solid ${C.border}`, background: C.accent, color: C.base }}>+</button>
                 </div>
               </div>
             </div>
@@ -182,19 +189,19 @@ export const LobbyPage = () => {
           </div>
 
           {/* ── JOIN ROOM ── */}
-          <div style={{ background: "#fff", borderRadius: 24, border: `1px solid ${C.borderMid}`, padding: "36px 34px", boxShadow: "0 20px 50px -20px rgba(47,52,58,.15)" }}>
+          <div style={{ background: C.base, borderRadius: 24, padding: "36px 34px", boxShadow: "0 20px 50px -20px rgba(47,52,58,.4)" }}>
 
             {/* Name */}
             <div style={{ marginBottom: 28 }}>
-              <label style={labelStyle}>{t("lobby.yourName", "Tu nombre")}</label>
-              <p style={{ fontFamily: F.body, fontSize: 13, color: C.faint, marginBottom: 10 }}>
+              <label style={{ ...labelStyle, color: "#9AA3AB" }}>{t("lobby.yourName", "Tu nombre")}</label>
+              <p style={{ fontFamily: F.body, fontSize: 13, color: "#9AA3AB", marginBottom: 10 }}>
                 {t("lobby.yourNameSub", "Así te verán el resto de jugadores en la partida.")}
               </p>
               <input
                 className="input"
-                style={{ border: `1.5px solid ${C.border}`, color: C.base }}
+                style={{ border: "1.5px solid #3C424A", color: C.base, background: "#fff" }}
                 placeholder="Ej. Marina"
-                value={guestName}
+                value={ guestName }
                 onChange={(e) => setGuestName(e.target.value)}
                 maxLength={20}
                 readOnly={!!user}
@@ -203,8 +210,8 @@ export const LobbyPage = () => {
 
             {/* Divider */}
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-              <div style={{ flex: 1, height: 1, background: C.border }} />
-              <span style={{ fontFamily: F.body, fontSize: 12, color: C.faint }}>
+              <div style={{ flex: 1, height: 1, background: "#3C424A" }} />
+              <span style={{ fontFamily: F.body, fontSize: 12, color: "#9AA3AB" }}>
                 {t("lobby.invitedToRoom", "¿te invitaron a una sala?")}
               </span>
               <div style={{ flex: 1, height: 1, background: C.border }} />
@@ -212,11 +219,11 @@ export const LobbyPage = () => {
 
             {/* Code input */}
             <div style={{ marginBottom: 20 }}>
-              <label style={labelStyle}>{t("lobby.roomCode")}</label>
+              <label style={{ ...labelStyle, color: "#9AA3AB" }}>{t("lobby.roomCode")}</label>
               <input
                 style={{
                   width: "100%", boxSizing: "border-box",
-                  border: `2px solid ${C.border}`, borderRadius: 10,
+                  border: "2px solid #3C424A", borderRadius: 10,
                   padding: 15, outline: "none",
                   fontFamily: F.display, fontWeight: 800, fontSize: 28,
                   letterSpacing: "0.12em", textAlign: "center",
@@ -236,7 +243,7 @@ export const LobbyPage = () => {
             <button
               onClick={handleJoin}
               disabled={joinCode.length < 6 || !guestName.trim()}
-              style={{ width: "100%", background: joinCode.length < 6 || !guestName.trim() ? "#ccc" : C.base, color: "#fff", borderRadius: 14, padding: "17px 0", fontFamily: F.display, fontWeight: 700, fontSize: 16, border: "none", cursor: joinCode.length < 6 || !guestName.trim() ? "not-allowed" : "pointer", letterSpacing: "-0.01em" }}
+              style={{ width: "100%", background: joinCode.length < 6 || !guestName.trim() ? "#3C424A" : C.accent, color: joinCode.length < 6 || !guestName.trim() ? "#9AA3AB" : C.base, borderRadius: 14, padding: "17px 0", fontFamily: F.display, fontWeight: 700, fontSize: 16, border: "none", cursor: joinCode.length < 6 || !guestName.trim() ? "not-allowed" : "pointer", letterSpacing: "-0.01em" }}
             >
               {t("lobby.joinRoom2", "Unirse a la sala")}
             </button>

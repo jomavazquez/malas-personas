@@ -12,7 +12,7 @@ export const TopMenu = () => {
         <>
             <div className="hidden md:flex items-center gap-6" style={{ fontFamily: F.display, fontWeight: 600, fontSize: 16, color: C.subtle }}>
                 <UnderlineLink onClick={ scrollTo("how") } >{ t("nav.howItWorks") }</UnderlineLink>
-                <UnderlineLink to={ user ? "/my-account" : "/login" }>{ t( user ? "nav.myAccount" : "nav.login") }</UnderlineLink>
+                <UnderlineLink to={ user ? "/my-rooms" : "/login" }>{ t( user ? "nav.myRooms" : "nav.login") }</UnderlineLink>
                 <LanguageSelector />
                 <Button to={ user ? "/lobby" : "/register" } size="sm">{ t("nav.createRoom") }</Button>
             </div>

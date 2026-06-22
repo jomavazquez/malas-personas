@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useAuth, useJoinModal } from "../context";
-import { Blob, Logo, Button, UnderlineLink, Footer, TopMenu, Badge, FloatingQuestion } from "../components";
+import { Avatar, Blob, Logo, Button, UnderlineLink, Footer, TopMenu, Badge, FloatingQuestion } from "../components";
 import { C, F } from "../lib";
 import styles from "./HomePage.module.css";
 
@@ -11,7 +11,7 @@ export const HomePage = () => {
   const { openJoinModal } = useJoinModal();
 
   return (
-    <div style={{ background: C.surface, fontFamily: F.body, position: "relative" }}>
+    <div style={{ background: C.surface, position: "relative" }}>
       <nav className="flex items-center justify-between px-4 md:px-14 h-16 relative pt-6 md:pt-10" style={{ zIndex: 2 }}>
         <div className="max-w-360 mx-auto w-full flex items-center justify-between">
           <Logo />
@@ -119,12 +119,11 @@ export const HomePage = () => {
               <div className={ styles.step_title } style={{ color: C.base }}>{ t("how.step2.title") }</div>
               <div className={ styles.step_body } style={{ color: C.muted }}>{ t("how.step2.desc") }</div>
               <div className="flex gap-2">
-                {
-                  ([["M", C.accent, C.base], ["D", "#556987", "#fff"], ["A", "#194068", "#fff"], ["L", "#50545A", "#fff"]] as [string, string, string][]).map(([label, bg, fg]) => (
-                    <span key={ label } style={{ width: 40, height: 40, borderRadius: 999, background: bg, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: F.display, fontWeight: 800, fontSize: 16, color: fg }}>{ label }</span>
-                  ))
-                }
-                <span style={{ width: 40, height: 40, borderRadius: 999, background: "#fff", border: "1.5px dashed #C4CACA", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: F.display, fontWeight: 600, fontSize: 16, color: C.faint }}>+</span>
+                <Avatar label="M" bgColor={ C.accent } textColor={ C.base } size={ 40 } />
+                <Avatar label="D" bgColor="#556987" textColor="#fff" size={ 40 } />
+                <Avatar label="A" bgColor="#194068" textColor="#fff" size={ 40 } />
+                <Avatar label="L" bgColor="#50545A" textColor="#fff" size={ 40 } />
+                <span className={ styles.avatar_plus } style={{ color: C.faint }}>+</span>
               </div>
             </div>
             {/* Step 3 */}
@@ -156,9 +155,9 @@ export const HomePage = () => {
               ))
             }
           </div>
-          <div className={ styles.cta_container } style={{ border: `1px solid ${C.borderMid}` }}>
+          <div className="cta_container" style={{ border: `1px solid ${C.borderMid}` }}>
             <Badge>{ t("pricing.free") }</Badge>
-            <div className={ styles.cta_title } style={{ color: C.base }}>{ t("auth.register") }</div>
+            <div className="cta_title" style={{ color: C.base }}>{ t("auth.register") }</div>
             <div className="form_label" style={{ color: C.muted }}>{ t("auth.username") }</div>
             <div className="input" style={{ border: `1.5px solid ${C.border}`, color: C.faint, marginBottom: 15 }}>Marina</div>
             <div className="form_label" style={{ color: C.muted }}>{ t("auth.email") }</div>

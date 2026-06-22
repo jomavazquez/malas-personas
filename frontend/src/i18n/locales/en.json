@@ -3,7 +3,7 @@
     "howItWorks": "How it works",
     "login": "Log in",
     "createRoom": "Create room",
-    "myAccount": "My account"
+    "myRooms": "My rooms"
   },
   "auth": {
     "email": "Email",
@@ -44,7 +44,10 @@
     "orJoin": "or join an existing room",
     "maxPlayers": "Max players",
     "pointsToWin": "Points to win",
-    "code": "Code"
+    "code": "Code",
+    "newGame": "New game",
+    "roomName": "Room name",
+    "gameLang": "Game language"
   },
   "room": {
     "waiting": "Waiting for players...",

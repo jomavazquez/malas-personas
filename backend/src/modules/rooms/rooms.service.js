@@ -5,7 +5,7 @@ const ROOM_CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const generateRoomCode = async () => {
   let code;
   let exists = true;
-  while( exists ){
+  while (exists) {
     code = Array.from({ length: 6 }, () =>
       ROOM_CODE_CHARS[Math.floor(Math.random() * ROOM_CODE_CHARS.length)]
     ).join("");
@@ -20,7 +20,7 @@ export const createRoom = async (hostId, { deckId, maxPlayers, pointsToWin, name
     where: { hostId, isActive: true },
   });
 
-  if( activeRoom ){
+  if (activeRoom) {
     const error = new Error("Ya tienes una sala activa. Ciérrala antes de crear una nueva.");
     error.status = 409;
     throw error;
@@ -90,5 +90,17 @@ export const closeRoom = async (hostId, code) => {
     where: { code: code.toUpperCase() },
     data: { isActive: false, status: "FINISHED", finishedAt: new Date() },
     select: { id: true, code: true, status: true, isActive: true, finishedAt: true },
+  });
+};
+
+export const getMyRooms = async (userId) => {
+  return prisma.room.findMany({
+    where: { hostId: userId },
+    select: {
+      id: true, code: true, name: true, status: true, isActive: true,
+      maxPlayers: true, pointsToWin: true, createdAt: true, finishedAt: true,
+      deck: { select: { id: true, name: true, language: true } },
+    },
+    orderBy: { createdAt: "desc" },
   });
 };

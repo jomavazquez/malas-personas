@@ -1,0 +1,21 @@
+.avatar_container {
+    align-items: center;
+    display: flex;
+    gap: 10px
+}
+
+.circle {
+    align-items: center;
+    border-radius: 999px;
+    display: flex;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    justify-content: center    
+}
+
+.label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+    font-size: 16px
+}
