@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 import { useAuth, useJoinModal } from "../context";
+import { getLenis } from "../hooks";
 import { Avatar, Blob, Logo, Button, UnderlineLink, Footer, TopMenu, Badge, FloatingQuestion } from "../components";
 import { C, F } from "../lib";
 import styles from "./HomePage.module.css";
@@ -9,6 +12,24 @@ export const HomePage = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
   const { openJoinModal } = useJoinModal();
+  const location = useLocation();
+
+  useEffect(() => {
+    const id = location.state?.scrollTo;
+    if( !id ) return;
+    
+    const attempt = () => {
+      const el = document.getElementById(id);
+      const lenis = getLenis();
+      if( el && lenis ){
+        lenis.scrollTo(el);
+      }else{
+        setTimeout(attempt, 100);
+      }
+    };
+    
+    setTimeout(attempt, 200);
+  }, [location.state]);
 
   return (
     <div style={{ background: C.surface, position: "relative" }}>

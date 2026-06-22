@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth, useJoinModal } from "../../context";
 import { Blob, Button, Logo } from "../../components";
-import { C, F, scrollToTop } from "../../lib";
-import { useJoinModal } from "../../context/JoinModalContext";
-import { scrollTo } from "../../lib";
+import { C, F, goToSection, scrollToTop,  } from "../../lib";
 import styles from "./Footer.module.css";
 
 export const Footer = () => {
@@ -13,6 +11,7 @@ export const Footer = () => {
     const { t } = useTranslation();
     const { user } = useAuth();
     const { openJoinModal } = useJoinModal();
+    const navigate = useNavigate();
 
     const [ showScrollUp, setShowScrollUp ] = useState(false);
 
@@ -77,7 +76,9 @@ export const Footer = () => {
                 </div>
                 <div>
                     <div className={ styles.column_label }>{ t("footer.product") }</div>
-                    <FooterLink onClick={ scrollTo("how") }>{ t("nav.howItWorks") }</FooterLink>
+                    <FooterLink onClick={() => goToSection(navigate, "how")}>
+                        { t("nav.howItWorks") }
+                    </FooterLink>
                     <FooterLink to={ user ? "/lobby" : "/register" }>{ t("lobby.createRoom") }</FooterLink>
                     <FooterLink onClick={ openJoinModal }>{ t("footer.joinWithCode") }</FooterLink>
                 </div>
