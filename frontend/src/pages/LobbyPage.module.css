@@ -69,7 +69,6 @@
 .card_icons {
     align-items: center;
     border-radius: 999px;
-    display: flex;
     font-size: 12px;
     font-weight: 800;
     justify-content: center
@@ -87,6 +86,7 @@
 }
 
 .selected {
+    display: flex;
     height: 20px;
     width: 20px;
 }

@@ -137,7 +137,7 @@ export const LobbyPage = () => {
                           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                             {
                               !isForAll &&
-                              <span className={ `hidden! lg:inline ${ styles.card_icons } ${ styles.plusAge }` }>+18</span>
+                              <span className={ `hidden lg:inline ${ styles.card_icons } ${ styles.plusAge }` }>+18</span>
                             }
                             {
                               isSelected &&
