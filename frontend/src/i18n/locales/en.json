@@ -158,6 +158,16 @@
     "filter_active": "Active",
     "filter_finished": "Finished",
     "lastgame": "Last game",
-    "reopen": "Re-open"
+    "reopen": "Re-open",
+    "close": "Close room",
+    "active": "Active",
+    "finished": "Finished",
+    "loading": "Loading ...",
+    "empty": "There are no rooms to show.",
+    "room": "Room",
+    "search": "Search by name or code...",
+    "deleteConfirm": "Are you sure you want to delete this room? This action cannot be undone.",
+    "cancel": "Cancel",
+    "delete": "Delete"
   }
 }

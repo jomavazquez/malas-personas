@@ -2,22 +2,22 @@
 @import "tailwindcss";
 
 html, body, #root {
-  height: auto;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  background: #DCE3E2;
-  font-family: "Manrope", system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
+    height: auto;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #DCE3E2;
+    font-family: "Manrope", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased
 }
 
 html, body {
-  overflow-x: hidden;
+    overflow-x: hidden
 }
 
 @keyframes floaty {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 :root {
@@ -25,28 +25,30 @@ html, body {
 }
 
 .animate-floaty {
-  animation: floaty 6s ease-in-out infinite;
+    animation: floaty 6s ease-in-out infinite
 }
 
 .input {
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 500;
-  padding: 15px;
-  width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    outline: none;
+    padding: 15px;
+    width: 100%
 }
 
 .checkbox {
-  align-items: center;
-  border-radius: 6px;
-  display: flex;
-  flex-shrink: 0;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 800;
-  height: 25px;
-  justify-content: center;
-  width: 25px
+    align-items: center;
+    border-radius: 6px;
+    display: flex;
+    flex-shrink: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    height: 25px;
+    justify-content: center;
+    width: 25px
 }
 
 .check_desc {
@@ -82,11 +84,11 @@ html, body {
 }
 
 .heading_1 {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 40px;
-  font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 1.04em;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.04em
 }
 
 .error {
@@ -164,4 +166,49 @@ html, body {
 .box_btn:hover {
     background: #000 !important;
     color: var(--primary) !important
+}
+
+.btn_red {
+    align-items: center;
+    background: #FBF2F1;
+    border: solid 1.5px #F3DEDC;
+    border-radius: 999px;
+    color: #C1584E;
+    cursor: pointer;
+    display: flex;
+    font-size: 20px;
+    font-weight: 600;
+    justify-content: center;
+    height: 35px;
+    transition: all 0.25s ease;
+    width: 35px
+}
+
+.btn_red:hover {
+    background: #F3DEDC
+}
+
+.modal_bg {
+    background: rgba(0, 0, 0, 0.6)
+}
+
+.modal_container {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, .5);
+    max-width: 350px;
+    padding: 30px;
+    width: 100%
+}
+
+.modal_title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 10px
+}
+
+.modal_body {
+    font-size: 16px;
+    margin-bottom: 25px
 }

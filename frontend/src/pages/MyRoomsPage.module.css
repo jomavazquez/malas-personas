@@ -22,3 +22,119 @@
     gap: 10px;
     justify-content: flex-end
 }
+
+.room_info {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px
+}
+
+.room_name {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600
+}
+
+.code_container {
+    align-items: center;
+    border-radius: 10px;
+    display: inline-flex;
+    justify-content: center;
+    padding: 8px 10px
+}
+
+.code {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.15em
+}
+
+.loading {
+    font-size: 16px;
+    padding: 40px;
+    text-align: center    
+}
+
+.search_icon {
+    font-size: 26px;
+    left: 15px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.search {
+    font-size: 14px;
+    padding-left: 40px;
+    width: 275px
+}
+
+.filter {
+    background: #fff;
+    border-radius: 999px;
+    display: flex;
+    padding: 5px;
+    position: relative;
+
+}
+
+.filter_btn {
+    background: transparent;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 16px;
+    position: relative;
+    transition: color 0.25s ease;
+    white-space: nowrap;
+    z-index: 1
+}
+
+.filter_active {
+    border-radius: 999px;
+    bottom: 4px;
+    pointer-events: none;
+    position: absolute;
+    top: 4px;
+    transition: left 0.25s ease, width 0.25s ease
+}
+
+.btn {
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    transition: all 0.25s ease
+}
+
+.btn_copy {
+    justify-content: center;
+    height: 35px;
+    width: 35px    
+}
+
+.btn_cancel {
+    background: #fff;
+    flex: 1;
+    padding: 10px
+}
+
+.btn_cancel:hover {
+    border-color: transparent !important
+}
+
+.btn_delete {
+    flex: 1;
+    background: #C1584E;
+    color: #fff
+}
+
+.btn_delete:hover {
+    background: #963831    
+}

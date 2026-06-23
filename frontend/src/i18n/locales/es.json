@@ -158,6 +158,16 @@
     "filter_active": "Activas",
     "filter_finished": "Finalizadas",
     "lastgame": "Último juego",
-    "reopen": "Reabrir"
+    "reopen": "Reabrir",
+    "close": "Cerrar sala",
+    "active": "Activa",
+    "finished": "Finalizada",
+    "loading": "Cargando ...",
+    "empty": "No hay salas que mostrar.",
+    "room": "Sala",
+    "search": "Buscar por nombre o código...",
+    "deleteConfirm": "¿Estás seguro de que quieres eliminar esta sala? Esta acción no se puede deshacer.",
+    "cancel": "Cancelar",
+    "delete": "Eliminar"
   }
 }
