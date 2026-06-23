@@ -184,7 +184,7 @@ export const MyRoomsPage = () => {
                       <Badge marginBottom={ 0 } dot={ room.isActive } color={ room.isActive ? undefined : C.muted }>{ t(room.isActive ? "myroom.active" : "myroom.finished") }</Badge>
                     </div>
                     <div style={{ color: C.faint, fontSize: 14, marginTop: 2 }}>
-                      { room.deck?.language === "ES" ? "Español" : "English"} · { room.deck?.name }
+                      { room.deck?.language === "ES" ? "Español" : "English"} · { room.deck?.name === "All" ? t("myroom.forEveryone") : t("myroom.noFilter") }
                     </div>
                   </div>
                   <div style={{ fontSize: 15, color: C.muted }}>{ room.maxPlayers }<span className="inline md:hidden"> {t("room.players")}</span></div>

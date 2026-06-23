@@ -26,7 +26,7 @@
     border-radius: 10px;
     border: 1px solid #3C424A;
     font-weight: 700;
-    font-size: 11px;
+    font-size: 12px;
     padding: 10px;
     color: #9AA3AB;
     text-decoration: none;
@@ -49,9 +49,10 @@
 }
 
 .copyright {
-    font-weight: 500;
-    font-size: 13px;
-    color: #888
+    color: #888;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600    
 }
 
 .author_link {
