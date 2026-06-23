@@ -129,10 +129,10 @@ export const RegisterPage = () => {
                     { acceptTerms && <span style={{ color: C.base, fontFamily: F.display }}>✓</span> }
                   </div>
                   <span style={{ fontFamily: F.body, fontSize: 14, color: C.muted }}>
-                    {t("register.acceptTerms", "Acepto los")}{" "}
-                    <UnderlineLink to="/terms">{t("register.terms", "términos del servicio")}</UnderlineLink>
-                    {" "}{t("register.and", "y la")}{" "}
-                    <UnderlineLink to="/privacy">{t("register.privacy", "política de privacidad")}</UnderlineLink>.
+                    { t("register.accept") }{" "}
+                    <UnderlineLink to="/legal-notice">{ t("register.terms") }</UnderlineLink>
+                    {" "}{ t("register.and") }{" "}
+                    <UnderlineLink to="/privacy-policy">{ t("footer.privacyPolicy").toLowerCase() }</UnderlineLink>.
                   </span>
                 </div>
                 {

@@ -143,7 +143,10 @@
     "cardSub": "Sin tarjeta, sin anuncios. Solo jugar con tu equipo.",
     "submit": "Crear cuenta",
     "passwordHint": "Mínimo 8 caracteres, con una mayúscula y un número.",
-    "freeNote": "Gratis para siempre · sin tarjeta de crédito"
+    "freeNote": "Gratis para siempre · sin tarjeta de crédito",
+    "accept": "Acepto los",
+    "terms": "términos del servicio",
+    "and": "y la"
   },  
   "features": {
     "1": "Guarda tus salas y reábrelas con un click.",

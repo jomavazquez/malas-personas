@@ -48,7 +48,7 @@ export const Footer = () => {
 
     return (
         <footer style={{ background: "#000", position: "relative", overflow: "hidden" }}>
-            <Blob size={ 600 } color={ C.accent } blur={ 80 } style={{ bottom: 400, left: "50%", transform: "translateX(-50%)" }} />
+            <Blob size={ 1024 } color={ C.accent } blur={ 80 } style={{ bottom: 550, left: "50%", transform: "translateX(-50%)" }} />
             <div className="relative overflow-hidden px-8 md:px-14 py-16 md:py-20 text-center">
                 <div className="relative">
                     <h2 className="text-[32px] md:text-[42px]" style={{ fontFamily: F.display, fontWeight: 800, letterSpacing: "-0.035em", color: "#fff", margin: "0 0 15px", lineHeight: 1.05 }}>
@@ -67,18 +67,14 @@ export const Footer = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 px-8 md:px-14 py-12 md:py-16">
                 <div className="col-span-1">
                     <Logo color="#fff" />
-                    <p className={styles.tagline}>
-                        { t("footer.tagline") }
-                    </p>
+                    <p className={ styles.tagline }>{ t("footer.tagline") }</p>
                     <div className="flex gap-2">
                         <a href="https://www.linkedin.com/in/jomavazquez/" target="_blank" className={ styles.social_link }>LinkedIn</a>
                     </div>
                 </div>
                 <div>
                     <div className={ styles.column_label }>{ t("footer.product") }</div>
-                    <FooterLink onClick={() => goToSection(navigate, "how")}>
-                        { t("nav.howItWorks") }
-                    </FooterLink>
+                    <FooterLink onClick={ () => goToSection(navigate, "how") }>{ t("nav.howItWorks") }</FooterLink>
                     <FooterLink to={ user ? "/lobby" : "/register" }>{ t("nav.createRoom") }</FooterLink>
                     <FooterLink onClick={ openJoinModal }>{ t("footer.joinWithCode") }</FooterLink>
                 </div>
@@ -110,7 +106,7 @@ export const Footer = () => {
                     transform: showScrollUp ? "translateY(0)" : "translateY(12px)"
                 }}
                 onMouseEnter={ (e) => { e.currentTarget.style.transform = "translateY(-5px)"; }}
-                onMouseLeave={ (e) => { e.currentTarget.style.transform = showScrollUp ? "translateY(0)" : "translateY(12px)"; }}
+                onMouseLeave={ (e) => { e.currentTarget.style.transform = showScrollUp ? "translateY(0)" : "translateY(10px)"; }}
                 aria-label="Scroll Up"
             >
                 ↑

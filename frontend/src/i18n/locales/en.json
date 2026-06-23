@@ -143,7 +143,10 @@
     "cardSub": "No credit card, no ads. Just playing with your team.",
     "submit": "Create account",
     "passwordHint": "At least 8 characters, including one uppercase letter and one number.",
-    "freeNote": "Free forever · no credit card required"
+    "freeNote": "Free forever · no credit card required",
+    "accept": "I accept the",
+    "terms": "terms of use",
+    "and": "and the"
   },
   "features": {
     "1": "Save your rooms and reopen them in one click.",
