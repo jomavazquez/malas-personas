@@ -13,9 +13,11 @@ export const TopMenu = () => {
     return (
         <>
             <div className="hidden md:flex items-center gap-6" style={{ fontFamily: F.display, fontWeight: 600, fontSize: 16, color: C.subtle }}>
-                <UnderlineLink onClick={() => goToSection(navigate, "how")}>
-                    { t("nav.howItWorks") }
-                </UnderlineLink>
+                <div className="min-[768px]:hidden min-[901px]:block">
+                    <UnderlineLink onClick={() => goToSection(navigate, "how")}>
+                        { t("nav.howItWorks") }
+                    </UnderlineLink>
+                </div>
                 <UnderlineLink to={ user ? "/my-rooms" : "/login" }>
                     { t( user ? "nav.myRooms" : "nav.login") }
                 </UnderlineLink>

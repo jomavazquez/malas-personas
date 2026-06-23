@@ -23,7 +23,8 @@ export const TopMenuMyAccount = () => {
         <button className={ styles.logout } onClick={ handleLogout } title={ t("auth.logout") }>⏻</button>
       </div>
       {/* MOBILE */}
-      <div className="flex md:hidden items-center gap-3">
+      <div className="flex md:hidden items-center gap-10">
+        <UnderlineLink to={ user ? "/my-rooms" : "/login" }>{ t( user ? "nav.myRooms" : "nav.login") }</UnderlineLink>
         <LanguageSelector />
         <button className={ styles.logout } onClick={ handleLogout } title={ t("auth.logout") }>⏻</button>
       </div>

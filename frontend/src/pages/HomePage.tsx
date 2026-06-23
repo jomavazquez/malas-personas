@@ -130,8 +130,10 @@ export const HomePage = () => {
               <div className={ styles.step_title } style={{ color: C.base }}>{ t("how.step1.title") }</div>
               <div className={ styles.step_body } style={{ color: C.muted }}>{ t("how.step1.desc") }</div>
               <div style={{ background: C.base, borderRadius: 12, padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <span style={{ fontFamily: F.body, fontWeight: 800, fontSize: 12, letterSpacing: "0.05em", textTransform: "uppercase", color: C.accent }}>{ t("lobby.code") }</span>
-                <span style={{ fontFamily: F.display, fontWeight: 800, fontSize: 20, letterSpacing: "0.15em", color: "#fff" }}>9XK7Q2</span>
+                <div className="min-[768px]:hidden min-[950px]:block">
+                  <span className={ styles.step1_code_label } style={{ color: C.accent }}>{ t("lobby.code") }</span>
+                </div>
+                <span className={ styles.step1_code }>9XK7Q2</span>
               </div>
             </div>
             {/* Step 2 */}
@@ -142,8 +144,12 @@ export const HomePage = () => {
               <div className="flex gap-2">
                 <Avatar label="M" bgColor={ C.accent } textColor={ C.base } size={ 40 } />
                 <Avatar label="D" bgColor="#556987" textColor="#fff" size={ 40 } />
-                <Avatar label="A" bgColor="#194068" textColor="#fff" size={ 40 } />
-                <Avatar label="L" bgColor="#50545A" textColor="#fff" size={ 40 } />
+                <div className="min-[768px]:hidden min-[900px]:block">
+                  <Avatar label="A" bgColor="#194068" textColor="#fff" size={ 40 } />
+                </div>
+                <div className="min-[768px]:hidden min-[1024px]:block">
+                  <Avatar label="L" bgColor="#50545A" textColor="#fff" size={ 40 } />
+                </div>
                 <span className={ styles.avatar_plus } style={{ color: C.faint }}>+</span>
               </div>
             </div>

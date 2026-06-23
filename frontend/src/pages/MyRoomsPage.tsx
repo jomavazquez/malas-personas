@@ -54,8 +54,8 @@ export const MyRoomsPage = () => {
 
   return (
     <div style={{ background: C.surface, position: "relative" }}>
-      <nav className="flex items-center justify-between px-4 md:px-14 h-16 relative pt-6 md:pt-10" style={{ zIndex: 2 }}>
-        <div className="max-w-360 mx-auto w-full flex items-center justify-between">
+      <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 2 }}>
+        <div className="max-w-360 mx-auto w-full my-2 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
           <Logo />
           <TopMenuMyAccount />
         </div>
@@ -195,7 +195,6 @@ export const MyRoomsPage = () => {
           )}
         </div>
       </div>
-
       <Footer />
     </div>
   );
