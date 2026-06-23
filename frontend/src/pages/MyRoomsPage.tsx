@@ -10,41 +10,44 @@ import styles from "./MyRoomsPage.module.css";
 type Filter = "all" | "active" | "finished";
 
 export const MyRoomsPage = () => {
-
-  const { t, i18n } = useTranslation(); // asegúrate de tener i18n
+  const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const [ rooms, setRooms ] = useState<Room[]>([]);
   const [ loading, setLoading ] = useState(true);
-  const [ filter, setFilter ] = useState<Filter>("all");
+  const [ filter, setFilter ] = useState<Filter>("active");
   const [ search, setSearch ] = useState("");
   const [ copiedId, setCopiedId ] = useState<string | null>(null);
+  const [ deleteCode, setDeleteCode ] = useState<string | null>(null);
 
-  const handleDelete = async (code: string) => {
-    if (!confirm(t("myRooms.confirmDelete", "¿Seguro que quieres eliminar esta sala?"))) return;
-    try {
-      await api.post(`/rooms/${code}/close`, {});
-      setRooms((prev) => prev.filter((r) => r.code !== code));
-    } catch (err) {
-      console.error(err);
-    }
-  };
   const filterRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [ pillStyle, setPillStyle ] = useState({ left: 0, width: 0 });
-  const filters: Filter[] = ["all", "active", "finished"];
+  const filters: Filter[] = ["active", "finished", "all"];
 
   useLayoutEffect(() => {
     const idx = filters.indexOf(filter);
     const btn = filterRefs.current[idx];
-    if( btn ) setPillStyle({ left: btn.offsetLeft, width: btn.offsetWidth });
-  }, [filter, i18n.language]); 
+    if (btn) setPillStyle({ left: btn.offsetLeft, width: btn.offsetWidth });
+  }, [filter, i18n.language]);
 
   useEffect(() => {
     api.get<{ rooms: Room[] }>("/rooms/my").then((data) => {
       setRooms(data.rooms);
     }).finally(() => setLoading(false));
   }, []);
+
+  const handleDelete = async () => {
+    if (!deleteCode) return;
+    try {
+      await api.patch(`/rooms/${deleteCode}/close`, {});
+      setRooms((prev) => prev.filter((r) => r.code !== deleteCode));
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setDeleteCode(null);
+    }
+  };
 
   const filtered = rooms
     .filter((r) => {
@@ -62,12 +65,48 @@ export const MyRoomsPage = () => {
 
   return (
     <div style={{ background: C.surface, position: "relative" }}>
+
+      {/* Delete confirmation modal */}
+      {deleteCode && (
+        <div
+          className="fixed inset-0 flex items-center justify-center z-50 px-6"
+          style={{ background: "rgba(0,0,0,0.5)" }}
+          onClick={() => setDeleteCode(null)}
+        >
+          <div
+            style={{ background: "#fff", borderRadius: 20, padding: "32px", maxWidth: 360, width: "100%", boxShadow: "0 40px 80px -20px rgba(47,52,58,.5)" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 20, color: C.base, marginBottom: 10 }}>
+              {t("myRooms.deleteTitle", "Eliminar sala")}
+            </div>
+            <p style={{ fontFamily: F.body, fontSize: 14, color: C.muted, marginBottom: 24 }}>
+              {t("myRooms.deleteConfirm", "¿Seguro que quieres eliminar esta sala? Esta acción no se puede deshacer.")}
+            </p>
+            <div style={{ display: "flex", gap: 10 }}>
+              <button
+                onClick={() => setDeleteCode(null)}
+                style={{ flex: 1, borderRadius: 12, padding: "12px 0", fontFamily: F.display, fontWeight: 700, fontSize: 15, border: `1.5px solid ${C.border}`, background: "#fff", color: C.base, cursor: "pointer" }}
+              >
+                {t("myRooms.cancel", "Cancelar")}
+              </button>
+              <button
+                onClick={handleDelete}
+                style={{ flex: 1, borderRadius: 12, padding: "12px 0", fontFamily: F.display, fontWeight: 700, fontSize: 15, border: "none", background: "#DC2626", color: "#fff", cursor: "pointer" }}
+              >
+                {t("myRooms.delete", "Eliminar")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 2 }}>
-        <div className="max-w-360 mx-auto w-full my-2 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
+        <div className="max-w-360 mx-auto w-full flex items-center justify-between flex-col md:flex-row gap-4 md:gap-0">
           <Logo />
           <TopMenuMyAccount />
         </div>
       </nav>
+
       <div className="max-w-360 mx-auto px-4 md:px-14 2xl:px-0 py-6 md:py-16">
         <div className="flex items-start justify-between mb-6 flex-wrap gap-4">
           <div>
@@ -76,11 +115,7 @@ export const MyRoomsPage = () => {
               <strong>{ rooms.length }</strong> { t("myroom.saved") } · <strong>{ activeCount }</strong> { t("myroom.activeNow") }
             </p>
           </div>
-          <Button
-            bgColor={ C.accent }
-            textColor="#000"
-            onClick={() => navigate("/lobby")}
-          >
+          <Button bgColor={ C.accent } textColor="#000" onClick={() => navigate("/lobby")}>
             { t("nav.createRoom") } →
           </Button>
         </div>
@@ -118,7 +153,7 @@ export const MyRoomsPage = () => {
                   whiteSpace: "nowrap",
                 }}
               >
-                { t(`myroom.filter_${f}`, f === "all" ? "All" : f === "active" ? "Active" : "Finished") }
+                {t(`myRooms.filter_${f}`, f === "all" ? "Todas" : f === "active" ? "Activas" : "Finalizadas")}
               </button>
             ))}
           </div>
@@ -133,14 +168,13 @@ export const MyRoomsPage = () => {
           </div>
         </div>
 
-        {/* Table */}
-        <div style={{ background: "#fff", borderRadius: 20, border: `1px solid ${C.borderMid}`, overflow: "hidden" }}>
-
-          {/* Header row */}
+        {/* TABLE */}
+        <div className={ styles.table } style={{ border: `1.5px solid ${ C.borderMid }` }}>
+          {/* HEADER ROW */}
           <div className="hidden md:grid" style={{ gridTemplateColumns: "160px 1fr 140px 160px 200px", padding: "12px 24px", borderBottom: `1px solid ${C.border}` }}>
-            {["myRooms.col_code", "myRooms.col_room", "myRooms.col_players", "myRooms.col_lastGame", ""].map((k, i) => (
-              <div key={i} style={{ fontFamily: F.display, fontWeight: 700, fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", color: C.faint }}>
-                {k ? t(k, k.split("_")[1]) : ""}
+            {["lobby.code", "lobby.roomName", "room.players", "myroom.lastgame", ""].map((k, i) => (
+              <div key={ i } className={ styles.table_th } style={{ color: C.faint }}>
+                { k ? t(k, k.split("_")[1]) : "" }
               </div>
             ))}
           </div>
@@ -163,7 +197,7 @@ export const MyRoomsPage = () => {
                 {/* Code + copy */}
                 <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                   <div style={{ background: C.surface, borderRadius: 10, padding: "8px 12px", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-                    <span style={{ fontFamily: F.display, fontWeight: 800, fontSize: 14, letterSpacing: "0.1em", color: C.base }}>{room.code}</span>
+                    <span style={{ fontFamily: F.display, fontWeight: 800, fontSize: 14, letterSpacing: "0.1em", color: C.base }}>{ room.code }</span>
                   </div>
                   <button
                     onClick={() => {
@@ -179,15 +213,14 @@ export const MyRoomsPage = () => {
                 </div>
 
                 {/* Room info */}
-                <div style={{ paddingLeft: 0 }} className="md:pl-4">
+                <div className="md:pl-4">
                   <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                     <span style={{ fontFamily: F.display, fontWeight: 700, fontSize: 15, color: C.base }}>{room.name ?? room.code}</span>
-                    {room.isActive && (
+                    {room.isActive ? (
                       <span style={{ background: `color-mix(in srgb, ${C.accent} 15%, #fff)`, color: C.accentDeep, border: `1px solid color-mix(in srgb, ${C.accent} 40%, transparent)`, borderRadius: 999, padding: "2px 10px", fontFamily: F.display, fontWeight: 700, fontSize: 11 }}>
                         ● {t("myRooms.active", "ACTIVA")}
                       </span>
-                    )}
-                    {!room.isActive && (
+                    ) : (
                       <span style={{ background: C.surface, color: C.muted, border: `1px solid ${C.border}`, borderRadius: 999, padding: "2px 10px", fontFamily: F.display, fontWeight: 700, fontSize: 11 }}>
                         {t("myRooms.finished", "FINALIZADA")}
                       </span>
@@ -199,42 +232,37 @@ export const MyRoomsPage = () => {
                 </div>
 
                 {/* Players */}
-                <div style={{ fontFamily: F.body, fontSize: 14, color: C.muted }}>
-                  {room.maxPlayers} {t("myRooms.players", "jugadores")}
+                <div style={{ fontSize: 15, color: C.muted }}>
+                  { room.maxPlayers }{" "}{ t("room.players").toLowerCase() }
                 </div>
 
                 {/* Last game */}
-                <div style={{ fontFamily: F.body, fontSize: 14, color: C.muted }}>
+                <div style={{ fontSize: 15, color: C.muted }}>
                   {room.createdAt ? new Date(room.createdAt).toLocaleDateString("es-ES", { day: "numeric", month: "short" }) : "—"}
                 </div>
 
                 {/* Actions */}
-                <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
-                  {room.isActive ? (
+                <div className={ styles.table_actions }>
+                  {
+                    room.isActive && (
                     <>
-                      <button
+                      <Button
+                        size="sm"
+                        bgColor={C.accent}
+                        textColor="#000"
                         onClick={() => navigate(`/room/${room.code}`, { state: { guestId: user!.id, guestName: user!.username } })}
-                        style={{ background: C.accent, color: C.base, borderRadius: 10, padding: "9px 18px", fontFamily: F.display, fontWeight: 700, fontSize: 13, border: "none", cursor: "pointer" }}
+                        style={{ fontSize: 13 }}
                       >
-                        {t("myRooms.reopen", "Reabrir")}
+                        { t("myroom.reopen") }
+                      </Button>
+                      <button
+                        onClick={ () => setDeleteCode(room.code) }
+                        style={{ width: 34, height: 34, borderRadius: 10, border: `1.5px solid #FECACA`, background: "#FEF2F2", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 14, color: "#DC2626" }}
+                        title={t("myRooms.delete", "Eliminar sala")}
+                      >
+                        ✕
                       </button>
-
                     </>
-                  ) : (
-                    <button
-                      style={{ borderRadius: 10, padding: "9px 18px", fontFamily: F.display, fontWeight: 700, fontSize: 13, border: `1.5px solid ${C.border}`, background: "#fff", color: C.base, cursor: "pointer" }}
-                    >
-                      {t("myRooms.results", "Ver resultados")}
-                    </button>
-                  )}
-                  {room.isActive && (
-                    <button
-                      onClick={() => handleDelete(room.code)}
-                      style={{ width: 34, height: 34, borderRadius: 10, border: `1.5px solid #FECACA`, background: "#FEF2F2", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 14, color: "#DC2626" }}
-                      title={t("myRooms.delete", "Eliminar sala")}
-                    >
-                      ✕
-                    </button>
                   )}
                 </div>
               </div>

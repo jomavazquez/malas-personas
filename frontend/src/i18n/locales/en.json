@@ -156,6 +156,8 @@
     "activeNow": "active right now",
     "filter_all": "All",
     "filter_active": "Active",
-    "filter_finished": "Finished"
+    "filter_finished": "Finished",
+    "lastgame": "Last game",
+    "reopen": "Re-open"
   }
 }

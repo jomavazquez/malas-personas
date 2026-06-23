@@ -2,3 +2,23 @@
     font-size: 16px;
     margin-top: 10px
 }
+
+.table {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden
+}
+
+.table_th {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase
+}
+
+.table_actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end
+}

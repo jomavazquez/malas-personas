@@ -156,6 +156,8 @@
     "activeNow": "activas ahora mismo",
     "filter_all": "Todas",
     "filter_active": "Activas",
-    "filter_finished": "Finalizadas"
+    "filter_finished": "Finalizadas",
+    "lastgame": "Último juego",
+    "reopen": "Reabrir"
   }
 }
