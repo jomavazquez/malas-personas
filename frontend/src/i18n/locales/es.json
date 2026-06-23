@@ -168,6 +168,10 @@
     "search": "Buscar por nombre o código...",
     "deleteConfirm": "¿Estás seguro de que quieres eliminar esta sala? Esta acción no se puede deshacer.",
     "cancel": "Cancelar",
-    "delete": "Eliminar"
+    "delete": "Eliminar",
+    "forEveryone": "Pata todos",
+    "forEveryoneDesc": "Preguntas amables, aptas para cualquier público.",
+    "noFilter": "Sin filtros",
+    "noFilterDesc": "Más bestia. Para quien no se ofende fácilmente."
   }
 }

@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context";
 import { Badge, Button, Footer, Logo, TopMenuMyAccount } from "../components";
-import { api, C, F } from "../lib";
-import { getOrCreateGuestId } from "../lib/guest";
+import { api, C, getOrCreateGuestId } from "../lib";
 import type { Deck } from "../types";
 import styles from "./LobbyPage.module.css";
 
@@ -35,9 +34,10 @@ export const LobbyPage = () => {
       const filtered = data.decks.filter((d) => d.language === selectedLang);
       const list = filtered.length ? filtered : data.decks;
       setDecks(list);
-      if( list.length ) setSelectedDeck(list[0].id);
+      const noFilter = list.find((d) => d.name === "No Filter");
+      setSelectedDeck(noFilter?.id ?? list[0]?.id ?? "");
     });
-  }, [ selectedLang ]);
+  }, [selectedLang]);
 
   const handleCreate = async () => {
     if( !selectedDeck || !roomName.trim() ) return;
@@ -115,21 +115,40 @@ export const LobbyPage = () => {
                 ))}
               </div>
             </div>
-            {/* Deck chips */}
+            {/* Deck cards */}
             <div style={{ marginBottom: 25 }}>
               <label className="form_label">{ t("lobby.selectDeck") }</label>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
                 {
-                  decks.map((d) => (
-                  <button key={d.id} onClick={() => setSelectedDeck(d.id)} style={{
-                    borderRadius: 999, padding: "8px 16px", fontFamily: F.display, fontWeight: 600, fontSize: 14,
-                    border: `1.5px solid ${selectedDeck === d.id ? C.accent : C.border}`,
-                    background: selectedDeck === d.id ? `color-mix(in srgb, ${C.accent} 10%, #fff)` : "#fff",
-                    color: C.base, cursor: "pointer", transition: "all 0.15s",
-                  }}>
-                    {d.name}
-                  </button>
-                ))}
+                  decks.map((d) => {
+                    const isForAll = d.name === "All";
+                    const isSelected = selectedDeck === d.id;
+                    const label = isForAll ? t("myroom.forEveryone") : t("myroom.noFilter");
+                    const desc = isForAll ? t("myroom.forEveryoneDesc") : t("myroom.noFilterDesc");
+                    return (
+                      <button
+                        key={ d.id }
+                        onClick={() => setSelectedDeck(d.id)}
+                        className={ styles.card }
+                        style={{ border: `1.5px solid ${isSelected ? C.accent : C.border}`, background: isSelected ? `color-mix(in srgb, ${C.accent} 10%, #fff)` : "#fff" }}
+                      >
+                        <div className={ styles.card_container }>
+                          <span className={ styles.card_title } style={{ color: C.base }}>{ label }</span>
+                          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                            {
+                              !isForAll &&
+                              <span className={ `hidden! lg:inline ${ styles.card_icons } ${ styles.plusAge }` }>+18</span>
+                            }
+                            {
+                              isSelected &&
+                              <span className={ `${ styles.card_icons } ${ styles.selected }` } style={{ background: C.accent, color: C.base }}>✓</span>
+                            }
+                        </div>
+                      </div>
+                      <p className={ `hidden lg:inline ${ styles.card_desc }` } style={{ color: C.muted }}>{ desc }</p>
+                    </button>
+                  );
+                })}
               </div>
             </div>
             {/* PLAYERS + POINTS */}
@@ -195,11 +214,11 @@ export const LobbyPage = () => {
             {/* DIVIDER */}
             <div className={ styles.dividerContainer }>
               <div className={ styles.divider } />
-              <span style={{ fontSize: 13, color: "#9AA3AB" }}>{ t("lobby.invitedToRoom") }</span>
+              <span style={{ fontSize: 16, color: "#9AA3AB" }}>{ t("lobby.invitedToRoom") }</span>
               <div className={ styles.divider } />
             </div>
             <div style={{ marginBottom: 20 }}>
-              <label className="form_label" style={{ color: "#fff", marginBottom: 5 }}>{t("lobby.roomCode")}</label>
+              <label className="form_label" style={{ color: "#fff" }}>{t("lobby.roomCode")}</label>
               <input
                 className="input_code"
                 style={{ color: C.base }}

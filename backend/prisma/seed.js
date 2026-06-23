@@ -39,8 +39,10 @@ const seedDeck = async (deckData) => {
 
 const main = async () => {
   console.log("🌱 Starting seed...\n");
-  await seedDeck(loadDeck("deck-base-es.json"));
-  await seedDeck(loadDeck("deck-base-en.json"));
+  await seedDeck(loadDeck("deck-all-en.json"));
+  await seedDeck(loadDeck("deck-all-es.json"));
+  await seedDeck(loadDeck("deck-no-filter-en.json"));
+  await seedDeck(loadDeck("deck-no-filter-es.json"));  
   console.log("\n🎉 Seed complete");
 };
 

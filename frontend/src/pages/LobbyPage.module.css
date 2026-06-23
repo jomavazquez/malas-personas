@@ -44,3 +44,49 @@
     flex: 1;
     height: 1px
 }
+
+.card {
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 15px;
+    position: relative;
+    text-align: left;
+    transition: all 0.25s ease
+}
+
+.card_container {
+    align-items: center;
+    display: flex;
+    justify-content: space-between
+}
+
+.card_title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700
+}
+
+.card_icons {
+    align-items: center;
+    border-radius: 999px;
+    display: flex;
+    font-size: 12px;
+    font-weight: 800;
+    justify-content: center
+}
+
+.card_desc {
+    font-size: 14px;
+    margin: 10px 0 0 0
+}
+
+.plusAge {
+    background: #FEE2E2;
+    color: #DC2626;
+    padding: 1px 10px
+}
+
+.selected {
+    height: 20px;
+    width: 20px;
+}

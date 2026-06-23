@@ -168,6 +168,10 @@
     "search": "Search by name or code...",
     "deleteConfirm": "Are you sure you want to delete this room? This action cannot be undone.",
     "cancel": "Cancel",
-    "delete": "Delete"
+    "delete": "Delete",
+    "forEveryone": "For everyone",
+    "forEveryoneDesc": "Friendly questions suitable for all audiences.",
+    "noFilter": "No filters",
+    "noFilterDesc": "Wilder questions. For people who aren't easily offended."
   }
 }

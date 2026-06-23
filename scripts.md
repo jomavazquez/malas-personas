@@ -16,3 +16,7 @@ docker exec -it malas-personas-db psql -U malas -d malas_personas -c "SELECT * F
 # Truncate a table:
 
 docker exec -it malas-personas-db psql -U malas -d malas_personas -c "TRUNCATE rooms RESTART IDENTITY CASCADE;"
+
+# Seed the database 
+
+npm run db:seed
