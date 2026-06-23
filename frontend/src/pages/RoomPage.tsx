@@ -5,8 +5,8 @@ import { useAuth } from "../context";
 import { C, F } from "../lib";
 import { connectSocket } from "../lib/socket";
 import { getOrCreateGuestId } from "../lib/guest";
+import { Footer, Logo } from "../components";
 import type { Player, GameState } from "../types";
-import { Footer, Logo, TopMenu } from "../components";
 
 export const RoomPage = () => {
 

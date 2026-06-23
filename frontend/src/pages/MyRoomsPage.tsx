@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
@@ -10,7 +10,8 @@ import styles from "./MyRoomsPage.module.css";
 type Filter = "all" | "active" | "finished";
 
 export const MyRoomsPage = () => {
-  const { t } = useTranslation();
+
+  const { t, i18n } = useTranslation(); // asegúrate de tener i18n
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -18,6 +19,26 @@ export const MyRoomsPage = () => {
   const [ loading, setLoading ] = useState(true);
   const [ filter, setFilter ] = useState<Filter>("all");
   const [ search, setSearch ] = useState("");
+  const [ copiedId, setCopiedId ] = useState<string | null>(null);
+
+  const handleDelete = async (code: string) => {
+    if (!confirm(t("myRooms.confirmDelete", "¿Seguro que quieres eliminar esta sala?"))) return;
+    try {
+      await api.post(`/rooms/${code}/close`, {});
+      setRooms((prev) => prev.filter((r) => r.code !== code));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const filterRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const [ pillStyle, setPillStyle ] = useState({ left: 0, width: 0 });
+  const filters: Filter[] = ["all", "active", "finished"];
+
+  useLayoutEffect(() => {
+    const idx = filters.indexOf(filter);
+    const btn = filterRefs.current[idx];
+    if( btn ) setPillStyle({ left: btn.offsetLeft, width: btn.offsetWidth });
+  }, [filter, i18n.language]); 
 
   useEffect(() => {
     api.get<{ rooms: Room[] }>("/rooms/my").then((data) => {
@@ -38,19 +59,6 @@ export const MyRoomsPage = () => {
     });
 
   const activeCount = rooms.filter((r) => r.isActive).length;
-
-  const filterBtnStyle = (f: Filter): React.CSSProperties => ({
-    borderRadius: 999,
-    padding: "8px 18px",
-    fontFamily: F.display,
-    fontWeight: 600,
-    fontSize: 14,
-    border: "none",
-    cursor: "pointer",
-    background: filter === f ? C.base : "transparent",
-    color: filter === f ? "#fff" : C.muted,
-    transition: "all 0.15s",
-  });
 
   return (
     <div style={{ background: C.surface, position: "relative" }}>
@@ -79,10 +87,38 @@ export const MyRoomsPage = () => {
 
         {/* Filters + Search */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-          <div style={{ display: "flex", gap: 4, background: "#fff", borderRadius: 999, padding: 4, border: `1px solid ${C.border}` }}>
-            {(["all", "active", "finished"] as Filter[]).map((f) => (
-              <button key={f} style={filterBtnStyle(f)} onClick={() => setFilter(f)}>
-                {t(`myRooms.filter_${f}`, f === "all" ? "Todas" : f === "active" ? "Activas" : "Finalizadas")}
+          <div style={{ position: "relative", display: "flex", background: "#fff", borderRadius: 999, padding: 4, border: `1px solid ${C.border}` }}>
+            <div style={{
+              position: "absolute",
+              top: 4, bottom: 4,
+              left: pillStyle.left,
+              width: pillStyle.width,
+              borderRadius: 999,
+              background: C.base,
+              transition: "left 0.2s ease, width 0.2s ease",
+              pointerEvents: "none",
+            }} />
+            {filters.map((f, i) => (
+              <button
+                key={f}
+                ref={(el) => { filterRefs.current[i] = el; }}
+                onClick={() => setFilter(f)}
+                style={{
+                  position: "relative", zIndex: 1,
+                  borderRadius: 999,
+                  padding: "8px 18px",
+                  fontFamily: F.display,
+                  fontWeight: 600,
+                  fontSize: 14,
+                  border: "none",
+                  cursor: "pointer",
+                  background: "transparent",
+                  color: filter === f ? "#fff" : C.muted,
+                  transition: "color 0.2s ease",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                { t(`myroom.filter_${f}`, f === "all" ? "All" : f === "active" ? "Active" : "Finished") }
               </button>
             ))}
           </div>
@@ -101,7 +137,7 @@ export const MyRoomsPage = () => {
         <div style={{ background: "#fff", borderRadius: 20, border: `1px solid ${C.borderMid}`, overflow: "hidden" }}>
 
           {/* Header row */}
-          <div className="hidden md:grid" style={{ gridTemplateColumns: "120px 1fr 140px 160px 200px", padding: "12px 24px", borderBottom: `1px solid ${C.border}` }}>
+          <div className="hidden md:grid" style={{ gridTemplateColumns: "160px 1fr 140px 160px 200px", padding: "12px 24px", borderBottom: `1px solid ${C.border}` }}>
             {["myRooms.col_code", "myRooms.col_room", "myRooms.col_players", "myRooms.col_lastGame", ""].map((k, i) => (
               <div key={i} style={{ fontFamily: F.display, fontWeight: 700, fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", color: C.faint }}>
                 {k ? t(k, k.split("_")[1]) : ""}
@@ -121,12 +157,25 @@ export const MyRoomsPage = () => {
             filtered.map((room, i) => (
               <div
                 key={room.id}
-                className="grid grid-cols-1 md:grid-cols-[120px_1fr_140px_160px_200px] gap-2 md:gap-0 items-center"
+                className="grid grid-cols-1 md:grid-cols-[160px_1fr_140px_160px_200px] gap-2 md:gap-0 items-center"
                 style={{ padding: "16px 24px", borderBottom: i < filtered.length - 1 ? `1px solid ${C.borderMid}` : "none" }}
               >
-                {/* Code */}
-                <div style={{ background: C.surface, borderRadius: 10, padding: "8px 12px", display: "inline-flex", alignItems: "center", justifyContent: "center", width: "fit-content" }}>
-                  <span style={{ fontFamily: F.display, fontWeight: 800, fontSize: 14, letterSpacing: "0.1em", color: C.base }}>{room.code}</span>
+                {/* Code + copy */}
+                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <div style={{ background: C.surface, borderRadius: 10, padding: "8px 12px", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+                    <span style={{ fontFamily: F.display, fontWeight: 800, fontSize: 14, letterSpacing: "0.1em", color: C.base }}>{room.code}</span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(room.code);
+                      setCopiedId(room.id);
+                      setTimeout(() => setCopiedId(null), 2000);
+                    }}
+                    style={{ width: 28, height: 28, borderRadius: 8, border: `1.5px solid ${C.border}`, background: copiedId === room.id ? C.accent : "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 12, color: copiedId === room.id ? C.base : C.muted, transition: "all 0.15s" }}
+                    title={t("room.copyCode")}
+                  >
+                    {copiedId === room.id ? "✓" : "⧉"}
+                  </button>
                 </div>
 
                 {/* Room info */}
@@ -169,13 +218,7 @@ export const MyRoomsPage = () => {
                       >
                         {t("myRooms.reopen", "Reabrir")}
                       </button>
-                      <button
-                        onClick={() => { navigator.clipboard.writeText(room.code); }}
-                        style={{ width: 34, height: 34, borderRadius: 10, border: `1.5px solid ${C.border}`, background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 14, color: C.muted }}
-                        title={t("room.copyCode")}
-                      >
-                        ⧉
-                      </button>
+
                     </>
                   ) : (
                     <button
@@ -184,11 +227,15 @@ export const MyRoomsPage = () => {
                       {t("myRooms.results", "Ver resultados")}
                     </button>
                   )}
-                  <button
-                    style={{ width: 34, height: 34, borderRadius: 10, border: `1.5px solid ${C.border}`, background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 16, color: C.muted }}
-                  >
-                    ···
-                  </button>
+                  {room.isActive && (
+                    <button
+                      onClick={() => handleDelete(room.code)}
+                      style={{ width: 34, height: 34, borderRadius: 10, border: `1.5px solid #FECACA`, background: "#FEF2F2", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 14, color: "#DC2626" }}
+                      title={t("myRooms.delete", "Eliminar sala")}
+                    >
+                      ✕
+                    </button>
+                  )}
                 </div>
               </div>
             ))

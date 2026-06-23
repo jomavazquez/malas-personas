@@ -153,6 +153,9 @@
   },
   "myroom": {
     "saved": "saved rooms",
-    "activeNow": "active right now"
+    "activeNow": "active right now",
+    "filter_all": "All",
+    "filter_active": "Active",
+    "filter_finished": "Finished"
   }
 }
