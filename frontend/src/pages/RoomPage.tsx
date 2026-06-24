@@ -36,8 +36,28 @@ export const RoomPage = () => {
   // Si no hay identidad, mostrar formulario de nombre
   const needsName = !resolvedName;
 
+  const handleStart = () => {
+    const socket = connectSocket();
+    socket.emit("game:start", { roomCode: code }, (res: { error?: string }) => {
+      if (res.error) setError(res.error);
+    });
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(code ?? "");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleNameSubmit = () => {
+    if (!nameInput.trim()) return;
+    const id = getOrCreateGuestId();
+    setResolvedId(id);
+    setResolvedName(nameInput.trim());
+  };
+
   useEffect(() => {
-    if (!code || !resolvedId || !resolvedName) return;
+    if( !code || !resolvedId || !resolvedName ) return;
     const socket = connectSocket();
 
     socket.emit("room:join", { roomCode: code, userId: resolvedId, username: resolvedName, isGuest }, (res: { error?: string; state?: GameState }) => {
@@ -62,27 +82,14 @@ export const RoomPage = () => {
       socket.off("room:playerLeft");
       socket.off("game:started");
     };
-  }, [code, resolvedId, resolvedName, isGuest, navigate]);
+  }, [ code, resolvedId, resolvedName, isGuest, navigate ]);
 
-  const handleStart = () => {
-    const socket = connectSocket();
-    socket.emit("game:start", { roomCode: code }, (res: { error?: string }) => {
-      if (res.error) setError(res.error);
-    });
-  };
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(code ?? "");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handleNameSubmit = () => {
-    if (!nameInput.trim()) return;
-    const id = getOrCreateGuestId();
-    setResolvedId(id);
-    setResolvedName(nameInput.trim());
-  };
+  useEffect(() => {
+    setError("");
+    setPlayers([]);
+    setHostId(null);
+    setConnected(false);
+  }, [ code ]);  
 
   if( needsName ){
     return (
@@ -123,10 +130,8 @@ export const RoomPage = () => {
     );
   }
 
-  if( error ){
-    return <RoomNotFound code={ code } error={ error } />;
-  }
-
+  if( error ) return <RoomNotFound code={ code } error={ error } />;
+  
   return (
     <div style={{ background: C.surface, position: "relative" }}>
       <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 10 }}>
