@@ -40,3 +40,25 @@
     margin-bottom: 20px;
     text-align: center
 }
+
+.code_container {
+    display: flex;
+    gap: 20px;
+    justify-content: center
+}
+
+.code {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 60px;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    line-height: 1em
+}
+
+.btn {
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 15px
+}

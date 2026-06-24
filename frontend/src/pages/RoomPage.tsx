@@ -3,7 +3,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
 import { C, F, getOrCreateGuestId, connectSocket } from "../lib";
-import { Footer, Logo, TopMenu, TopMenuMyAccount, RoomNotFound, Avatar } from "../components";
+import { Footer, Logo, TopMenu, TopMenuMyAccount, RoomNotFound, Avatar, Button } from "../components";
 import type { Player, GameState } from "../types";
 import styles from "./RoomPage.module.css";
 
@@ -136,30 +136,30 @@ export const RoomPage = () => {
   return (
     <div style={{ background: C.surface, position: "relative" }}>
       <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 10 }}>
-        <div className="max-w-360 mx-auto w-full flex items-center justify-between">
+        <div className="max-w-360 mx-auto w-full flex items-center justify-between flex-col md:flex-row gap-4 md:gap-0">
           <Logo />
           {
             isGuest ? <TopMenu /> : <TopMenuMyAccount />
           }
         </div>
       </nav>
-      <div style={{ maxWidth: 1340, margin: "0 auto", padding: 50 }}>
-        <div style={{ 
-          maxWidth: 480, margin: "0 auto" }}>
-
-          {/* Code */}
-          <div style={{ textAlign: "center", marginBottom: 40 }}>
-            <div style={{ fontFamily: F.display, fontWeight: 700, fontSize: 12, letterSpacing: "0.09em", textTransform: "uppercase", color: C.muted, marginBottom: 12 }}>
-              {t("room.shareCode")}
-            </div>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16 }}>
-              <span style={{ fontFamily: F.display, fontWeight: 800, fontSize: 64, letterSpacing: "0.08em", color: C.base, lineHeight: 1 }}>{code}</span>
-              <button onClick={handleCopy} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 10, padding: "8px 16px", fontFamily: F.display, fontWeight: 600, fontSize: 13, color: C.muted, cursor: "pointer" }}>
-                {copied ? t("room.copied") : t("room.copyCode")}
+      <div className="max-w-360 mx-auto px-4 md:px-14 2xl:px-0 py-6 md:py-16">
+        <div className="mx-auto" style={{ maxWidth: 480 }}>
+          <div style={{ textAlign: "center", marginBottom: 25 }}>
+            <div className={ styles.players_th } style={{ fontSize: 12, color: C.muted }}>{ t("room.shareCode") }</div>
+            <div className={ styles.code_container }>
+              <span className={ styles.code } style={{ color: C.base }}>{ code }</span>
+              <button 
+                onClick={ handleCopy } 
+                className={ styles.btn }
+                style={{ background: C.surface, border: `1.5px solid ${C.border}`, color: C.muted }}
+              >
+                {
+                  copied ? t("room.copied") : t("room.copyCode")
+                }
               </button>
             </div>
           </div>
-
           <div className={ styles.players_box } style={{ border: `1.5px solid ${ C.borderMid }`}}>
             <div className={ styles.players_th } style={{ color: C.faint }}>{ t("room.players") }{" "}({ players.length })</div>
             <div className={ styles.players_container }>
@@ -199,9 +199,15 @@ export const RoomPage = () => {
                   !canStart && 
                   <p className={ styles.p } style={{ color: C.muted }}>{ t("room.minPlayers") }</p>
                 }
-                <button onClick={handleStart} disabled={!canStart || !connected} style={{ width: "100%", background: !canStart || !connected ? "#ccc" : C.accent, color: C.base, borderRadius: 14, padding: "18px 0", fontFamily: F.display, fontWeight: 700, fontSize: 16, border: "none", cursor: !canStart || !connected ? "not-allowed" : "pointer", boxShadow: canStart ? `0 16px 30px -14px color-mix(in srgb, ${C.accent} 60%, transparent)` : "none" }}>
-                  {t("room.start")}
-                </button>
+                <Button 
+                  onClick={ handleStart } 
+                  disabled={ !canStart || !connected } 
+                  bgColor={ !canStart || !connected ? "#ccc" : C.accent }
+                  textColor="#000"
+                  style={{ boxShadow: canStart ? `0 16px 30px -14px color-mix(in srgb, ${C.accent} 60%, transparent)` : "none", cursor: !canStart || !connected ? "not-allowed" : "pointer", width: "100%" }}
+                >
+                  { t("room.start") }
+                </Button>
               </div>
             : <p className={ styles.p } style={{ color: C.muted, marginBottom: 0 }}>{ t("room.waiting") }</p>
           }
