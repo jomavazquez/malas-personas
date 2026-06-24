@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useJoinModal } from "../../context";
 import { Badge, Button, Footer, Logo, TopMenu, UnderlineLink } from "../../components";
 import { C, F } from "../../lib";
 import styles from "./RoomNotFound.module.css";
@@ -13,6 +14,7 @@ export const RoomNotFound = ({ code, error }: RoomNotFoundProps) => {
     
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const { openJoinModal } = useJoinModal();
 
     const isNotFound = error.includes("encontrada") || error.includes("not found") || error.includes("inactiva") || error.includes("inactive");
 
@@ -40,7 +42,7 @@ export const RoomNotFound = ({ code, error }: RoomNotFoundProps) => {
                 }
                 <div className={ styles.actions }>
                     <Button onClick={ () => navigate("/lobby") }>{ t("cta.button") }</Button>
-                    <UnderlineLink onClick={() => navigate("/")}>{ t("nav.home") }</UnderlineLink>
+                    <UnderlineLink onClick={ openJoinModal }>{ t("room.tryAgain") }</UnderlineLink>
                 </div>
             </div>
             <Footer />

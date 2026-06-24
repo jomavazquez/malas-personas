@@ -3,8 +3,7 @@
     "howItWorks": "How it works",
     "login": "Log in",
     "createRoom": "Create room",
-    "myRooms": "My rooms",
-    "home": "Go to Home"
+    "myRooms": "My rooms"
   },
   "auth": {
     "email": "Email",
@@ -61,7 +60,8 @@
     "copied": "Copied!",
     "you": "You",
     "host": "Host",
-    "judge": "Judge"
+    "judge": "Judge",
+    "tryAgain": "Try again with a new code!"
   },
   "game": {
     "judge": "Judge this round",
