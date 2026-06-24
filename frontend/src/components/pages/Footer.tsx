@@ -77,6 +77,10 @@ export const Footer = () => {
                         <div className={ styles.column_label }>{ t("footer.product") }</div>
                         <FooterLink onClick={ () => goToSection(navigate, "how") }>{ t("nav.howItWorks") }</FooterLink>
                         <FooterLink to={ user ? "/lobby" : "/register" }>{ t("nav.createRoom") }</FooterLink>
+                        {
+                            user &&
+                            <FooterLink to="/my-rooms">{ t("nav.myRooms") }</FooterLink>
+                        }
                         <FooterLink onClick={ openJoinModal }>{ t("footer.joinWithCode") }</FooterLink>
                     </div>
                     <div>
