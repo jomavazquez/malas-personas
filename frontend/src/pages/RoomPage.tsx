@@ -2,10 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
-import { C, F } from "../lib";
-import { connectSocket } from "../lib/socket";
-import { getOrCreateGuestId } from "../lib/guest";
-import { Footer, Logo } from "../components";
+import { C, F, getOrCreateGuestId, connectSocket } from "../lib";
+import { Footer, Logo, TopMenu, TopMenuMyAccount } from "../components";
 import type { Player, GameState } from "../types";
 
 export const RoomPage = () => {
@@ -88,7 +86,13 @@ export const RoomPage = () => {
 
   if( needsName ){
     return (
-      <div style={{ minHeight: "100vh", background: C.bg, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: F.body, padding: "0 24px" }}>
+      <div style={{ background: C.surface, position: "relative" }}>
+        <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 10 }}>
+          <div className="max-w-360 mx-auto w-full flex items-center justify-between">
+            <Logo />
+            <TopMenu />
+          </div>
+        </nav>        
         <div style={{ background: "#fff", borderRadius: 24, padding: "38px 36px", width: "100%", maxWidth: 360, boxShadow: "0 30px 60px -34px rgba(47,52,58,.4)" }}>
           <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 22, letterSpacing: "-0.03em", color: C.base, marginBottom: 8 }}>
             ¿Cómo te llaman?
@@ -114,6 +118,7 @@ export const RoomPage = () => {
             Entrar a la sala
           </button>
         </div>
+        <Footer />
       </div>
     );
   }
@@ -129,15 +134,13 @@ export const RoomPage = () => {
 
   return (
     <div style={{ background: C.surface, position: "relative" }}>
-      <nav className="flex items-center justify-between px-4 md:px-14 h-16 relative pt-6 md:pt-10" style={{ zIndex: 2 }}>
+      <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 10 }}>
         <div className="max-w-360 mx-auto w-full flex items-center justify-between">
           <Logo />
           {
-            !isGuest && (
-            <button onClick={() => navigate("/lobby")} style={{ background: "none", border: "none", fontFamily: F.display, fontWeight: 600, fontSize: 14, color: C.muted, cursor: "pointer" }}>
-              ← Lobby
-            </button>
-          )}
+            !isGuest && 
+            <TopMenuMyAccount />
+          }
         </div>
       </nav>
       <div style={{ maxWidth: 1340, margin: "0 auto", padding: "52px 44px" }}>
@@ -178,7 +181,8 @@ export const RoomPage = () => {
             </div>
           </div>
 
-          {isHost ? (
+          {
+            isHost ? (
             <div>
               {!canStart && <p style={{ textAlign: "center", fontFamily: F.body, fontSize: 14, color: C.muted, marginBottom: 12 }}>{t("room.minPlayers")}</p>}
               <button onClick={handleStart} disabled={!canStart || !connected} style={{ width: "100%", background: !canStart || !connected ? "#ccc" : C.accent, color: C.base, borderRadius: 14, padding: "18px 0", fontFamily: F.display, fontWeight: 700, fontSize: 16, border: "none", cursor: !canStart || !connected ? "not-allowed" : "pointer", boxShadow: canStart ? `0 16px 30px -14px color-mix(in srgb, ${C.accent} 60%, transparent)` : "none" }}>
