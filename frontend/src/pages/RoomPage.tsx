@@ -3,7 +3,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
 import { C, F, getOrCreateGuestId, connectSocket } from "../lib";
-import { Footer, Logo, TopMenu, TopMenuMyAccount } from "../components";
+import { Footer, Logo, TopMenu, TopMenuMyAccount, RoomNotFound } from "../components";
 import type { Player, GameState } from "../types";
 
 export const RoomPage = () => {
@@ -123,13 +123,8 @@ export const RoomPage = () => {
     );
   }
 
-  if (error) {
-    return (
-      <div style={{ minHeight: "100vh", background: C.bg, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 16, fontFamily: F.body }}>
-        <p style={{ color: "#E5534B" }}>{error}</p>
-        <button onClick={() => navigate("/")} style={{ background: C.base, color: "#fff", borderRadius: 12, padding: "12px 24px", fontFamily: F.display, fontWeight: 700, border: "none", cursor: "pointer" }}>← Volver</button>
-      </div>
-    );
+  if( error ){
+    return <RoomNotFound code={ code } error={ error } />;
   }
 
   return (

@@ -1,4 +1,5 @@
 export * from "./pages/Footer";
+export * from "./pages/RoomNotFound";
 export * from "./pages/TopMenu";
 export * from "./pages/TopMenuMyAccount";
 export * from "./ui/buttons/Button";

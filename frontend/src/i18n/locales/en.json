@@ -3,7 +3,8 @@
     "howItWorks": "How it works",
     "login": "Log in",
     "createRoom": "Create room",
-    "myRooms": "My rooms"
+    "myRooms": "My rooms",
+    "home": "Go to Home"
   },
   "auth": {
     "email": "Email",
@@ -101,14 +102,19 @@
     "sub": "Free, no downloads required. Create a room and share the code."
   },
   "errors": {
-    "roomNotFound": "Room not found",
+    "ERROR": "Error",
     "roomFull": "Room is full",
     "generic": "Something went wrong. Please try again.",
     "INVALID_CREDENTIALS": "Invalid email or password",
     "ACCEPT_TERMS": "You must agree to the Terms and Conditions",
     "INVALID_DATA": "Invalid data or the user already exists",
     "EMAIL_IN_USE": "Email already in use",
-    "DUPLICATE_PLAYER": "A player with that name is already in the game from this network"
+    "DUPLICATE_PLAYER": "A player with that name is already in the game from this network",
+    "ROOM_NOT_FOUND": "Room not found",
+    "notFoundTitle": "There is no room with this code.",
+    "theCode": "The code",
+    "theCode2": "does not exist or has been entered incorrectly. Please check it with the person who invited you and try again.",
+    "theCodeSub": "6 characters · no spaces."
   },
   "footer": {
     "product": "Product",

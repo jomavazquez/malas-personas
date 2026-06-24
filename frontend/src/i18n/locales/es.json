@@ -3,7 +3,8 @@
     "howItWorks": "Cómo funciona",
     "login": "Iniciar sesión",
     "createRoom": "Crear sala",
-    "myRooms": "Mis salas"
+    "myRooms": "Mis salas",
+    "home": "Volver al inicio"
   },
   "auth": {
     "email": "Email",
@@ -101,14 +102,19 @@
     "sub": "Gratis, sin descargas. Crea la sala y comparte el código."
   },
   "errors": {
-    "roomNotFound": "Sala no encontrada",
+    "ERROR": "Error",
     "roomFull": "La sala está llena",
     "generic": "Algo ha salido mal. Inténtalo de nuevo.",
     "INVALID_CREDENTIALS": "Email o contraseña incorrectos",
     "ACCEPT_TERMS": "Debes aceptar los términos y condiciones",
     "INVALID_DATA": "Datos incorrectos o el usuario ya existe",
     "EMAIL_IN_USE": "Este email ya se está usando",
-    "DUPLICATE_PLAYER": "Ya hay un jugador con ese nombre desde esta red"
+    "DUPLICATE_PLAYER": "Ya hay un jugador con ese nombre desde esta red",
+    "ROOM_NOT_FOUND": "Sala no encontrada",
+    "notFoundTitle": "No hay ninguna sala con ese código.",
+    "theCode": "El código",
+    "theCode2": "no existe o está mal escrito. Revísalo con quien te invitó y vuelve a intentarlo.",
+    "theCodeSub": "Son 6 caracteres · sin espacios."
   },
   "footer": {
     "product": "Producto",
