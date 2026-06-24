@@ -33,7 +33,7 @@ const AppInner = () => {
         <Route path="/lobby" element={ <ProtectedRoute><LobbyPage /></ProtectedRoute> } />
         <Route path="/room/:code" element={ <RoomPage /> } />
         <Route path="/my-rooms" element={ <ProtectedRoute><MyRoomsPage /></ProtectedRoute> } />
-        <Route path="/game/:code" element={ <ProtectedRoute><GamePage /></ProtectedRoute> } />
+        <Route path="/game/:code" element={ <GamePage /> } />
         <Route path="/legal-notice" element={ <LegalPage doc="legal-notice" /> } />
         <Route path="/privacy-policy" element={ <LegalPage doc="privacy-policy" /> } />
         <Route path="/cookies-policy" element={ <LegalPage doc="cookies-policy" /> } />

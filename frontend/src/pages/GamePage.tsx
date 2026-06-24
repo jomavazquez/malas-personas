@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
 import { connectSocket } from "../lib/socket";
@@ -11,6 +11,12 @@ export const GamePage = () => {
   const { user } = useAuth();
   const { code } = useParams<{ code: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const guestId: string | undefined = location.state?.guestId;
+  const guestName: string | undefined = location.state?.guestName;
+  const myId = user?.id ?? guestId ?? "";
+  const myName = user?.username ?? guestName ?? "";
 
   const [gameState, setGameState] = useState<GameState | null>(null);
   const [hand, setHand] = useState<Card[]>([]);
@@ -21,13 +27,13 @@ export const GamePage = () => {
   const [gameOver, setGameOver] = useState<{ userId: string; username: string; score: number } | null>(null);
   const [playedCount, setPlayedCount] = useState(0);
 
-  const isJudge = gameState?.judge?.userId === user?.id;
+  const isJudge = gameState?.judge?.userId === myId;
 
   useEffect(() => {
-    if (!user || !code) return;
+    if (!code || !myId || !myName) return;
     const socket = connectSocket();
 
-    socket.emit("room:join", { roomCode: code, userId: user.id, username: user.username, isGuest: false }, (res: { error?: string; state?: GameState }) => {
+    socket.emit("room:join", { roomCode: code, userId: myId, username: myName, isGuest: !user }, (res: { error?: string; state?: GameState }) => {
       if (res.error) { navigate("/"); return; }
       setGameState(res.state!);
       setHand(res.state!.hand ?? []);
@@ -67,7 +73,7 @@ export const GamePage = () => {
       socket.off("game:over");
       socket.off("room:playerLeft");
     };
-  }, [user, code, navigate]);
+  }, [myId, myName, code, navigate]);
 
   const handlePlayCard = (cardId: string) => {
     if (hasPlayed || isJudge) return;
@@ -115,7 +121,7 @@ export const GamePage = () => {
         <div style={{ display: "flex", gap: 28 }}>
           {gameState.players.map((p) => (
             <div key={p.userId} style={{ textAlign: "center" }}>
-              <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 22, letterSpacing: "-0.03em", color: p.userId === user?.id ? C.accent : "#fff" }}>{p.score}</div>
+              <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 22, letterSpacing: "-0.03em", color: p.userId === myId ? C.accent : "#fff" }}>{p.score}</div>
               <div style={{ fontFamily: F.body, fontSize: 11, color: C.faint }}>{p.username}{p.isJudge ? " ⚖️" : ""}</div>
             </div>
           ))}
