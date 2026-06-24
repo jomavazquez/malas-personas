@@ -168,6 +168,7 @@
     "loading": "Cargando ...",
     "empty": "No hay salas que mostrar.",
     "room": "Sala",
+    "points": "Puntos",
     "search": "Buscar por nombre o código...",
     "deleteConfirm": "¿Estás seguro de que quieres eliminar esta sala? Esta acción no se puede deshacer.",
     "cancel": "Cancelar",

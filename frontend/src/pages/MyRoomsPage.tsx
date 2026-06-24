@@ -103,10 +103,9 @@ export const MyRoomsPage = () => {
           </Button>
         </div>
         {/* FILTERS */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <div className="flex flex-wrap items-center justify-center md:justify-between gap-4 mb-6">
           <div className={ styles.filter } style={{ border: `1px solid ${C.border}` }}>
-            <div className={ styles.filter_active } 
-            style={{ left: pillStyle.left, width: pillStyle.width, background: C.base }} />
+            <div className={ styles.filter_active } style={{ left: pillStyle.left, width: pillStyle.width, background: C.base }} />
             {
               filters.map((f, i) => (
                 <button
@@ -121,7 +120,7 @@ export const MyRoomsPage = () => {
               ))
             }
           </div>
-          <div style={{ position: "relative" }}>
+          <div className="w-full md:w-68.75" style={{ position: "relative" }}>
             <span className={ styles.search_icon } style={{ color: C.faint }}>⌕</span>
             <input
               className={`input ${ styles.search }`}
@@ -136,14 +135,20 @@ export const MyRoomsPage = () => {
         <div className={ styles.table } style={{ border: `1.5px solid ${ C.borderMid }` }}>
           {/* HEADER ROW */}
           <div 
-            className="hidden md:grid xl:grid-cols-[160px_1fr_200px_200px_180px] lg:grid-cols-[160px_1fr_140px_120px_180px] md:grid-cols-[120px_1fr_100px_80px_125px]" 
+            className="hidden md:grid xl:grid-cols-[160px_1fr_200px_200px_60px_180px] lg:grid-cols-[160px_1fr_140px_150px_60px_180px] md:grid-cols-[120px_1fr_100px_120px_60px_125px]" 
             style={{ borderBottom: `1.5px solid ${C.border}`, padding: "10px 20px" }}
           >
-            {["lobby.code", "myroom.room", "room.players", "myroom.lastgame", ""].map((k, i) => (
-              <div key={ i } className={ styles.table_th } style={{ color: C.faint }}>
-                { k ? t(k, k.split("_")[1]) : "" }
-              </div>
-            ))}
+            {
+              ["lobby.code", "myroom.room", "room.players", "myroom.lastgame", "myroom.points", ""].map((k, i) => (
+                <div
+                  key={ i }
+                  className={ `${styles.table_th} ${i >= 2 && i <= 4 ? "text-center" : ""}` }
+                  style={{ color: C.faint }}
+                >
+                  { k ? t(k, k.split("_")[1]) : "" }
+                </div>
+              ))
+            }
           </div>
           {
             loading 
@@ -153,11 +158,11 @@ export const MyRoomsPage = () => {
               : filtered.map((room, i) => (
                 <div 
                   key={ room.id }
-                  className="grid grid-cols-1 xl:grid-cols-[160px_1fr_200px_200px_180px] lg:grid-cols-[160px_1fr_140px_120px_180px] md:grid-cols-[120px_1fr_100px_80px_125px] gap-2 md:gap-0 items-center"
+                  className="grid grid-cols-1 xl:grid-cols-[160px_1fr_200px_200px_60px_180px] lg:grid-cols-[160px_1fr_140px_150px_60px_180px] md:grid-cols-[120px_1fr_100px_120px_60px_125px] gap-2 md:gap-0 items-center"
                   style={{ padding: "10px 20px", borderBottom: i < filtered.length - 1 ? `1.5px solid ${C.borderMid}` : "none" }}
                 >
                   {/* CODE + COPY */}
-                  <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                  <div className="justify-center md:justify-start" style={{ display: "flex", alignItems: "center", gap: 5 }}>
                     <div className={ styles.code_container } style={{ background: C.surface }}>
                       <span className={ styles.code } style={{ color: C.base }}>{ room.code }</span>
                     </div>
@@ -179,40 +184,45 @@ export const MyRoomsPage = () => {
                   </div>
                   {/* ROOM INFO */}
                   <div>
-                    <div className={ styles.room_info }>
+                    <div className={`${styles.room_info} justify-center md:justify-start`}>
                       <span className={ styles.room_name } style={{ color: C.base }}>{ room.name ?? room.code }</span>
                       <Badge marginBottom={ 0 } dot={ room.isActive } color={ room.isActive ? undefined : C.muted }>{ t(room.isActive ? "myroom.active" : "myroom.finished") }</Badge>
                     </div>
-                    <div style={{ color: C.faint, fontSize: 14, marginTop: 2 }}>
+                    <div className="text-center md:text-left mt-0.5 md:mt-2.5" style={{ color: C.faint, fontSize: 14 }}>
                       { room.deck?.language === "ES" ? "Español" : "English"} · { room.deck?.name === "All" ? t("myroom.forEveryone") : t("myroom.noFilter") }
                     </div>
                   </div>
-                  <div style={{ fontSize: 15, color: C.muted }}>{ room.maxPlayers }<span className="inline md:hidden"> {t("room.players")}</span></div>
-                  <div style={{ fontSize: 15, color: C.muted }}>{ room.createdAt ? new Date(room.createdAt).toLocaleDateString(i18n.language, { day: "numeric", month: "long" }) : "—" }</div>
-                  <div className={ styles.table_actions }>
-                    {
-                      room.isActive && (
-                      <>
-                        <Button
-                          bgColor={ C.accent }
-                          textColor="#000"
-                          onClick={() => navigate(`/room/${room.code}`, { state: { guestId: user!.id, guestName: user!.username } })}
-                          style={{ fontSize: 13, height: 35, padding: "10px" }}
-                        >
-                          { t("myroom.reopen") }
-                        </Button>
-                        <button
-                          onClick={ () => setDeleteCode(room.code) }
-                          className="btn_red"
-                          style={{ borderRadius: 12, fontSize: 14 }}
-                          title={ t("myroom.close") }
-                        >
-                          ✕
-                        </button>
-                      </>
-                      )
-                    }
+                  <div className="text-center" style={{ fontSize: 15, color: C.muted }}>
+                    { room.maxPlayers }<span className="inline md:hidden">{" "}{ t("room.players") }</span>
                   </div>
+                  <div className="text-center" style={{ fontSize: 15, color: C.muted }}>
+                    { room.createdAt ? new Date(room.createdAt).toLocaleDateString(i18n.language, { day: "numeric", month: "long" }) : "—" }
+                  </div>
+                  <div className="text-center" style={{ fontSize: 15, color: C.muted }}>
+                    { room.pointsToWin }<span className="inline md:hidden">{" "}{ t("myroom.points") }</span>
+                  </div>
+                  {
+                    room.isActive && (
+                    <div className={ styles.table_actions }>
+                      <Button
+                        bgColor={ C.accent }
+                        textColor="#000"
+                        onClick={() => navigate(`/room/${room.code}`, { state: { guestId: user!.id, guestName: user!.username } })}
+                        style={{ fontSize: 13, height: 35, padding: "10px", marginRight: 10 }}
+                      >
+                        { t("myroom.reopen") }
+                      </Button>
+                      <button
+                        onClick={ () => setDeleteCode(room.code) }
+                        className="btn_red"
+                        style={{ borderRadius: 12, fontSize: 14 }}
+                        title={ t("myroom.close") }
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    )
+                  }
                 </div>
               ))
             }
