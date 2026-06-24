@@ -35,8 +35,12 @@ export const registerGameHandlers = (io, socket) => {
         return callback({ error: "La partida ha terminado" });
       }
 
+      // Determina isGuest en el backend consultando la BD
+      const userRecord = await prisma.user.findUnique({ where: { id: userId }, select: { id: true } }).catch(() => null);
+      const resolvedIsGuest = !userRecord;
+
       const { session: updated, player, isReconnect } = addPlayer(session, {
-        socketId: socket.id, userId, username, isGuest,
+        socketId: socket.id, userId, username, isGuest: resolvedIsGuest,
       });
 
       socketMeta.set(socket.id, { roomCode: code, userId, username });

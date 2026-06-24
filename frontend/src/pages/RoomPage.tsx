@@ -27,20 +27,32 @@ export const RoomPage = () => {
   const [ copied, setCopied ] = useState(false);
   const [ error, setError ] = useState("");
   const [ connected, setConnected ] = useState(false);
-  const [ nameInput, setNameInput ] = useState("");
+  const [ nameInput, setNameInput ] = useState(user?.username ?? "");
+  const [ confirmed, setConfirmed ] = useState(!!guestName || !!user);
   const [ resolvedName, setResolvedName ] = useState(myName);
   const [ resolvedId, setResolvedId ] = useState(myId);
+  const [ isGuestResolved, setIsGuestResolved ] = useState(!user && !!guestId);
+
+  // Si el usuario carga después del primer render, actualiza resolvedName/resolvedId
+  useEffect(() => {
+    if (user?.username) {
+      setResolvedName(user.username);
+      setResolvedId(user.id);
+      setNameInput(user.username);
+      setIsGuestResolved(false);
+    }
+  }, [user?.username]);
 
   const isHost = resolvedId === hostId;
   const canStart = players.length >= 2;
 
-  // Si no hay identidad, mostrar formulario de nombre
-  const needsName = !resolvedName;
+  // Mostrar formulario hasta que el usuario confirme explícitamente
+  const needsName = !confirmed;
 
   const handleStart = () => {
     const socket = connectSocket();
     socket.emit("game:start", { roomCode: code }, (res: { error?: string }) => {
-      if (res.error) setError(res.error);
+      if( res.error ) setError(res.error);
     });
   };
 
@@ -52,19 +64,28 @@ export const RoomPage = () => {
 
   const handleNameSubmit = () => {
     if (!nameInput.trim()) return;
-    const id = getOrCreateGuestId();
+    const id = user ? user.id : getOrCreateGuestId();
     setResolvedId(id);
     setResolvedName(nameInput.trim());
+    setConfirmed(true);
   };
+
+  useEffect(() => {
+    setError("");
+    setPlayers([]);
+    setHostId(null);
+    setConnected(false);
+  }, [code]);
 
   useEffect(() => {
     if( !code || !resolvedId || !resolvedName ) return;
     const socket = connectSocket();
 
-    socket.emit("room:join", { roomCode: code, userId: resolvedId, username: resolvedName, isGuest }, (res: { error?: string; state?: GameState }) => {
+    socket.emit("room:join", { roomCode: code, userId: resolvedId, username: resolvedName, isGuest: isGuestResolved }, (res: { error?: string; state?: GameState }) => {
       if (res.error) { setError(res.error); return; }
       setConnected(true);
-      setHostId(res.state!.players[0]?.userId ?? null);
+      console.log("state received:", res.state?.hostId, "myId:", resolvedId);
+      setHostId(res.state!.hostId ?? null);
       setPlayers(res.state!.players);
     });
 
@@ -85,12 +106,7 @@ export const RoomPage = () => {
     };
   }, [ code, resolvedId, resolvedName, isGuest, navigate ]);
 
-  useEffect(() => {
-    setError("");
-    setPlayers([]);
-    setHostId(null);
-    setConnected(false);
-  }, [ code ]);  
+
 
   if( needsName ){
     return (
@@ -116,6 +132,7 @@ export const RoomPage = () => {
                 onChange={ (e) => setNameInput(e.target.value) }
                 maxLength={ 20 }
                 autoFocus
+                readOnly={ !!user }
                 onKeyDown={ (e) => e.key === "Enter" && handleNameSubmit() }
               />
               <Button
@@ -182,7 +199,7 @@ export const RoomPage = () => {
                       <span className={ styles.you } style={{ color: C.accent }}>{ t("room.you") }</span>
                     }
                     {
-                      i === 0 && 
+                      p.userId === hostId && 
                       <span className={ styles.you } style={{ color: C.muted }}>{ t("room.host") }</span>
                     }
                     {

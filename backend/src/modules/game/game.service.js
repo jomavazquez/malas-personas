@@ -189,6 +189,7 @@ export const pickWinner = (session, { judgeUserId, winnerUserId }) => {
 
 export const serializeSessionForPlayer = (session, userId) => ({
   roomCode: session.roomCode,
+  hostId: session.hostId,
   status: session.status,
   pointsToWin: session.pointsToWin,
   maxPlayers: session.maxPlayers,

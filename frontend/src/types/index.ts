@@ -43,6 +43,7 @@ export interface Player {
 
 export interface GameState {
   roomCode: string;
+  hostId: string;
   status: "waiting" | "playing" | "finished";
   pointsToWin: number;
   maxPlayers: number;
