@@ -20,6 +20,7 @@ interface ButtonProps extends BaseProps {
 type UnderlineLinkProps = LinkProps | ButtonProps;
 
 export const UnderlineLink = ({ color = C.accentDeep, children, ...props }: UnderlineLinkProps) => {
+    
     const [ hovered, setHovered ] = useState(false);
 
     const sharedStyle = {
