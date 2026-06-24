@@ -3,8 +3,9 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
 import { C, F, getOrCreateGuestId, connectSocket } from "../lib";
-import { Footer, Logo, TopMenu, TopMenuMyAccount, RoomNotFound } from "../components";
+import { Footer, Logo, TopMenu, TopMenuMyAccount, RoomNotFound, Avatar } from "../components";
 import type { Player, GameState } from "../types";
+import styles from "./RoomPage.module.css";
 
 export const RoomPage = () => {
 
@@ -138,13 +139,13 @@ export const RoomPage = () => {
         <div className="max-w-360 mx-auto w-full flex items-center justify-between">
           <Logo />
           {
-            !isGuest && 
-            <TopMenuMyAccount />
+            isGuest ? <TopMenu /> : <TopMenuMyAccount />
           }
         </div>
       </nav>
-      <div style={{ maxWidth: 1340, margin: "0 auto", padding: "52px 44px" }}>
-        <div style={{ maxWidth: 480, margin: "0 auto" }}>
+      <div style={{ maxWidth: 1340, margin: "0 auto", padding: 50 }}>
+        <div style={{ 
+          maxWidth: 480, margin: "0 auto" }}>
 
           {/* Code */}
           <div style={{ textAlign: "center", marginBottom: 40 }}>
@@ -159,39 +160,51 @@ export const RoomPage = () => {
             </div>
           </div>
 
-          {/* Players */}
-          <div style={{ background: "#fff", borderRadius: 24, border: `1px solid ${C.borderMid}`, padding: "28px 28px", marginBottom: 20, boxShadow: "0 20px 40px -20px rgba(47,52,58,.2)" }}>
-            <div style={{ fontFamily: F.display, fontWeight: 700, fontSize: 12, letterSpacing: "0.09em", textTransform: "uppercase", color: C.muted, marginBottom: 16 }}>
-              {t("room.players")} ({players.length})
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {players.map((p, i) => (
-                <div key={p.userId} style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <div style={{ width: 36, height: 36, borderRadius: 999, background: p.userId === myId ? C.accent : C.base, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: F.display, fontWeight: 800, fontSize: 14, color: p.userId === myId ? C.base : "#fff" }}>
-                    {p.username[0].toUpperCase()}
-                  </div>
-                  <span style={{ flex: 1, fontFamily: F.body, fontSize: 15, color: C.base }}>{p.username}</span>
-                  <div style={{ display: "flex", gap: 6 }}>
-                    {p.userId === myId && <span style={{ fontFamily: F.display, fontWeight: 700, fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase", color: C.accent }}>{t("room.you")}</span>}
-                    {i === 0 && <span style={{ fontFamily: F.display, fontWeight: 700, fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase", color: C.muted }}>{t("room.host")}</span>}
-                    {p.isGuest && <span style={{ fontFamily: F.display, fontWeight: 700, fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase", color: C.faint }}>{t("room.guest", "Invitado")}</span>}
+          <div className={ styles.players_box } style={{ border: `1.5px solid ${ C.borderMid }`}}>
+            <div className={ styles.players_th } style={{ color: C.faint }}>{ t("room.players") }{" "}({ players.length })</div>
+            <div className={ styles.players_container }>
+              {
+                players.map((p, i) => (
+                <div key={ p.userId } className={ styles.players_row }>
+                  <Avatar 
+                    user={ p.username } 
+                    bgColor={ p.userId === myId ? C.accent : C.base } 
+                    textColor={ p.userId === myId ? C.base : "#fff" }
+                    showLabel 
+                  />
+                  <div style={{ display: "flex", gap: 10 }}>
+                    {
+                      p.userId === myId && 
+                      <span className={ styles.you } style={{ color: C.accent }}>{ t("room.you") }</span>
+                    }
+                    {
+                      i === 0 && 
+                      <span className={ styles.you } style={{ color: C.muted }}>{ t("room.host") }</span>
+                    }
+                    {
+                      p.isGuest && 
+                      <span className={ styles.you } style={{ color: C.faint }}>{ t("room.guest") }</span>
+                    }
                   </div>
                 </div>
-              ))}
+                ))
+              }
             </div>
           </div>
-
           {
-            isHost ? (
-            <div>
-              {!canStart && <p style={{ textAlign: "center", fontFamily: F.body, fontSize: 14, color: C.muted, marginBottom: 12 }}>{t("room.minPlayers")}</p>}
-              <button onClick={handleStart} disabled={!canStart || !connected} style={{ width: "100%", background: !canStart || !connected ? "#ccc" : C.accent, color: C.base, borderRadius: 14, padding: "18px 0", fontFamily: F.display, fontWeight: 700, fontSize: 16, border: "none", cursor: !canStart || !connected ? "not-allowed" : "pointer", boxShadow: canStart ? `0 16px 30px -14px color-mix(in srgb, ${C.accent} 60%, transparent)` : "none" }}>
-                {t("room.start")}
-              </button>
-            </div>
-          ) : (
-            <p style={{ textAlign: "center", fontFamily: F.body, fontSize: 14, color: C.muted }}>{t("room.waiting")}</p>
-          )}
+            isHost 
+            ?
+              <div>
+                {
+                  !canStart && 
+                  <p className={ styles.p } style={{ color: C.muted }}>{ t("room.minPlayers") }</p>
+                }
+                <button onClick={handleStart} disabled={!canStart || !connected} style={{ width: "100%", background: !canStart || !connected ? "#ccc" : C.accent, color: C.base, borderRadius: 14, padding: "18px 0", fontFamily: F.display, fontWeight: 700, fontSize: 16, border: "none", cursor: !canStart || !connected ? "not-allowed" : "pointer", boxShadow: canStart ? `0 16px 30px -14px color-mix(in srgb, ${C.accent} 60%, transparent)` : "none" }}>
+                  {t("room.start")}
+                </button>
+              </div>
+            : <p className={ styles.p } style={{ color: C.muted, marginBottom: 0 }}>{ t("room.waiting") }</p>
+          }
         </div>
       </div>
       <Footer />

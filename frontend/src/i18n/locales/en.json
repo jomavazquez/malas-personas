@@ -59,6 +59,7 @@
     "copyCode": "Copy",
     "copied": "Copied!",
     "you": "You",
+    "guest": "Guest",
     "host": "Host",
     "judge": "Judge",
     "tryAgain": "Try again with a new code!"
@@ -167,7 +168,7 @@
     "filter_active": "Active",
     "filter_finished": "Finished",
     "lastgame": "Last game",
-    "reopen": "Re-open",
+    "reopen": "Launch",
     "close": "Close room",
     "active": "Active",
     "finished": "Finished",
