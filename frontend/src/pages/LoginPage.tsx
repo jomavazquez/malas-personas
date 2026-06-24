@@ -58,12 +58,14 @@ export const LoginPage = () => {
           <div className="max-w-360 mx-auto w-full grid grid-cols-1 md:grid-cols-[45%_55%] gap-0 items-center">
             {/* LEFT */}
             <div className="hidden md:flex flex-col justify-end pr-16 pb-12 relative" style={{ minHeight: 520 }}>
-              <FloatingQuestion left={ 295 } top={ 75 } />
+              <div className="block md:hidden lg:hidden xl:block">
+                <FloatingQuestion left={ 295 } top={ 75 } />
+              </div>
               <h3 className="heading_1" style={{ color: C.base }}>{ t("login.welcome") }</h3>
               <p className={ styles.welcome_sub } style={{ color: C.accentDeep }}>{ t("login.welcomeSub") }</p>
             </div>
             {/* RIGHT */}
-            <div className="pl-0 lg:pl-50 pr-0 md:pr-10 md:pl-10">
+            <div className="px-10 lg:px-25">
               <Badge>{ t("login.badge") }</Badge>
               <h1 className="heading_1" style={{ color: C.base }}>{ t("auth.login") }</h1>
               <form onSubmit={ handleSubmit } className="form">

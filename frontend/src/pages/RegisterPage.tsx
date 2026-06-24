@@ -72,7 +72,7 @@ export const RegisterPage = () => {
               </div>
             </div>
             {/* RIGHT */}
-            <div className="pl-0 lg:pl-50 pr-0 md:pr-10 md:pl-10">
+            <div className="px-10 lg:px-25">
               <Badge>{ t("pricing.free") }</Badge>
               <h1 className="heading_1" style={{ color: C.base }}>{ t("auth.register") }</h1>
               <form onSubmit={ handleSubmit } className="form">
