@@ -62,7 +62,10 @@
     "guest": "Invitado",
     "host": "Anfitrión",
     "judge": "Juez",
-    "tryAgain": "Probar con otro código"
+    "tryAgain": "Probar con otro código",
+    "yourName": "¿Cómo te llaman?",
+    "yourNameVisible": " · Tu nombre será visible para los demás.",
+    "enter": "Entrar a la sala"
   },
   "game": {
     "judge": "Juez esta ronda",

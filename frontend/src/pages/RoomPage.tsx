@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
-import { C, F, getOrCreateGuestId, connectSocket } from "../lib";
+import { C, getOrCreateGuestId, connectSocket } from "../lib";
 import { Footer, Logo, TopMenu, TopMenuMyAccount, RoomNotFound, Avatar, Button } from "../components";
 import type { Player, GameState } from "../types";
 import styles from "./RoomPage.module.css";
@@ -96,35 +96,39 @@ export const RoomPage = () => {
     return (
       <div style={{ background: C.surface, position: "relative" }}>
         <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 10 }}>
-          <div className="max-w-360 mx-auto w-full flex items-center justify-between">
+          <div className="max-w-360 mx-auto w-full flex items-center justify-between flex-col md:flex-row gap-4 md:gap-0">
             <Logo />
-            <TopMenu />
+            {
+              isGuest ? <TopMenu /> : <TopMenuMyAccount />
+            }
           </div>
-        </nav>        
-        <div style={{ background: "#fff", borderRadius: 24, padding: "38px 36px", width: "100%", maxWidth: 360, boxShadow: "0 30px 60px -34px rgba(47,52,58,.4)" }}>
-          <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 22, letterSpacing: "-0.03em", color: C.base, marginBottom: 8 }}>
-            ¿Cómo te llaman?
+        </nav>
+        <div className="max-w-360 mx-auto px-4 md:px-14 2xl:px-0 py-6 md:py-16">
+          <div className="mx-auto" style={{ maxWidth: 480 }}>
+            <div className={ styles.players_box } style={{ border: `1.5px solid ${ C.borderMid }`}}>
+              <div className="cta_title" style={{ color: C.base, marginBottom: 10 }}>{ t("room.yourName") }</div>
+              <p className={ styles.desc } style={{ color: C.muted, marginBottom: 20 }}>{ t("myroom.room") }{" "}<strong>{ code }</strong>{ t("room.yourNameVisible") }</p>
+              <input
+                className="input"
+                style={{ border: `1.5px solid ${C.border}`, color: C.base, marginBottom: 20 }}
+                placeholder="Marina"
+                value={ nameInput }
+                onChange={ (e) => setNameInput(e.target.value) }
+                maxLength={ 20 }
+                autoFocus
+                onKeyDown={ (e) => e.key === "Enter" && handleNameSubmit() }
+              />
+              <Button
+                onClick={ handleNameSubmit }
+                disabled={ !nameInput.trim() }
+                bgColor={ !nameInput.trim() ? "#ccc" : C.accent }
+                textColor="#000"
+                style={{ width: "100%", boxShadow: nameInput.trim() ? `0 16px 30px -14px color-mix(in srgb, ${C.accent} 60%, transparent)` : "none" }}
+              >
+                { t("room.enter") }
+              </Button>
+            </div>
           </div>
-          <p style={{ fontFamily: F.body, fontSize: 14, color: C.muted, marginBottom: 20 }}>
-            Sala <strong>{code}</strong> · Tu nombre será visible para los demás.
-          </p>
-          <input
-            className="input"
-            style={{ border: `1.5px solid ${C.border}`, color: C.base, marginBottom: 16 }}
-            placeholder="Marina"
-            value={nameInput}
-            onChange={(e) => setNameInput(e.target.value)}
-            maxLength={20}
-            autoFocus
-            onKeyDown={(e) => e.key === "Enter" && handleNameSubmit()}
-          />
-          <button
-            onClick={handleNameSubmit}
-            disabled={!nameInput.trim()}
-            style={{ width: "100%", background: !nameInput.trim() ? "#ccc" : C.accent, color: C.base, borderRadius: 14, padding: "16px 0", fontFamily: F.display, fontWeight: 700, fontSize: 16, border: "none", cursor: !nameInput.trim() ? "not-allowed" : "pointer" }}
-          >
-            Entrar a la sala
-          </button>
         </div>
         <Footer />
       </div>

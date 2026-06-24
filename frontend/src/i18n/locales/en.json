@@ -62,7 +62,10 @@
     "guest": "Guest",
     "host": "Host",
     "judge": "Judge",
-    "tryAgain": "Try again with a new code!"
+    "tryAgain": "Try again with a new code!",
+    "yourName": "What's your name?",
+    "yourNameVisible": " · Your name will be visible for everybody.",
+    "enter": "Enter"
   },
   "game": {
     "judge": "Judge this round",
