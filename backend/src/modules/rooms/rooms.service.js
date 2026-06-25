@@ -21,7 +21,7 @@ export const createRoom = async (hostId, { deckId, maxPlayers, pointsToWin, name
   });
 
   if (activeRoom) {
-    const error = new Error("Ya tienes una sala activa. Ciérrala antes de crear una nueva.");
+    const error = new Error("ROOM_ALREADY_ACTIVE");
     error.status = 409;
     throw error;
   }
@@ -103,4 +103,12 @@ export const getMyRooms = async (userId) => {
     },
     orderBy: { createdAt: "desc" },
   });
+};
+
+export const deleteRoom = async (userId, code) => {
+  const room = await prisma.room.findUnique({ where: { code } });
+  if (!room) throw Object.assign(new Error("ROOM_NOT_FOUND"), { code: "ROOM_NOT_FOUND" });
+  if (room.hostId !== userId) throw Object.assign(new Error("UNAUTHORIZED"), { code: "UNAUTHORIZED" });
+  await prisma.room.delete({ where: { code } });
+  return { success: true };
 };

@@ -1,4 +1,4 @@
-import { createRoom, getRoomByCode, closeRoom, getMyRooms } from "./rooms.service.js";
+import { createRoom, getRoomByCode, closeRoom, getMyRooms, deleteRoom } from "./rooms.service.js";
 
 export const handleCreateRoom = async (req, res, next) => {
   try {
@@ -31,6 +31,15 @@ export const handleGetMyRooms = async (req, res, next) => {
   try {
     const rooms = await getMyRooms(req.user.userId);
     res.json({ success: true, rooms });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const handleDeleteRoom = async (req, res, next) => {
+  try {
+    await deleteRoom(req.user.userId, req.params.code);
+    res.json({ success: true });
   } catch (err) {
     next(err);
   }

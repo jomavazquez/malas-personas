@@ -20,6 +20,7 @@ export const MyRoomsPage = () => {
   const [ search, setSearch ] = useState("");
   const [ copiedId, setCopiedId ] = useState<string | null>(null);
   const [ deleteCode, setDeleteCode ] = useState<string | null>(null);
+  const [ deleteType, setDeleteType ] = useState<"close" | "delete">("close");
 
   const filterRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [ pillStyle, setPillStyle ] = useState({ left: 0, width: 0 });
@@ -37,11 +38,19 @@ export const MyRoomsPage = () => {
     }).finally(() => setLoading(false));
   }, []);
 
-  const handleDelete = async () => {
-    if( !deleteCode ) return;
+  const handleDelete = async (type: "close" | "delete", code: string) => {
+    if( !code ) return;
     try{
-      await api.patch(`/rooms/${deleteCode}/close`, {});
-      setRooms((prev) => prev.filter((r) => r.code !== deleteCode));
+      if( type === "delete" ){
+        await api.delete(`/rooms/${code}`);
+      }else{
+        await api.patch(`/rooms/${code}/close`, {});
+      }
+      if( type === "delete" ){
+        setRooms((prev) => prev.filter((r) => r.code !== code));
+      }else{
+        setRooms((prev) => prev.map((r) => r.code === code ? { ...r, isActive: false, status: "FINISHED" } : r));
+      }
     }catch( err ){
     }finally{
       setDeleteCode(null);
@@ -69,8 +78,8 @@ export const MyRoomsPage = () => {
         deleteCode &&
         <div className="fixed inset-0 flex items-center justify-center z-50 px-6 modal_bg" onClick={() => setDeleteCode(null)}>
           <div className="modal_container" onClick={ (e) => e.stopPropagation() }>
-            <div className="modal_title" style={{ color: C.base }}>{ t("myroom.close") }</div>
-            <p className="modal_body" style={{ color: C.muted }}>{ t("myroom.deleteConfirm") }</p>
+            <div className="modal_title" style={{ color: C.base }}>{ deleteType === "delete" ? t("myroom.deleteRoom") : t("myroom.closeRoom") }</div>
+            <p className="modal_body" style={{ color: C.muted }}>{ deleteType === "delete" ? t("myroom.deleteConfirm") : t("myroom.closeConfirm") }</p>
             <div style={{ display: "flex", gap: 10 }}>
               <button
                 className={ `${ styles.btn } ${ styles.btn_cancel }`}
@@ -79,7 +88,12 @@ export const MyRoomsPage = () => {
               >
                 { t("myroom.cancel") }
               </button>
-              <button className={ `${ styles.btn } ${ styles.btn_delete }`} onClick={ handleDelete }>{ t("myroom.delete") }</button>
+              <button 
+                className={ `${ styles.btn } ${ styles.btn_delete }`} 
+                onClick={ () => handleDelete(deleteType, deleteCode!) }
+              >
+                { deleteType === "delete" ? t("myroom.delete") : t("myroom.close") }
+              </button>
             </div>
           </div>
         </div>
@@ -201,28 +215,27 @@ export const MyRoomsPage = () => {
                   <div className="text-center" style={{ fontSize: 15, color: C.muted }}>
                     { room.pointsToWin }<span className="inline md:hidden">{" "}{ t("myroom.points") }</span>
                   </div>
-                  {
-                    room.isActive && (
-                    <div className={ styles.table_actions }>
+                  <div className={ styles.table_actions }>
+                    {
+                      room.isActive &&
                       <Button
                         bgColor={ C.accent }
                         textColor="#000"
-                        onClick={() => navigate(`/room/${room.code}`, { state: { guestId: user!.id, guestName: user!.username } })}
+                        onClick={ () => navigate(`/room/${room.code}`, { state: { guestId: user!.id, guestName: user!.username } }) }
                         style={{ fontSize: 13, height: 35, padding: "10px", marginRight: 10 }}
                       >
                         { t("myroom.reopen") }
                       </Button>
-                      <button
-                        onClick={ () => setDeleteCode(room.code) }
-                        className="btn_red"
-                        style={{ borderRadius: 12, fontSize: 14 }}
-                        title={ t("myroom.close") }
-                      >
-                        ✕
-                      </button>
-                    </div>
-                    )
-                  }
+                    }
+                    <button
+                      onClick={() => { setDeleteCode(room.code); setDeleteType(room.isActive ? "close" : "delete"); }}
+                      className="btn_red"
+                      style={{ borderRadius: 12, fontSize: 14 }}
+                      title={ room.isActive ? t("myroom.close") : t("myroom.delete") }
+                    >
+                      ✕
+                    </button>
+                  </div>
                 </div>
               ))
             }

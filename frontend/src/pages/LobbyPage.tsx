@@ -29,20 +29,24 @@ export const LobbyPage = () => {
 
   const joinCode = codeChars.join("");
 
-  // Guarda el nombre del mazo actualmente seleccionado para restaurarlo al cambiar idioma
-  const selectedDeckName = decks.find((d) => d.id === selectedDeck)?.name ?? "";
-  const isNoFilter = selectedDeckName === "No Filter" || selectedDeckName === "Sin filtro";
+  const NO_FILTER_NAMES = ["No Filter", "Sin filtro"];
 
   useEffect(() => {
     api.get<{ decks: Deck[] }>("/decks").then((data) => {
       const filtered = data.decks.filter((d) => d.language === selectedLang);
       const list = filtered.length ? filtered : data.decks;
       setDecks(list);
-      // Restaura el mismo tipo de mazo que había elegido
-      const match = list.find((d) => isNoFilter ? d.name === "No Filter" : d.name !== "No Filter" );
+      const preferNoFilter = !selectedDeck || NO_FILTER_NAMES.includes(
+        data.decks.find((d) => d.id === selectedDeck)?.name ?? ""
+      );
+      const match = list.find((d) =>
+        preferNoFilter
+          ? NO_FILTER_NAMES.includes(d.name)
+          : !NO_FILTER_NAMES.includes(d.name)
+      );
       setSelectedDeck(match?.id ?? list[0]?.id ?? "");
     });
-  }, [selectedLang]);
+  }, [ selectedLang ]);
 
   const handleCreate = async () => {
     if( !selectedDeck || !roomName.trim() ) return;
