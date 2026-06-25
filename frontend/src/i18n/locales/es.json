@@ -107,8 +107,6 @@
   },
   "errors": {
     "ERROR": "Error",
-    "roomFull": "La sala está llena",
-    "generic": "Algo ha salido mal. Inténtalo de nuevo.",
     "INVALID_CREDENTIALS": "Email o contraseña incorrectos",
     "ACCEPT_TERMS": "Debes aceptar los términos y condiciones",
     "INVALID_DATA": "Datos incorrectos o el usuario ya existe",
@@ -117,6 +115,7 @@
     "ROOM_NOT_FOUND": "Sala no encontrada",
     "GAME_ALREADY_STARTED": "El juego ya ha empezado. ¡Espera a que termine o conéctate a otra sala!",
     "ROOM_ALREADY_ACTIVE": "Ya tienes una sala activa. Ciérrala antes de crear una nueva.",
+    "ROOM_FULL": "Esta sala ya está llena. Prueba una diferente.",
     "notFoundTitle": "No hay ninguna sala con ese código.",
     "theCode": "El código",
     "theCode2": "no existe o está mal escrito. Revísalo con quien te invitó y vuelve a intentarlo.",

@@ -107,8 +107,6 @@
   },
   "errors": {
     "ERROR": "Error",
-    "roomFull": "Room is full",
-    "generic": "Something went wrong. Please try again.",
     "INVALID_CREDENTIALS": "Invalid email or password",
     "ACCEPT_TERMS": "You must agree to the Terms and Conditions",
     "INVALID_DATA": "Invalid data or the user already exists",
@@ -117,6 +115,7 @@
     "ROOM_NOT_FOUND": "Room not found",
     "GAME_ALREADY_STARTED": "The game has already started. Wait a bit or connect to other room!",
     "ROOM_ALREADY_ACTIVE": "You already have an active room. Close it before creating a new one.",
+    "ROOM_FULL": "This room is already full. Try another one.",
     "notFoundTitle": "There is no room with this code.",
     "theCode": "The code",
     "theCode2": "does not exist or has been entered incorrectly. Please check it with the person who invited you and try again.",
