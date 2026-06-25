@@ -185,7 +185,7 @@ export const RoomPage = () => {
             <div className={ styles.players_th } style={{ color: C.faint }}>{ t("room.players") }{" "}({ players.length })</div>
             <div className={ styles.players_container }>
               {
-                players.map((p, i) => (
+                players.map((p) => (
                 <div key={ p.userId } className={ styles.players_row }>
                   <Avatar 
                     user={ p.username } 

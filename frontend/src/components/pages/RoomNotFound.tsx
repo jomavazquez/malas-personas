@@ -32,7 +32,7 @@ export const RoomNotFound = ({ code, error }: RoomNotFoundProps) => {
                     <div className={ `${ styles.card } ${ styles.card_white }` }><span style={{ fontFamily: F.display, fontSize: 50, color: "#E5534B" }}>?</span></div>
                 </div>
                 <Badge color="#E5534B">{ isNotFound ? t("errors.ROOM_NOT_FOUND") : t("errors.ERROR") }</Badge>
-                <h2 className={`heading_1 ${ styles.title }`} style={{ color: C.base }}>{ isNotFound ? t("errors.notFoundTitle") : error }</h2>
+                <h2 className={`heading_1 ${ styles.title }`} style={{ color: C.base }}>{ isNotFound ? t("errors.notFoundTitle") : t(`errors.${error}`, error) }</h2>
                 {
                     isNotFound &&
                     <>

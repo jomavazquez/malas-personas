@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../context/AuthContext";
-import { connectSocket } from "../lib/socket";
-import { C, F } from "../lib/tokens";
+import { useAuth } from "../context";
+import { C, F, connectSocket } from "../lib";
+import { Footer, Logo } from "../components";
 import type { GameState, PlayedCard, Card } from "../types";
 
 export const GamePage = () => {
@@ -111,13 +111,15 @@ export const GamePage = () => {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: F.body }}>
+    <div style={{ background: C.surface, position: "relative" }}>
+      <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 10 }}>
+        <div className="max-w-360 mx-auto w-full flex items-center justify-between">
+          <Logo />
+        </div>
+      </nav>      
 
       {/* Header */}
       <div style={{ background: C.base, padding: "14px 52px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <span style={{ fontFamily: F.display, fontWeight: 800, fontSize: 18, letterSpacing: "-0.03em", color: "#fff" }}>
-          Malas Personas<span style={{ color: C.accent }}>.</span>
-        </span>
         <div style={{ display: "flex", gap: 28 }}>
           {gameState.players.map((p) => (
             <div key={p.userId} style={{ textAlign: "center" }}>
@@ -222,6 +224,7 @@ export const GamePage = () => {
           <p style={{ fontFamily: F.body, fontSize: 14, color: C.muted }}>{t("game.waitingForPlayers")}</p>
         )}
       </div>
+      <Footer />
     </div>
   );
 };

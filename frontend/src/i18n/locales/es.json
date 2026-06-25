@@ -115,6 +115,7 @@
     "EMAIL_IN_USE": "Este email ya se está usando",
     "DUPLICATE_PLAYER": "Ya hay un jugador con ese nombre desde esta red",
     "ROOM_NOT_FOUND": "Sala no encontrada",
+    "GAME_ALREADY_STARTED": "El juego ya ha empezado. ¡Espera a que termine o conéctate a otra sala!",
     "notFoundTitle": "No hay ninguna sala con ese código.",
     "theCode": "El código",
     "theCode2": "no existe o está mal escrito. Revísalo con quien te invitó y vuelve a intentarlo.",
