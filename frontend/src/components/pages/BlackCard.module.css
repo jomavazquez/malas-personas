@@ -1,0 +1,24 @@
+.black_card {
+    background: #000;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px -16px rgba(0, 0, 0, .5);
+    padding: 25px
+}
+
+.black_card_question {
+    color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2em;
+    margin-bottom: 15px
+}
+
+.black_card_sub {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase
+}

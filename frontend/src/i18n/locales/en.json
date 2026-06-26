@@ -73,13 +73,17 @@
     "pickCard": "Pick your answer",
     "waitingForPlayers": "Waiting for answers...",
     "played": "{{count}} of {{total}} players have answered",
-    "pickWinner": "Pick the best answer",
+    "pickWinner": "Pick the funniest answer",
     "roundWinner": "{{username}} wins the round!",
     "winningCard": "With the card:",
     "gameOver": "Game over!",
     "winner": "{{username}} wins with {{score}} points!",
     "backToLobby": "Back to home",
-    "pointsToWin": "Points to win"
+    "pointsToWin": "Points to win",
+    "roundQuestion": "Round question",
+    "waitingForJudge": "The judge is choosing...",
+    "answers": "answers",
+    "sendCard": "Send card"
   },
   "how": {
     "eyebrow": "How to play",

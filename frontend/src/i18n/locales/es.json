@@ -73,13 +73,17 @@
     "pickCard": "Elige tu respuesta",
     "waitingForPlayers": "Esperando respuestas...",
     "played": "{{count}} de {{total}} jugadores han respondido",
-    "pickWinner": "Elige la mejor respuesta",
+    "pickWinner": "Elige la respuesta que te resulte más divertida",
     "roundWinner": "¡{{username}} gana la ronda!",
     "winningCard": "Con la carta:",
     "gameOver": "¡Fin de la partida!",
     "winner": "¡{{username}} gana con {{score}} puntos!",
     "backToLobby": "Volver al inicio",
-    "pointsToWin": "Puntos para ganar"
+    "pointsToWin": "Puntos para ganar",
+    "roundQuestion": "Pregunta de la ronda",
+    "waitingForJudge": "El juez está eligiendo...",
+    "answers": "respuestas",
+    "sendCard": "Enviar carta"
   },
   "how": {
     "eyebrow": "Cómo se juega",
