@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { useAuth, useJoinModal } from "../context";
 import { getLenis } from "../hooks";
-import { Avatar, Blob, Logo, Button, UnderlineLink, Footer, TopMenu, Badge, FloatingQuestion } from "../components";
+import { Avatar, Blob, Logo, Button, UnderlineLink, Footer, TopMenu, Badge, FloatingQuestion, BlackCard } from "../components";
 import { C, F } from "../lib";
 import styles from "./HomePage.module.css";
 
@@ -159,7 +159,7 @@ export const HomePage = () => {
               <div className={ styles.step_title } style={{ color: C.base }}>{ t("how.step3.title") }</div>
               <div className={ styles.step_body } style={{ color: C.muted }}>{ t("how.step3.desc") }</div>
               <div className="flex gap-2">
-                <div style={{ flex: 1, background: C.base, borderRadius: 12, padding: 12, fontFamily: F.display, fontWeight: 800, fontSize: 13, color: "#fff", lineHeight: 1.2 }}>{ t("how.step3.card") }</div>
+                <BlackCard question={ t("how.step3.card") } fontSize={ 13 } />
                 <div style={{ flex: 1, background: "#fff", border: `2px solid ${C.border}`, borderRadius: 12, padding: 12, fontFamily: F.display, fontWeight: 700, alignContent: "center", fontSize: 13, color: C.base, lineHeight: 1.2 }}>{ t("how.step3.answer") }</div>
               </div>
             </div>

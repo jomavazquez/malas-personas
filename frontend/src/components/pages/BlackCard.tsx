@@ -4,18 +4,23 @@ import styles from "./BlackCard.module.css";
 
 interface Props {
     question: string;
+    showSub?: boolean;
+    fontSize?: number;
 }
 
-export const BlackCard = ({ question }: Props ) => {
+export const BlackCard = ({ question, showSub = false, fontSize = 22 }: Props ) => {
     
     return (
         <div className={ styles.black_card }>
-            <div className={ styles.black_card_question }>
+            <div className={ styles.black_card_question } style={{ fontSize }}>
                 <BlackCardText text={ question } />
             </div>
-            <span className={ styles.black_card_sub } style={{ color: C.accent }}>
-                { t("game.roundQuestion") }
-            </span>
+            {
+                showSub &&
+                <span className={ styles.black_card_sub } style={{ color: C.accent }}>
+                    { t("game.roundQuestion") }
+                </span>
+            }
         </div>
     )
 }
