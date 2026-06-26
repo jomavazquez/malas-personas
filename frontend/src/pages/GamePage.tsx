@@ -3,7 +3,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
 import { C, F, connectSocket } from "../lib";
-import { BlackCard, Button, Footer, Logo } from "../components";
+import { Avatar, BlackCard, Button, Footer, Logo } from "../components";
 import type { GameState, PlayedCard, Card } from "../types";
 import styles from "./GamePage.module.css";
 
@@ -149,59 +149,9 @@ export const GamePage = () => {
       </nav>
 
 
-      {/* ── SCOREBOARD ── */}
-      <div style={{ padding: "50px 32px" }}>
-        <div style={{ fontFamily: F.display, fontWeight: 700, fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase", color: C.faint, marginBottom: 10 }}>
-          {t("game.scoreboard", "MARCADOR")}
-          {revealedCards && !roundResult && (
-            <span style={{ marginLeft: 12, color: C.muted, fontWeight: 500 }}>
-              · {playedCount} {t("game.cardsOnTable", "cartas sobre la mesa")}
-            </span>
-          )}
-        </div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-          {gameState.players.map((p) => {
-            const isMe = p.userId === myId;
-            const isJ = p.userId === gameState.judge?.userId;
-            const played = revealedCards?.some((c) => c.userId === p.userId) || (isMe && hasPlayed);
-            return (
-              <div key={p.userId} style={{
-                display: "flex", alignItems: "center", gap: 6,
-                background: isMe ? `color-mix(in srgb, ${C.accent} 12%, #fff)` : C.surface,
-                border: `1.5px solid ${isMe ? C.accent : C.border}`,
-                borderRadius: 999, padding: "5px 12px 5px 5px",
-              }}>
-                <div style={{ width: 28, height: 28, borderRadius: 999, background: isMe ? C.accent : C.base, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: F.display, fontWeight: 800, fontSize: 12, color: isMe ? C.base : "#fff" }}>
-                  {p.username[0].toUpperCase()}
-                </div>
-                <span style={{ fontFamily: F.display, fontWeight: 600, fontSize: 13, color: C.base }}>
-                  {p.username}{isMe ? ` · ${t("room.you")}` : ""}
-                </span>
-                {isJ && (
-                  <span style={{ fontFamily: F.display, fontWeight: 700, fontSize: 10, color: C.muted, background: C.surface, border: `1px solid ${C.border}`, borderRadius: 999, padding: "1px 6px" }}>
-                    {t("room.judge", "JUEZ").toUpperCase()}
-                  </span>
-                )}
-                <span style={{ fontFamily: F.display, fontWeight: 800, fontSize: 15, color: isMe ? C.accentDeep : C.base, minWidth: 14, textAlign: "center" }}>
-                  {p.score}
-                </span>
-                {played && !isJ && (
-                  <span style={{ width: 18, height: 18, borderRadius: 999, background: C.accent, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: C.base }}>✓</span>
-                )}
-                {!played && !isJ && !isMe && (
-                  <span style={{ width: 18, height: 18, borderRadius: 999, border: `1.5px solid ${C.border}`, display: "inline-block" }} />
-                )}
-              </div>
-            );
-          })}
-          <div style={{ marginLeft: "auto", fontFamily: F.display, fontWeight: 600, fontSize: 13, color: C.faint, alignSelf: "center" }}>
-            {t("game.goal", "Meta")} · <strong>{gameState.pointsToWin}</strong> {t("game.points", "puntos")}
-          </div>
-        </div>
-      </div>
 
       {/* ── MAIN CONTENT ── */}
-      <div className="max-w-360 mx-auto w-full flex items-center justify-between flex-col md:flex-row px-10 2xl:px-0">
+      <div className="max-w-360 mx-auto w-full px-10 2xl:px-0 mt-10">
 
         {/* Round result banner */}
         {
@@ -232,8 +182,8 @@ export const GamePage = () => {
               revealedCards && !roundResult 
               ? 
                 <div>
-                  <p className={ styles.judge_desc } style={{ color: C.muted }}>{ t("game.pickWinner") } · {revealedCards.length}{" "}{ t("game.answers") }</p>
-                  <div className={ styles.judge_grid }>
+                  <p className={ `my-5 ${ styles.judge_desc }` } style={{ color: C.muted }}>{ t("game.pickWinner") } · {revealedCards.length}{" "}{ t("game.answers") }</p>
+                  <div className={ `mb-10 ${ styles.judge_grid }` }>
                   {
                     revealedCards.map(({ userId, card }) => (
                       <div
@@ -252,7 +202,7 @@ export const GamePage = () => {
                   </div>
                 </div>
             : !roundResult 
-              ? <p className={ styles.judge_desc } style={{ color: C.muted }}>{ t("game.waitingForPlayers") }{" "}({playedCount} / {totalNeeded})</p>
+              ? <p className={ `my-5 mb-10 ${ styles.judge_desc }` } style={{ color: C.muted }}>{ t("game.waitingForPlayers") }{" "}({playedCount} / {totalNeeded})</p>
               : null
             }
           </div>
@@ -267,11 +217,11 @@ export const GamePage = () => {
               }
               {
                 hasPlayed && !revealedCards &&
-                <p className={ styles.judge_desc } style={{ color: C.muted }}>{ t("game.played", { count: playedCount, total: totalNeeded })}</p>
+                <p className={ `m-5 ${ styles.judge_desc }` } style={{ color: C.muted }}>{ t("game.played", { count: playedCount, total: totalNeeded })}</p>
               }
               {
                 revealedCards && !roundResult &&
-                <p className={ styles.judge_desc } style={{ color: C.muted }}>{ t("game.waitingForJudge") }</p>
+                <p className={ `mt-5 ${ styles.judge_desc }` } style={{ color: C.muted }}>{ t("game.waitingForJudge") }</p>
               }
             </div>
             {/* RIGHT: HAND */}
@@ -322,6 +272,46 @@ export const GamePage = () => {
             </div>
           </div>
         }
+        {/* ── SCOREBOARD ── */}
+        <div className="pb-10">
+          <div className="flex">
+            <div className={ styles.player_pick_answer } style={{ color: C.faint }}>
+              { t("game.score") }
+              {
+                revealedCards && !roundResult &&
+                <span style={{ color: C.faint, fontWeight: 500 }}>{" "}·{" "}{ playedCount }{" "}{ t("game.cardsOnTable") }</span>
+              }
+            </div>
+            <div className={ styles.player_pick_answer } style={{ marginLeft: "auto", color: C.faint, alignSelf: "center" }}>
+              { t("game.goal") }{" "}·{" "}<strong>{ gameState.pointsToWin }</strong>{" "}{t("myroom.points") }
+            </div>
+          </div>
+          <div className={ styles.score_grid }>
+            {
+              gameState.players.map((p) => {
+                const isMe = p.userId === myId;
+                const isJ = p.userId === gameState.judge?.userId;
+                return (
+                  <div 
+                    key={ p.userId } 
+                    className={ styles.score_player }
+                    style={{
+                      background: isMe ? `color-mix(in srgb, ${C.accent} 15%, #fff)` : "#fff",
+                      border: `1.5px solid ${ isMe ? C.accent : C.border }`,
+                    }}
+                  >
+                    <Avatar size={ 28 } user={ p.username } showLabel />
+                    {
+                      isJ &&
+                      <span className={ styles.score_judge_label }>{ t("game.judgeLabel").toUpperCase() }</span>
+                    }
+                    <span className={ styles.score } style={{ color: C.base }}>{ p.score }</span>
+                  </div>
+                );
+              })
+            }
+          </div>
+        </div>
       </div>
       <Footer />
     </div>

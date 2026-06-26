@@ -83,7 +83,11 @@
     "roundQuestion": "Pregunta de la ronda",
     "waitingForJudge": "El juez está eligiendo...",
     "answers": "respuestas",
-    "sendCard": "Enviar carta"
+    "sendCard": "Enviar carta",
+    "score": "Marcador",
+    "cardsOnTable": "cartas",
+    "judgeLabel": "Juez",
+    "goal": "Objetivo"
   },
   "how": {
     "eyebrow": "Cómo se juega",

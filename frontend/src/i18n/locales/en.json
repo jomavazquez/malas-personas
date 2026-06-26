@@ -83,7 +83,11 @@
     "roundQuestion": "Round question",
     "waitingForJudge": "The judge is choosing...",
     "answers": "answers",
-    "sendCard": "Send card"
+    "sendCard": "Send card",
+    "score": "Score",
+    "cardsOnTable": "cards",
+    "judgeLabel": "Judge",
+    "goal": "Goal"
   },
   "how": {
     "eyebrow": "How to play",
