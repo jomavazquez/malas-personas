@@ -20,17 +20,50 @@ export const GamePage = () => {
   const myId = user?.id ?? guestId ?? "";
   const myName = user?.username ?? guestName ?? "";
 
-  const [gameState, setGameState] = useState<GameState | null>(null);
-  const [hand, setHand] = useState<Card[]>([]);
-  const [selectedCard, setSelectedCard] = useState<string | null>(null);
-  const [hasPlayed, setHasPlayed] = useState(false);
-  const [revealedCards, setRevealedCards] = useState<PlayedCard[] | null>(null);
-  const [roundResult, setRoundResult] = useState<{ winner: { userId: string; username: string; score: number }; winningCard: Card } | null>(null);
-  const [gameOver, setGameOver] = useState<{ userId: string; username: string; score: number } | null>(null);
-  const [playedCount, setPlayedCount] = useState(0);
-  const [selectedWinner, setSelectedWinner] = useState<string | null>(null);
+  const [ gameState, setGameState ] = useState<GameState | null>(null);
+  const [ hand, setHand ] = useState<Card[]>([]);
+  const [ selectedCard, setSelectedCard ] = useState<string | null>(null);
+  const [ hasPlayed, setHasPlayed ] = useState(false);
+  const [ revealedCards, setRevealedCards ] = useState<PlayedCard[] | null>(null);
+  const [ roundResult, setRoundResult ] = useState<{ winner: { userId: string; username: string; score: number }; winningCard: Card } | null>(null);
+  const [ gameOver, setGameOver ] = useState<{ userId: string; username: string; score: number } | null>(null);
+  const [ playedCount, setPlayedCount ] = useState(0);
+  const [ selectedWinner, setSelectedWinner ] = useState<string | null>(null);
+  
+  const clock = 60;
+  const [timer, setTimer] = useState(clock);
 
   const isJudge = gameState?.judge?.userId === myId;
+
+  // Timer
+  useEffect(() => {
+    setTimer(clock);
+    const interval = setInterval(() => {
+      setTimer((prev) => {
+        if(prev <= 1 ){
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [ gameState?.currentBlackCard?.id] );
+
+  // Auto-send on timeout
+  useEffect(() => {
+    if( timer !== 0 || hasPlayed || isJudge || !gameState ) return;
+    const cardToPlay = selectedCard ?? hand[Math.floor(Math.random() * hand.length)]?.id;
+    if( !cardToPlay ) return;
+    const socket = connectSocket();
+    socket.emit("round:playCard", { roomCode: code, cardId: cardToPlay }, (res: { error?: string }) => {
+      if( !res.error ){
+        setSelectedCard(cardToPlay);
+        setHasPlayed(true);
+      }
+    });
+  }, [ timer ]);
+  
   const totalNeeded = (gameState?.players?.length ?? 1) - 1;
 
   useEffect(() => {
@@ -52,6 +85,7 @@ export const GamePage = () => {
       setRoundResult(null);
       setPlayedCount(0);
       setSelectedWinner(null);
+      setTimer(clock);
       // selectedCard se limpia cuando llegan nuevas cartas (hand:update)
     });
 
@@ -141,7 +175,13 @@ export const GamePage = () => {
             }
             <span className={ styles.dot } style={{ background: C.accent }} />
             <span className={ styles.player_pick_answer } style={{ color: C.faint, marginBottom: 0 }}>{ gameState.players.length }{" "}{t("room.players") }</span>
-            RELOJ
+            <span className={ styles.dot } style={{ background: C.accent }} />
+
+            
+            <div className={ styles.clock } style={{ color: timer <= 10 ? "#E5534B" : C.base }}>
+              <span className={ styles.clock_dot } style={{ background: timer <= 10 ? "#E5534B" : C.accent }} />
+              { String(Math.floor(timer / clock)).padStart(1, "0")}:{String(timer % clock).padStart(2, "0") }
+            </div>
           </div>
         </div>
       </nav>
