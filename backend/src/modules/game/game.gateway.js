@@ -111,9 +111,6 @@ export const registerGameHandlers = (io, socket) => {
 
       callback({ success: true, card });
 
-      const player = updated.players.find((p) => p.userId === meta.userId);
-      socket.emit("hand:update", { hand: player.hand });
-
       io.to(code).emit("round:cardPlayed", {
         playedCount: updated.playedCards.length,
         totalNeeded: updated.players.length - 1,
@@ -152,11 +149,7 @@ export const registerGameHandlers = (io, socket) => {
           winner: { userId: winner.userId, username: winner.username, score: winner.score },
         });
 
-        prisma.room.update({
-          where: { code },
-          data: { isActive: false, status: "FINISHED", finishedAt: new Date() },
-        }).catch(console.error);
-
+        // La sala se mantiene activa — el anfitrión puede volver a jugar
         deleteSession(code);
         return callback({ success: true });
       }
@@ -167,6 +160,10 @@ export const registerGameHandlers = (io, socket) => {
       io.to(code).emit("round:new", {
         blackCard,
         judge: { userId: newJudge.userId, username: newJudge.username },
+      });
+
+      updated.players.forEach((p) => {
+        io.to(p.socketId).emit("hand:update", { hand: p.hand });
       });
 
       callback({ success: true });
