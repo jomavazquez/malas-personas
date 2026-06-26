@@ -87,7 +87,10 @@
     "score": "Score",
     "cardsOnTable": "cards",
     "judgeLabel": "Judge",
-    "goal": "Goal"
+    "goal": "Goal",
+    "winsTitle": "{{username}} wins the game!",
+    "playAgain": "Play again",
+    "leaveRoom": "Leave room"
   },
   "how": {
     "eyebrow": "How to play",

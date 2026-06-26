@@ -139,6 +139,8 @@ export const GamePage = () => {
 
   // ── GAME OVER ──────────────────────────────────────────────────────────────
   if( gameOver ){
+    const sortedPlayers = gameState ? [...gameState.players].sort((a, b) => b.score - a.score) : [];
+
     return (
       <div style={{ background: C.surface, position: "relative" }}>
         <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 2 }}>
@@ -147,28 +149,46 @@ export const GamePage = () => {
             <TopMenu />
           </div>
         </nav>
-        <div className="max-w-360 mx-auto w-full px-10 2xl:px-0 mt-10">
-          <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 56, letterSpacing: "-0.04em", color: C.base }}>{t("game.gameOver")}</div>
-          <p style={{ fontSize: 22, color: C.muted }}>{t("game.winner", { username: gameOver.username, score: gameOver.score })}</p>
-          {
-            roundResult &&
-            <div style={{ background: `color-mix(in srgb, ${C.accent} 12%, #fff)`, border: `1.5px solid color-mix(in srgb, ${C.accent} 40%, transparent)`, borderRadius: 16, padding: "16px 24px", marginBottom: 24, display: "flex", alignItems: "center", gap: 12 }}>
-              <span style={{ fontSize: 24 }}>🏆</span>
-              <div>
-                <div style={{ fontFamily: F.display, fontWeight: 700, fontSize: 16, color: C.base }}>
-                  {t("game.roundWinner", { username: roundResult.winner.username })}
-                </div>
-                <div style={{ fontFamily: F.body, fontSize: 14, color: C.muted, marginTop: 2 }}>
-                  "{roundResult.winningCard.text}"
-                </div>
-              </div>
-            </div>
-          }
-          <button onClick={() => navigate("/")} style={{ background: C.accent, color: C.base, borderRadius: 14, padding: "16px 40px", fontFamily: F.display, fontWeight: 700, fontSize: 16, border: "none", cursor: "pointer" }}>
-            {t("game.backToLobby")}
-          </button>
+        <div className="max-w-360 mx-auto w-full px-10 2xl:px-0 mt-10" style={{ maxWidth: 500 }}>
+          <div className={ styles.go_pre } style={{ color: C.base }}>{ t("game.gameOver") }</div>
+          <h1 className="heading_1" style={{ color: C.base, textAlign: "center" }}>{ t("game.winsTitle", { username: gameOver.username }) }{" "}🏆</h1>
+          <div className={ styles.go_container }>
+            {
+              sortedPlayers.map((p, i) => {
+                const isWinner = p.userId === gameOver.userId;
+                return (
+                  <div 
+                    key={ p.userId } 
+                    className={ styles.go_player }
+                    style={{ background: isWinner ? C.accent : "#fff" }}
+                  >
+                    <span className={ styles.go_number } style={{ color: isWinner ? C.base : "#9AA3AB" }}>{ i + 1 }</span>
+                    <div className={ styles.go_avatar_number }>
+                      <Avatar 
+                        user={ p.username } 
+                        bgColor={ C.base }
+                        textColor="#fff"
+                        showLabel 
+                      />
+                      <span className={ styles.go_score} style={{ color: isWinner ? C.base : "#fff" }}>{ p.score }</span>
+                    </div>
+                  </div>
+                );
+              })
+            }
+          </div>
+          <div className={ styles.go_action }>
+            <Button
+              onClick={ () => navigate(`/room/${code}`, { state: { guestId: myId, guestName: myName } }) }
+              bgColor={ C.accent }
+              textColor="#000"
+            >
+              { t("game.playAgain") }
+            </Button>
+            <Button onClick={() => navigate("/")}>{ t("game.leaveRoom") }</Button>
+          </div>
         </div>
-        <Footer />        
+        <Footer />
       </div>
     );
   }

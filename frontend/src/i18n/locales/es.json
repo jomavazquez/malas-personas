@@ -87,7 +87,10 @@
     "score": "Marcador",
     "cardsOnTable": "cartas",
     "judgeLabel": "Juez",
-    "goal": "Objetivo"
+    "goal": "Objetivo",
+    "winsTitle": "¡{{username}} gana la partida!",
+    "playAgain": "Jugar de nuevo",
+    "leaveRoom": "Salir de la sala"
   },
   "how": {
     "eyebrow": "Cómo se juega",
