@@ -3,7 +3,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
 import { C, F, connectSocket } from "../lib";
-import { Avatar, BlackCard, Button, Footer, Logo } from "../components";
+import { Avatar, BlackCard, Button, Footer, Logo, TopMenu } from "../components";
 import type { GameState, PlayedCard, Card } from "../types";
 import styles from "./GamePage.module.css";
 
@@ -138,14 +138,37 @@ export const GamePage = () => {
   };
 
   // ── GAME OVER ──────────────────────────────────────────────────────────────
-  if (gameOver) {
+  if( gameOver ){
     return (
-      <div style={{ minHeight: "100vh", background: C.surface, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 24, fontFamily: F.body }}>
-        <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 56, letterSpacing: "-0.04em", color: C.base }}>{t("game.gameOver")}</div>
-        <p style={{ fontSize: 22, color: C.muted }}>{t("game.winner", { username: gameOver.username, score: gameOver.score })}</p>
-        <button onClick={() => navigate("/")} style={{ background: C.accent, color: C.base, borderRadius: 14, padding: "16px 40px", fontFamily: F.display, fontWeight: 700, fontSize: 16, border: "none", cursor: "pointer" }}>
-          {t("game.backToLobby")}
-        </button>
+      <div style={{ background: C.surface, position: "relative" }}>
+        <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 2 }}>
+          <div className="max-w-360 mx-auto w-full flex items-center justify-between flex-col md:flex-row gap-4 md:gap-0">
+            <Logo />
+            <TopMenu />
+          </div>
+        </nav>
+        <div className="max-w-360 mx-auto w-full px-10 2xl:px-0 mt-10">
+          <div style={{ fontFamily: F.display, fontWeight: 800, fontSize: 56, letterSpacing: "-0.04em", color: C.base }}>{t("game.gameOver")}</div>
+          <p style={{ fontSize: 22, color: C.muted }}>{t("game.winner", { username: gameOver.username, score: gameOver.score })}</p>
+          {
+            roundResult &&
+            <div style={{ background: `color-mix(in srgb, ${C.accent} 12%, #fff)`, border: `1.5px solid color-mix(in srgb, ${C.accent} 40%, transparent)`, borderRadius: 16, padding: "16px 24px", marginBottom: 24, display: "flex", alignItems: "center", gap: 12 }}>
+              <span style={{ fontSize: 24 }}>🏆</span>
+              <div>
+                <div style={{ fontFamily: F.display, fontWeight: 700, fontSize: 16, color: C.base }}>
+                  {t("game.roundWinner", { username: roundResult.winner.username })}
+                </div>
+                <div style={{ fontFamily: F.body, fontSize: 14, color: C.muted, marginTop: 2 }}>
+                  "{roundResult.winningCard.text}"
+                </div>
+              </div>
+            </div>
+          }
+          <button onClick={() => navigate("/")} style={{ background: C.accent, color: C.base, borderRadius: 14, padding: "16px 40px", fontFamily: F.display, fontWeight: 700, fontSize: 16, border: "none", cursor: "pointer" }}>
+            {t("game.backToLobby")}
+          </button>
+        </div>
+        <Footer />        
       </div>
     );
   }
@@ -176,8 +199,6 @@ export const GamePage = () => {
             <span className={ styles.dot } style={{ background: C.accent }} />
             <span className={ styles.player_pick_answer } style={{ color: C.faint, marginBottom: 0 }}>{ gameState.players.length }{" "}{t("room.players") }</span>
             <span className={ styles.dot } style={{ background: C.accent }} />
-
-            
             <div className={ styles.clock } style={{ color: timer <= 10 ? "#E5534B" : C.base }}>
               <span className={ styles.clock_dot } style={{ background: timer <= 10 ? "#E5534B" : C.accent }} />
               { String(Math.floor(timer / clock)).padStart(1, "0")}:{String(timer % clock).padStart(2, "0") }
@@ -185,28 +206,8 @@ export const GamePage = () => {
           </div>
         </div>
       </nav>
-
-
-
       {/* ── MAIN CONTENT ── */}
       <div className="max-w-360 mx-auto w-full px-10 2xl:px-0 mt-10">
-
-        {/* Round result banner */}
-        {
-          roundResult &&
-          <div style={{ background: `color-mix(in srgb, ${C.accent} 12%, #fff)`, border: `1.5px solid color-mix(in srgb, ${C.accent} 40%, transparent)`, borderRadius: 16, padding: "16px 24px", marginBottom: 24, display: "flex", alignItems: "center", gap: 12 }}>
-            <span style={{ fontSize: 24 }}>🏆</span>
-            <div>
-              <div style={{ fontFamily: F.display, fontWeight: 700, fontSize: 16, color: C.base }}>
-                {t("game.roundWinner", { username: roundResult.winner.username })}
-              </div>
-              <div style={{ fontFamily: F.body, fontSize: 14, color: C.muted, marginTop: 2 }}>
-                "{roundResult.winningCard.text}"
-              </div>
-            </div>
-          </div>
-        }
-
         {
           isJudge
         ?
