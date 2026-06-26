@@ -131,18 +131,16 @@ export const GamePage = () => {
       <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 2 }}>
         <div className="max-w-360 mx-auto w-full flex items-center justify-between flex-col md:flex-row gap-4 md:gap-0">
           <Logo />
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 15 }}>
             {
               isJudge 
-              ? <span style={{ background: C.accent, color: C.base, borderRadius: 999, padding: "3px 12px", fontFamily: F.display, fontWeight: 700, fontSize: 12 }}>
-                  { t("game.youAreJudge", "Eres el juez") }
-                </span>
-              : <span style={{ fontFamily: F.body, fontSize: 13, color: "#9AA3AB" }}>
-                  { t("room.judge") }: <strong style={{ color: "#fff" }}>{gameState.judge?.username}</strong>
+              ? <span className={ styles.you_judge } style={{ background: C.accent, color: C.base }}>{ t("game.youAreJudge") }</span>
+              : <span className={ styles.player_pick_answer } style={{ color: C.faint, marginBottom: 0 }}>
+                  { t("room.judge") }:{" "}<strong style={{ color: C.faint }}>{ gameState.judge?.username }</strong>
                 </span>
             }
-            <span style={{ width: 8, height: 8, borderRadius: 999, background: C.accent, display: "inline-block" }} />
-            <span style={{ fontFamily: F.display, fontWeight: 600, fontSize: 13, color: "#9AA3AB" }}>{ gameState.players.length }{" "}{t("room.players") }</span>
+            <span className={ styles.dot } style={{ background: C.accent }} />
+            <span className={ styles.player_pick_answer } style={{ color: C.faint, marginBottom: 0 }}>{ gameState.players.length }{" "}{t("room.players") }</span>
             RELOJ
           </div>
         </div>

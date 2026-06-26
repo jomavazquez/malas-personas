@@ -110,3 +110,18 @@
     font-weight: 800;
     text-align: center
 }
+
+.you_judge {
+    border-radius: 999px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 12px
+}
+
+.dot {
+    border-radius: 999px;
+    display: inline-block;
+    height: 3px;
+    width: 3px
+}
