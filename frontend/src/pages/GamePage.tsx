@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import confetti from "canvas-confetti";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
@@ -137,7 +138,19 @@ export const GamePage = () => {
     });
   };
 
-  // ── GAME OVER ──────────────────────────────────────────────────────────────
+  useEffect(() => {
+    if( !gameOver ) return;
+    const duration = 3000;
+    const end = Date.now() + duration;
+    const colors = [ C.accent, "#000", "#ffffff" ];
+    const frame = () => {
+      confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors });
+      confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors });
+      if( Date.now() < end ) requestAnimationFrame(frame);
+    };
+    frame();
+  }, [ gameOver ]);
+
   if( gameOver ){
     const sortedPlayers = gameState ? [...gameState.players].sort((a, b) => b.score - a.score) : [];
 
