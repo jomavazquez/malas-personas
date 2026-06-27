@@ -2,6 +2,7 @@
     background: #222;
     border-radius: 12px;
     box-shadow: 0 20px 40px -16px rgba(0, 0, 0, .5);
+    flex: 1;
     padding: 25px
 }
 

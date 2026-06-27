@@ -158,7 +158,7 @@ export const HomePage = () => {
               <div className={ styles.step_number} style={{ color: C.accent }}>3</div>
               <div className={ styles.step_title } style={{ color: C.base }}>{ t("how.step3.title") }</div>
               <div className={ styles.step_body } style={{ color: C.muted }}>{ t("how.step3.desc") }</div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-2">
                 <BlackCard question={ t("how.step3.card") } fontSize={ 13 } />
                 <div className={ `min-[768px]:hidden min-[995px]:block ${ styles.white_card }`} style={{ border: `2px solid ${C.border}`, color: C.base }}>{ t("how.step3.answer") }</div>
               </div>
