@@ -124,7 +124,7 @@ export const RegisterPage = () => {
                   </p>
                 </div>
                 {/* TERMS */}
-                <div className={ styles.terms_container } onClick={ () => setAcceptTerms(!acceptTerms) }>
+                <div className="terms_container" onClick={ () => setAcceptTerms(!acceptTerms) }>
                   <div className="checkbox" style={{ border: `2px solid ${acceptTerms ? C.accent : C.border}`, background: acceptTerms ? C.accent : "#fff" }}>
                     { acceptTerms && <span style={{ color: C.base, fontFamily: F.display }}>✓</span> }
                   </div>
@@ -141,9 +141,9 @@ export const RegisterPage = () => {
                 }
                 <button
                   type="submit"
-                  disabled={ loading }
+                  disabled={ loading || !acceptTerms }
                   className="btn"
-                  style={{ background: loading ? "#ccc" : C.accent, cursor: loading ? "not-allowed" : "pointer", color: C.base }}
+                  style={{ background: loading || !acceptTerms ? "#ccc" : C.accent, cursor: loading || !acceptTerms ? "not-allowed" : "pointer", color: C.base }}
                 >
                   { loading ? "..." : t("register.submit") }
                 </button>

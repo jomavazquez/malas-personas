@@ -23,9 +23,10 @@ type ButtonProps = (SolidProps | OutlineProps) & {
     onClick?: () => void;
     style?: React.CSSProperties;
     disabled?: boolean;
+    target?: '_blank' | '_self';
 };
 
-export const Button = ({ children, variant = "solid", size = "md", to, onClick, style: extraStyle, disabled, ...rest }: ButtonProps) => {
+export const Button = ({ children, variant = "solid", size = "md", to, onClick, style: extraStyle, disabled, target = '_self', ...rest }: ButtonProps) => {
     
     const isDisabled = disabled ?? (!to && !onClick);
     const [hovered, setHovered] = useState(false);
@@ -65,6 +66,6 @@ export const Button = ({ children, variant = "solid", size = "md", to, onClick, 
         onMouseLeave: () => setHovered(false),
     };
 
-    if( to ) return <Link to={ to } style={ style } { ...handlers }>{ children }</Link>;
+    if( to ) return <Link to={ to } style={ style } { ...handlers } target={ target }>{ children }</Link>;
     return <button onClick={ onClick } disabled={ isDisabled } style={ style } { ...handlers }>{ children }</button>;
 };

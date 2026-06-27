@@ -34,10 +34,3 @@
     margin: 10px 0 0;
     line-height: 1.4
 }
-
-.terms_container {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    cursor: pointer
-}

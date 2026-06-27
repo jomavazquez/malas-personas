@@ -1,3 +1,4 @@
+export * from "./ContactPage";
 export * from "./GamePage";
 export * from "./HomePage";
 export * from "./LegalPage";

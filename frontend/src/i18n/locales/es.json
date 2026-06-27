@@ -203,5 +203,22 @@
     "forEveryoneDesc": "Preguntas amables, aptas para cualquier público.",
     "noFilter": "Sin filtros",
     "noFilterDesc": "Más bestia. Para quien no se ofende fácilmente."
-  }
+  },
+  "contact": {
+    "subject_general": "Duda general",
+    "subject_game": "Problema en una partida",
+    "subject_cards": "Sugerir cartas",
+    "subject_press": "Prensa",
+    "writeUs": "Escríbenos",
+    "responseTime": "Tiempo de respuesta",
+    "responseTimeValue": "Normalmente en menos de 24 horas",
+    "sentTitle": "¡Mensaje enviado!",
+    "sentDesc": "Te contestamos en menos de 24 horas.",
+    "title": "Cuéntanos",
+    "subtitle": "Rellena el formulario y te contestamos al correo.",
+    "name": "Tu nombre",
+    "subject": "Asunto",
+    "privacy": "y el tratamiento de mis datos.",
+    "send": "Enviar mensaje"
+  }  
 }

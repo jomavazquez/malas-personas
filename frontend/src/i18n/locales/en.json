@@ -203,5 +203,22 @@
     "forEveryoneDesc": "Friendly questions suitable for all audiences.",
     "noFilter": "No filters",
     "noFilterDesc": "Wilder questions. For people who aren't easily offended."
+  },
+  "contact": {
+    "subject_general": "General inquiry",
+    "subject_game": "Problem in a game",
+    "subject_cards": "Suggest cards",
+    "subject_press": "Press",
+    "writeUs": "Write us",
+    "responseTime": "Response time",
+    "responseTimeValue": "Usually in less than 24 hours",
+    "sentTitle": "Message sent!",
+    "sentDesc": "We'll answer you in less than 24 h.",
+    "title": "Tell us",
+    "subtitle": "Fill the form and we'll response your email.",
+    "name": "Your name",
+    "subject": "Subject",
+    "privacy": "and the processing of my personal data.",
+    "send": "Send message"
   }
 }
