@@ -90,7 +90,8 @@
     "goal": "Objetivo",
     "winsTitle": "¡{{username}} gana la partida!",
     "playAgain": "Jugar de nuevo",
-    "leaveRoom": "Salir de la sala"
+    "leaveRoom": "Salir de la sala",
+    "loading": "Cargando partida..."
   },
   "how": {
     "eyebrow": "Cómo se juega",

@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
-import { C, F, connectSocket } from "../lib";
-import { Avatar, BlackCard, Button, Footer, Logo, GameOver } from "../components";
+import { C, connectSocket } from "../lib";
+import { Avatar, BlackCard, Button, Footer, Logo, GameOver, LoadingRoom } from "../components";
 import type { GameState, PlayedCard, Card } from "../types";
 import styles from "./GamePage.module.css";
 
@@ -145,11 +145,7 @@ export const GamePage = () => {
 
   // ── LOADING ────────────────────────────────────────────────────────────────
   if( !gameState ){
-    return (
-      <div style={{ minHeight: "100vh", background: C.surface, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: F.body, color: C.muted }}>
-        {t("game.loading", "Cargando partida...")}
-      </div>
-    );
+    return <LoadingRoom />;
   }
 
   // ── MAIN LAYOUT ────────────────────────────────────────────────────────────

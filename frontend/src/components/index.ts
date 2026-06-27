@@ -1,6 +1,7 @@
 export * from "./pages/BlackCard";
 export * from "./pages/Footer";
 export * from "./pages/GameOver";
+export * from "./pages/LoadingRoom";
 export * from "./pages/RoomNotFound";
 export * from "./pages/TopMenu";
 export * from "./pages/TopMenuMyAccount";

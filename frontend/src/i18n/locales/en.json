@@ -90,7 +90,8 @@
     "goal": "Goal",
     "winsTitle": "{{username}} wins the game!",
     "playAgain": "Play again",
-    "leaveRoom": "Leave room"
+    "leaveRoom": "Leave room",
+    "loading": "Loading game..."
   },
   "how": {
     "eyebrow": "How to play",
