@@ -222,7 +222,7 @@ export const GamePage = () => {
               }
               {
                 hasPlayed && !revealedCards &&
-                <p className={ `m-5 ${ styles.judge_desc }` } style={{ color: C.muted }}>{ t("game.played", { count: playedCount, total: totalNeeded })}</p>
+                <p className={ `my-5 ${ styles.judge_desc }` } style={{ color: C.muted }}>{ t("game.played", { count: playedCount, total: totalNeeded })}</p>
               }
               {
                 revealedCards && !roundResult &&
