@@ -158,12 +158,12 @@ export const GamePage = () => {
             {
               isJudge 
               ? <span className={ styles.you_judge } style={{ background: C.accent, color: C.base }}>{ t("game.youAreJudge") }</span>
-              : <span className={ styles.player_pick_answer } style={{ color: C.faint, marginBottom: 0 }}>
+              : <span className="player_pick_answer" style={{ color: C.faint, marginBottom: 0 }}>
                   { t("room.judge") }:{" "}<strong style={{ color: C.faint }}>{ gameState.judge?.username }</strong>
                 </span>
             }
             <span className={ styles.dot } style={{ background: C.accent }} />
-            <span className={ styles.player_pick_answer } style={{ color: C.faint, marginBottom: 0 }}>{ gameState.players.length }{" "}{t("room.players") }</span>
+            <span className="player_pick_answer" style={{ color: C.faint, marginBottom: 0 }}>{ gameState.players.length }{" "}{t("room.players") }</span>
             <span className={ styles.dot } style={{ background: C.accent }} />
             <div className={ styles.clock } style={{ color: timer <= 10 ? "#E5534B" : C.base }}>
               <span className={ styles.clock_dot } style={{ background: timer <= 10 ? "#E5534B" : C.accent }} />
@@ -231,7 +231,7 @@ export const GamePage = () => {
             </div>
             {/* RIGHT: HAND */}
             <div>
-              <div className={ styles.player_pick_answer } style={{ color: C.faint }}>{ t("game.pickCard") }</div>
+              <div className="player_pick_answer" style={{ color: C.faint }}>{ t("game.pickCard") }</div>
               <div className={ styles.player_card_container }>
                 {
                   hand.map((card) => {
@@ -280,14 +280,14 @@ export const GamePage = () => {
         {/* ── SCOREBOARD ── */}
         <div className="pb-10">
           <div className="flex">
-            <div className={ styles.player_pick_answer } style={{ color: C.faint }}>
+            <div className="player_pick_answer" style={{ color: C.faint }}>
               { t("game.score") }
               {
                 revealedCards && !roundResult &&
                 <span style={{ color: C.faint, fontWeight: 500 }}>{" "}·{" "}{ playedCount }{" "}{ t("game.cardsOnTable") }</span>
               }
             </div>
-            <div className={ styles.player_pick_answer } style={{ marginLeft: "auto", color: C.faint, alignSelf: "center" }}>
+            <div className="player_pick_answer" style={{ marginLeft: "auto", color: C.faint, alignSelf: "center" }}>
               { t("game.goal") }{" "}·{" "}<strong>{ gameState.pointsToWin }</strong>{" "}{t("myroom.points") }
             </div>
           </div>

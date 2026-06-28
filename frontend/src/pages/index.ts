@@ -1,5 +1,6 @@
 export * from "./ContactPage";
 export * from "./GamePage";
+export * from "./HelpCenterPage";
 export * from "./HomePage";
 export * from "./LegalPage";
 export * from "./LobbyPage";

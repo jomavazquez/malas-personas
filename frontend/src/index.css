@@ -227,3 +227,12 @@ html, body {
     gap: 10px;
     cursor: pointer
 }
+
+.player_pick_answer {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 15px;
+    text-transform: uppercase
+}

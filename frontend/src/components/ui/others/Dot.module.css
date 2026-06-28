@@ -1,0 +1,5 @@
+.sidebar_dot {
+    border-radius: 999px;
+    display: inline-block;
+    flex-shrink: 0
+}

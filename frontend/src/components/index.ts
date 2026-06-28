@@ -10,6 +10,7 @@ export * from "./ui/buttons/UnderlineLink";
 export * from "./ui/others/Avatar";
 export * from "./ui/others/Badge";
 export * from "./ui/others/Blob";
+export * from "./ui/others/Dot";
 export * from "./ui/others/FloatingQuestion";
 export * from "./ui/others/JoinModal";
 export * from "./ui/others/LanguageSelector";

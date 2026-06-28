@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { AuthProvider, useAuth, JoinModalProvider } from "./context";
-import { useLenis } from "./hooks/useLenis";
-import { HomePage, GamePage, LobbyPage, LoginPage, RegisterPage, MyRoomsPage, RoomPage, LegalPage, ContactPage } from "./pages";
+import { useLenis } from "./hooks";
+import { HomePage, GamePage, LobbyPage, LoginPage, RegisterPage, MyRoomsPage, RoomPage, LegalPage, ContactPage, HelpCenterPage } from "./pages";
 import "./i18n";
 import { scrollToTop } from "./lib";
 
@@ -30,6 +30,7 @@ const AppInner = () => {
         <Route path="/" element={ <HomePage /> } />
         <Route path="/login" element={ <LoginPage /> } />
         <Route path="/register" element={ <RegisterPage /> } />
+        <Route path="/help-center" element={ <HelpCenterPage /> } />
         <Route path="/contact" element={ <ContactPage /> } />
         <Route path="/lobby" element={ <ProtectedRoute><LobbyPage /></ProtectedRoute> } />
         <Route path="/room/:code" element={ <RoomPage /> } />
