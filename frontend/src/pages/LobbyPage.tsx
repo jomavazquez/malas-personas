@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
-import { Badge, Button, Footer, Logo, TopMenuMyAccount } from "../components";
+import { Badge, Button, Dot, Footer, Logo, TopMenuMyAccount } from "../components";
 import { api, C, getOrCreateGuestId } from "../lib";
 import type { Deck } from "../types";
 import styles from "./LobbyPage.module.css";
@@ -114,8 +114,7 @@ export const LobbyPage = () => {
                     onClick={ () => setSelectedLang(lang) } 
                     style={{ border: `1.5px solid ${ selectedLang === lang ? C.accent : C.border }`, background: selectedLang === lang ? `color-mix(in srgb, ${ C.accent } 10%, #fff)` : "#fff", color: C.base }}>
                     { 
-                      selectedLang === lang && 
-                      <span style={{ width: 7, height: 7, borderRadius: 999, background: C.accent, display: "inline-block" }} />
+                      selectedLang === lang && <Dot />
                     }
                     {
                       lang === "EN" ? "English" : "Español"

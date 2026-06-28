@@ -1,4 +1,5 @@
 import { C } from "../../../lib";
+import { Dot } from "../../../components";
 import styles from "./Badge.module.css";
 
 interface BadgeProps {
@@ -18,8 +19,7 @@ export const Badge = ({ children, color = C.accent, dot = true, marginBottom = 2
         }}
     >
         {
-            dot && 
-            <span style={{ width: 7, height: 7, borderRadius: 999, background: color, display: "inline-block" }} />
+            dot && <Dot />
         }
         <span className={ styles.badge_label } style={{ color: C.accentDeep }}>
             { children }

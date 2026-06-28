@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsMobile } from "../../../hooks";
 import { C, F } from "../../../lib";
+import { Dot } from "./Dot";
 
 const STORAGE_KEY = "mp_language";
 
@@ -59,8 +60,7 @@ export const LanguageSelector = () => {
                         }}
                     >
                         {
-                            isActive &&
-                            <span style={{ width: 6, height: 6, borderRadius: 999, background: C.accent, display: "inline-block", flexShrink: 0 }} />
+                            isActive && <Dot size={ 6 } />
                         }
                         {
                             isMobile ? short : label
