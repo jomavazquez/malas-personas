@@ -83,7 +83,6 @@ model Card {
   id     String   @id @default(cuid())
   type   CardType
   text   String
-  blanks Int      @default(1)
 
   deckId String
   deck   Deck   @relation(fields: [deckId], references: [id])

@@ -29,7 +29,6 @@ export interface Card {
   id: string;
   type: "BLACK" | "WHITE";
   text: string;
-  blanks: number;
 }
 
 export interface Player {

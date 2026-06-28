@@ -21,7 +21,7 @@ const dealCards = (whiteDeck, count) => {
 export const buildSession = async (room) => {
   const cards = await prisma.card.findMany({
     where: { deckId: room.deckId },
-    select: { id: true, type: true, text: true, blanks: true },
+    select: { id: true, type: true, text: true },
   });
 
   const blackDeck = shuffle(cards.filter((c) => c.type === "BLACK"));
