@@ -25,6 +25,7 @@ export const RoomPage = () => {
   const [ players, setPlayers ] = useState<Player[]>([]);
   const [ hostId, setHostId ] = useState<string | null>(null);
   const [ copied, setCopied ] = useState(false);
+  const [ copiedUrl, setCopiedUrl ] = useState(false);
   const [ error, setError ] = useState("");
   const [ connected, setConnected ] = useState(false);
   const [ nameInput, setNameInput ] = useState(user?.username ?? "");
@@ -62,6 +63,12 @@ export const RoomPage = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleCopyUrl = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopiedUrl(true);
+    setTimeout(() => setCopiedUrl(false), 2000);
+  };
+
   const handleNameSubmit = () => {
     if (!nameInput.trim()) return;
     const id = user ? user.id : getOrCreateGuestId();
@@ -75,7 +82,7 @@ export const RoomPage = () => {
     setPlayers([]);
     setHostId(null);
     setConnected(false);
-  }, [code]);
+  }, [ code ]);
 
   useEffect(() => {
     if( !code || !resolvedId || !resolvedName ) return;
@@ -105,8 +112,6 @@ export const RoomPage = () => {
       socket.off("game:started");
     };
   }, [ code, resolvedId, resolvedName, isGuest, navigate ]);
-
-
 
   if( needsName ){
     return (
@@ -168,17 +173,32 @@ export const RoomPage = () => {
         <div className="mx-auto" style={{ maxWidth: 480 }}>
           <div style={{ textAlign: "center", marginBottom: 25 }}>
             <div className={ styles.players_th } style={{ fontSize: 12, color: C.muted }}>{ t("room.shareCode") }</div>
-            <div className={ styles.code_container }>
+            <div className={ `${styles.code_container} flex-wrap md:flex-nowrap` }>
               <span className={ styles.code } style={{ color: C.base }}>{ code }</span>
-              <button 
-                onClick={ handleCopy } 
-                className={ styles.btn }
-                style={{ background: C.surface, border: `1.5px solid ${C.border}`, color: C.muted }}
-              >
-                {
-                  copied ? t("room.copied") : t("room.copyCode")
-                }
-              </button>
+              <div className="flex gap-2 w-full md:w-auto justify-center md:justify-start">
+                <button 
+                  onClick={ handleCopy } 
+                  className={ styles.btn }
+                  style={{ background: C.surface, border: `1.5px solid ${C.border}`, color: C.muted }}
+                >
+                  { 
+                    copied 
+                    ? <strong>{ t("room.copied") }</strong>
+                    : `${ t("room.copyCode") } ${ t("lobby.code").toLowerCase() }`
+                  }
+                </button>
+                <button 
+                  onClick={ handleCopyUrl } 
+                  className={ styles.btn }
+                  style={{ background: C.surface, border: `1.5px solid ${C.border}`, color: C.muted }}
+                >
+                  { 
+                    copiedUrl 
+                    ? <strong>{ t("room.copied") }</strong>
+                    : `${ t("room.copyCode") } URL`
+                  }
+                </button>
+              </div>
             </div>
           </div>
           <div className={ styles.players_box } style={{ border: `1.5px solid ${ C.borderMid }`}}>
