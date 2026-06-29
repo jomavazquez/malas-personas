@@ -182,7 +182,7 @@ export const pickWinner = (session, { judgeUserId, winnerUserId }) => {
   winner.score += 1;
 
   const gameOver = winner.score >= session.pointsToWin;
-  session.judgeIndex = (session.judgeIndex + 1) % session.players.length;
+  session.judgeIndex = session.players.findIndex((p) => p.userId === winnerUserId);
 
   return { session, winner, winnerPlay, gameOver };
 };
