@@ -55,7 +55,7 @@ export const GameOver = ({ winner, players }: GameOverProps) => {
                                     <span className={ styles.go_number } style={{ color: isWinner ? C.base : "#9AA3AB" }}>{ i + 1 }</span>
                                     <div className={ styles.go_avatar_number }>
                                         <Avatar user={ p.username } bgColor={ C.base } textColor="#fff" showLabel />
-                                        <span className={ styles.go_score } style={{ color: isWinner ? C.base : "#fff" }}>{ p.score }</span>
+                                        <span className={ styles.go_score } style={{ color: C.base }}>{ p.score }</span>
                                     </div>
                                 </div>
                             );
