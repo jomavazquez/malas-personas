@@ -19,4 +19,5 @@ docker exec -it malas-personas-db psql -U malas -d malas_personas -c "TRUNCATE r
 
 # Seed the database 
 
+npx prisma generate
 npm run db:seed

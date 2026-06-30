@@ -27,7 +27,7 @@ const seedDeck = async (deckData) => {
       language: deckData.language,
       cards: {
         create: [
-          ...deckData.blacks.map((card) => ({ type: "BLACK", text: card.text })),
+          ...deckData.blacks.map((text) => ({ type: "BLACK", text })),
           ...deckData.whites.map((text) => ({ type: "WHITE", text })),
         ],
       },
