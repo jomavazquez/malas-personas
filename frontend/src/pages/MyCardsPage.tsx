@@ -319,15 +319,17 @@ export const MyCardsPage = () => {
                   <span className={ styles.card_text } style={{ color: C.base }}>
                     <BlackCardText text={ card.text } color={ C.base } />
                   </span>
-                  <UnderlineLink onClick={() => openEdit(card)}>{ t("mydecks.edit") }</UnderlineLink>
-                  <button 
-                    onClick={ () => setDeleteId(card.id) } 
-                    className="btn_red"
-                    style={{ fontSize: 14 }}
-                  >
-                    ✕
-                  </button>
-            </div>
+                  <div className="flex md:contents w-full md:w-auto justify-between md:justify-normal">
+                    <UnderlineLink onClick={() => openEdit(card)}>{ t("mydecks.edit") }</UnderlineLink>
+                    <button 
+                      onClick={ () => setDeleteId(card.id) } 
+                      className="btn_red"
+                      style={{ fontSize: 14 }}
+                    >
+                      ✕
+                    </button>
+                  </div>
+              </div>
           ))}
         </div>
         {/* PAGINATION */}
