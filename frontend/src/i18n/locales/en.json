@@ -182,7 +182,9 @@
   "myroom": {
     "title": "My rooms",
     "titleShort": "Rooms",
+    "saved1": "saved room",
     "saved": "saved rooms",
+    "activeNow1": "active right now",
     "activeNow": "active right now",
     "filter_all": "All",
     "filter_active": "Active",

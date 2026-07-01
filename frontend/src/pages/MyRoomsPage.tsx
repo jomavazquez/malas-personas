@@ -109,7 +109,7 @@ export const MyRoomsPage = () => {
           <div>
             <h1 className="heading_1" style={{ color: C.base }}>{ t("myroom.title") }</h1>
             <p className={ styles.text } style={{ color: C.muted }}>
-              <strong>{ rooms.length }</strong> { t("myroom.saved") } · <strong>{ activeCount }</strong> { t("myroom.activeNow") }
+              <strong>{ rooms.length }</strong>{" "}{ rooms.length === 1 ? t("myroom.saved1") : t("myroom.saved") }{" "}·{" "}<strong>{ activeCount }</strong>{" "}{ activeCount === 1 ? t("myroom.activeNow1") : t("myroom.activeNow") }
             </p>
           </div>
           <Button bgColor={ C.accent } textColor="#000" onClick={() => navigate("/lobby")}>
@@ -188,8 +188,13 @@ export const MyRoomsPage = () => {
                           setCopiedId(room.id);
                           setTimeout(() => setCopiedId(null), 750);
                         }}
-                        className={`${ styles.btn } ${ styles.btn_copy } flex md:hidden lg:flex`}
-                        style={{ border: `1.5px solid ${C.border}`, background: copiedId === room.id ? C.accent : "#fff", color: copiedId === room.id ? C.base : C.muted }}
+                        className={`btn ${ styles.btn_copy } flex md:hidden lg:flex`}
+                        style={{ 
+                          border: `1.5px solid ${C.border}`, 
+                          background: copiedId === room.id ? 
+                          C.accent : "#fff", 
+                          color: copiedId === room.id ? C.base : C.muted
+                        }}
                         title={ t("room.copyCode") }
                       >
                         { copiedId === room.id ? "✓" : "⧉" }

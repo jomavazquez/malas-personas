@@ -182,7 +182,9 @@
   "myroom": {
     "title": "Mis salas",
     "titleShort": "Salas",
+    "saved1": "sala guardada",
     "saved": "salas guardadas",
+    "activeNow1": "activa ahora mismo",
     "activeNow": "activas ahora mismo",
     "filter_all": "Todas",
     "filter_active": "Activas",
