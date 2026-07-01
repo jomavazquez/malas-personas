@@ -121,14 +121,14 @@ export const ContactPage = () => {
                       </div>
                       <div>
                         <label className="form_label" style={{ color: C.muted }}>{ t("contact.subject") }</label>
-                        <div className={ styles.right_chips_container }>
+                        <div className="right_chips_container">
                           {
                             subjects.map(({ key, label }) => (
                               <button
                                 key={ key }
                                 type="button"
                                 onClick={ () => setSubject(key) }
-                                className={ styles.right_chips }
+                                className="right_chips"
                                 style={{ border: `1.5px solid ${ subject === key ? C.accent : C.border }`, background: subject === key ? `color-mix(in srgb, ${C.accent} 10%, #fff)` : "#fff", color: C.base }}
                               >
                                 { label }
@@ -140,7 +140,7 @@ export const ContactPage = () => {
                       <div>
                         <label className="form_label" style={{ color: C.muted }}>{ t("contact.message", "Mensaje") }</label>
                         <textarea
-                          className={`input ${ styles.textarea }`}
+                          className="input textarea"
                           name="message"
                           rows={ 5 }
                           placeholder={ t("contact.messagePlaceholder", "Cuéntanos en qué podemos ayudarte...") }

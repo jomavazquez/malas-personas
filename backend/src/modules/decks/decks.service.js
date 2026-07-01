@@ -1,6 +1,6 @@
 import prisma from "../../config/database.js";
 
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 10;
 
 // ── Official Decks (userId null)
 export const getDecks = async () => {
@@ -32,7 +32,7 @@ export const getDeckCards = async (userId, deckId, { page = 1, type, search }) =
     ...(search && { text: { contains: search, mode: "insensitive" } }),
   };
 
-  const [ cards, total ] = await Promise.all([
+  const [cards, total, blackCount, whiteCount] = await Promise.all([
     prisma.card.findMany({
       where,
       select: { id: true, type: true, text: true },
@@ -41,9 +41,13 @@ export const getDeckCards = async (userId, deckId, { page = 1, type, search }) =
       take: PAGE_SIZE,
     }),
     prisma.card.count({ where }),
+    prisma.card.count({ where: { deckId } }),
+    prisma.card.count({ where: { deckId, type: "WHITE" } }),
   ]);
 
-  return { cards, total, page, pageSize: PAGE_SIZE, pages: Math.ceil(total / PAGE_SIZE) };
+  const blacks = blackCount - whiteCount;
+
+  return { cards, total, page, pageSize: PAGE_SIZE, pages: Math.ceil(total / PAGE_SIZE), blackCount: blacks, whiteCount };
 };
 
 // ── Create User's Deck
@@ -78,7 +82,7 @@ export const deleteCard = async (userId, cardId) => {
   return prisma.card.delete({ where: { id: cardId } });
 };
 
-// ── Delete user's deck
+// ── Delete Deck
 export const deleteDeck = async (userId, deckId) => {
   const deck = await prisma.deck.findUnique({ where: { id: deckId } });
   if( !deck ) throw Object.assign(new Error("DECK_NOT_FOUND"), { status: 404 });

@@ -24,26 +24,3 @@
     font-size: 16px;
     margin: 5px 0 25px 0
 }
-
-.right_chips_container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px
-}
-
-.right_chips {
-    border-radius: 999px;
-    cursor: pointer;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 8px 16px;
-    transition: all 0.25s ease
-}
-
-.textarea {
-    box-sizing: border-box;
-    outline: none;
-    resize: none;
-    width: 100%
-}
