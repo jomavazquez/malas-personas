@@ -195,7 +195,7 @@ export const MyDecksPage = () => {
         {/* GRID */}
         {
           loading 
-          ? <p className={ styles.loading } style={{ color: C.base }}>{ t("myroom.loading") }</p>
+          ? <p className="loading" style={{ color: C.base }}>{ t("myroom.loading") }</p>
           : 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {

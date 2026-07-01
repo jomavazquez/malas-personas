@@ -129,7 +129,11 @@ export const ContactPage = () => {
                                 type="button"
                                 onClick={ () => setSubject(key) }
                                 className="right_chips"
-                                style={{ border: `1.5px solid ${ subject === key ? C.accent : C.border }`, background: subject === key ? `color-mix(in srgb, ${C.accent} 10%, #fff)` : "#fff", color: C.base }}
+                                style={{ 
+                                  border: `1.5px solid ${ subject === key ? C.accent : C.border }`, 
+                                  background: subject === key ? `color-mix(in srgb, ${C.accent} 10%, #fff)` : "#fff", 
+                                  color: C.base
+                                }}
                               >
                                 { label }
                               </button>
