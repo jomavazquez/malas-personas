@@ -204,6 +204,24 @@
     "noFilter": "No filters",
     "noFilterDesc": "Wilder questions. For people who aren't easily offended."
   },
+  "mydecks": {
+    "title": "My Decks",
+    "1deck": "deck",
+    "decks": "decks",
+    "search": "Search deck...",
+    "newDeck": "New deck",
+    "card": "card",
+    "cards": "cards",
+    "manage": "Manage cards",
+    "newDeckSub": "Start with a blank deck and add your own cards.",
+    "deleteTitle": "Delete deck",
+    "deleteConfirm": "The deck and all its cards will be deleted. This action cannot be undone.",
+    "deckName": "Deck name",
+    "deckNamePlaceholder": "e.g. My team deck",
+    "nameExists": "You already have a deck with that name.",
+    "createError": "Error creating deck. Please try again.",
+    "create": "Create deck"
+  },  
   "contact": {
     "subject_general": "General inquiry",
     "subject_game": "Problem in a game",

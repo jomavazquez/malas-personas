@@ -110,9 +110,14 @@ export const LobbyPage = () => {
                   (["EN", "ES"] as const).map((lang) => (
                   <button 
                     key={ lang } 
-                    className={ styles.langBt }
+                    className="langBt"
                     onClick={ () => setSelectedLang(lang) } 
-                    style={{ border: `1.5px solid ${ selectedLang === lang ? C.accent : C.border }`, background: selectedLang === lang ? `color-mix(in srgb, ${ C.accent } 10%, #fff)` : "#fff", color: C.base }}>
+                    style={{ 
+                      border: `1.5px solid ${ selectedLang === lang ? C.accent : C.border }`, 
+                      background: selectedLang === lang ? `color-mix(in srgb, ${ C.accent } 10%, #fff)` : "#fff", 
+                      color: C.base 
+                    }}
+                  >
                     { 
                       selectedLang === lang && <Dot />
                     }

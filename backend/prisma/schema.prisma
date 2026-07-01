@@ -17,6 +17,7 @@ model User {
   username     String   @unique
   createdAt    DateTime @default(now())
 
+  decks Deck[]
   hostedRooms Room[]
 
   @@map("users")
@@ -63,6 +64,9 @@ model Deck {
   name      String
   language  Language @default(ES)
   createdAt DateTime @default(now())
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
 
   cards Card[]
   rooms Room[]

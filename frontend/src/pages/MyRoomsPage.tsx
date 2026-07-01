@@ -82,14 +82,14 @@ export const MyRoomsPage = () => {
             <p className="modal_body" style={{ color: C.muted }}>{ deleteType === "delete" ? t("myroom.deleteConfirm") : t("myroom.closeConfirm") }</p>
             <div style={{ display: "flex", gap: 10 }}>
               <button
-                className={ `${ styles.btn } ${ styles.btn_cancel }`}
+                className="btn btn_cancel"
                 onClick={ () => setDeleteCode(null) }
                 style={{ border: `1.5px solid ${C.border}`, color: C.base }}
               >
                 { t("myroom.cancel") }
               </button>
               <button 
-                className={ `${ styles.btn } ${ styles.btn_delete }`} 
+                className="btn btn_delete"
                 onClick={ () => handleDelete(deleteType, deleteCode!) }
               >
                 { deleteType === "delete" ? t("myroom.delete") : t("myroom.close") }
@@ -113,7 +113,7 @@ export const MyRoomsPage = () => {
             </p>
           </div>
           <Button bgColor={ C.accent } textColor="#000" onClick={() => navigate("/lobby")}>
-            { t("nav.createRoom") } →
+            { t("nav.createRoom") }{" "}→
           </Button>
         </div>
         {/* FILTERS */}
@@ -135,9 +135,9 @@ export const MyRoomsPage = () => {
             }
           </div>
           <div className="w-full md:w-68.75" style={{ position: "relative" }}>
-            <span className={ styles.search_icon } style={{ color: C.faint }}>⌕</span>
+            <span className="search_icon" style={{ color: C.faint }}>⌕</span>
             <input
-              className={`input ${ styles.search }`}
+              className="input search"
               style={{ border: `1.5px solid ${C.border}`, color: C.base }}
               placeholder={ t("myroom.search") }
               value={ search }

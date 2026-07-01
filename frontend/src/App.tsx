@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 import { useEffect } from "react";
 import { AuthProvider, useAuth, JoinModalProvider } from "./context";
 import { useLenis } from "./hooks";
-import { HomePage, GamePage, LobbyPage, LoginPage, RegisterPage, MyRoomsPage, RoomPage, LegalPage, ContactPage, HelpCenterPage } from "./pages";
+import { HomePage, GamePage, LobbyPage, LoginPage, RegisterPage, MyRoomsPage, RoomPage, LegalPage, ContactPage, HelpCenterPage, MyDecksPage, MyCardsPage } from "./pages";
 import "./i18n";
 import { scrollToTop } from "./lib";
 
@@ -35,6 +35,8 @@ const AppInner = () => {
         <Route path="/lobby" element={ <ProtectedRoute><LobbyPage /></ProtectedRoute> } />
         <Route path="/room/:code" element={ <RoomPage /> } />
         <Route path="/my-rooms" element={ <ProtectedRoute><MyRoomsPage /></ProtectedRoute> } />
+        <Route path="/my-decks" element={ <ProtectedRoute><MyDecksPage /></ProtectedRoute> } />
+        <Route path="/my-cards" element={ <ProtectedRoute><MyCardsPage /></ProtectedRoute> } />
         <Route path="/game/:code" element={ <GamePage /> } />
         <Route path="/legal-notice" element={ <LegalPage doc="legal-notice" /> } />
         <Route path="/privacy-policy" element={ <LegalPage doc="privacy-policy" /> } />

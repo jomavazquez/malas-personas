@@ -102,18 +102,29 @@ html, body {
     border: none;
     border-radius: 12px;
     color: #fff;
+    cursor: pointer;
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 16px;
     font-weight: 700;
     letter-spacing: -0.01em;
     padding: 15px 30px;
-    transition: background 0.25s ease, color 0.25s ease;
+    transition: all 0.25s ease;
     width: 100%
 }
 
 .btn:hover {
     background: #fff !important;
     color: #000
+}
+
+.btn_cancel {
+    background: #fff;
+    flex: 1;
+    padding: 10px
+}
+
+.btn_cancel:hover {
+    border-color: transparent !important
 }
 
 .just_play_text {
@@ -188,6 +199,16 @@ html, body {
     background: #F3DEDC
 }
 
+.btn_delete {
+    flex: 1;
+    background: #C1584E;
+    color: #fff !important
+}
+
+.btn_delete:hover {
+    background: #963831 !important
+}
+
 .modal_bg {
     background: rgba(0, 0, 0, 0.6)
 }
@@ -235,4 +256,32 @@ html, body {
     letter-spacing: 0.1em;
     margin-bottom: 15px;
     text-transform: uppercase
+}
+
+.search_icon {
+    font-size: 26px;
+    left: 15px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.search {
+    font-size: 14px;
+    padding-left: 40px;
+    width: 100%
+}
+
+.langBt {
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    gap: 10px;
+    justify-content: center;
+    padding: 15px;
+    transition: all 0.15s
 }

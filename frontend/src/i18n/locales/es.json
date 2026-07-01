@@ -204,6 +204,24 @@
     "noFilter": "Sin filtros",
     "noFilterDesc": "Más bestia. Para quien no se ofende fácilmente."
   },
+  "mydecks": {
+    "title": "Mis mazos",
+    "1deck": "mazo",
+    "decks": "mazos",
+    "search": "Buscar mazo...",
+    "newDeck": "Nuevo mazo",
+    "card": "carta",
+    "cards": "cartas",
+    "manage": "Gestionar cartas",
+    "newDeckSub": "Empieza uno vacío y añade tus propias cartas.",
+    "deleteTitle": "Eliminar mazo",
+    "deleteConfirm": "Se eliminarán el mazo y todas sus cartas. Esta acción no se puede deshacer.",
+    "deckName": "Nombre del mazo",
+    "deckNamePlaceholder": "Ej: Mazo de oficina",
+    "nameExists": "Ya tienes un mazo con ese nombre.",
+    "createError": "Error al crear el mazo. Inténtalo de nuevo.",
+    "create": "Crear mazo"
+  },
   "contact": {
     "subject_general": "Duda general",
     "subject_game": "Problema en una partida",

@@ -1,0 +1,102 @@
+.filter_search {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px
+}
+
+.loading {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 20px;
+    padding: 25px;
+    text-align: center
+}
+
+.maze {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px -8px rgba(0, 0, 0, 0.2);
+    overflow: hidden
+}
+
+.card_preview {
+    height: 125px;
+    overflow: hidden;
+    position: relative
+}
+
+.lang {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 5px 12px;
+    position: absolute;
+    left: 20px;
+    top: 20px
+}
+
+.mini_card {
+    background: #fff;
+    border-radius: 10px;
+    bottom: -10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    max-width: 150px;
+    padding: 10px 15px;
+    position: absolute;
+    right: 20px;
+    transform: rotate(10deg)
+}
+
+.mini_card_txt {
+    display: block;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.3em
+}
+
+.card_title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    margin: 0 0 10px
+}
+
+.card_number {
+    font-size: 14px;
+    margin-bottom: 20px
+}
+
+.new_deck {
+    align-items: center;
+    background: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    min-height: 260px;
+    padding: 25px
+}
+
+.new_deck_icon {
+    align-items: center;
+    border-radius: 15px;
+    display: flex;
+    font-size: 30px;
+    font-weight: 700;
+    justify-content: center;
+    height: 60px;
+    width: 60px    
+}
+
+.new_deck_sub {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.3em
+}
