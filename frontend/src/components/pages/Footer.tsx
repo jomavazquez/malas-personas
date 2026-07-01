@@ -79,7 +79,10 @@ export const Footer = () => {
                         <FooterLink to={ user ? "/lobby" : "/register" }>{ t("nav.createRoom") }</FooterLink>
                         {
                             user &&
-                            <FooterLink to="/my-rooms">{ t("nav.myRooms") }</FooterLink>
+                            <>
+                                <FooterLink to="/my-rooms">{ t("myroom.title") }</FooterLink>
+                                <FooterLink to="/my-decks">{ t("mydecks.title") }</FooterLink>
+                            </>
                         }
                         <FooterLink onClick={ openJoinModal }>{ t("footer.joinWithCode") }</FooterLink>
                     </div>

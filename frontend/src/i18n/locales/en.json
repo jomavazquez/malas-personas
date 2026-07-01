@@ -3,7 +3,7 @@
     "howItWorks": "How it works",
     "login": "Log in",
     "createRoom": "Create room",
-    "myRooms": "My rooms",
+    "myAccount": "My account",
     "spanish": "Spanish",
     "english": "English"
   },
@@ -180,6 +180,7 @@
     "4": "Your name and avatar, ready for the next game."
   },
   "myroom": {
+    "title": "My rooms",
     "saved": "saved rooms",
     "activeNow": "active right now",
     "filter_all": "All",
@@ -207,7 +208,7 @@
     "noFilterDesc": "Wilder questions. For people who aren't easily offended."
   },
   "mydecks": {
-    "title": "My Decks",
+    "title": "My decks",
     "1deck": "deck",
     "decks": "decks",
     "search": "Search deck...",

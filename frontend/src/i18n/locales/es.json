@@ -3,7 +3,7 @@
     "howItWorks": "Cómo funciona",
     "login": "Iniciar sesión",
     "createRoom": "Crear sala",
-    "myRooms": "Mis salas",
+    "myAccount": "Mi cuenta",
     "spanish": "Español",
     "english": "Inglés"
   },
@@ -180,6 +180,7 @@
     "4": "Tu nombre y avatar, listos para la próxima ronda."
   },
   "myroom": {
+    "title": "Mis salas",
     "saved": "salas guardadas",
     "activeNow": "activas ahora mismo",
     "filter_all": "Todas",

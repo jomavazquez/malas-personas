@@ -18,9 +18,7 @@ export const TopMenu = () => {
                         { t("nav.howItWorks") }
                     </UnderlineLink>
                 </div>
-                <UnderlineLink to={ user ? "/my-rooms" : "/login" }>
-                    { t( user ? "nav.myRooms" : "nav.login") }
-                </UnderlineLink>
+                <UnderlineLink to={ user ? "/my-rooms" : "/login" }>{ t( user ? "nav.myAccount" : "nav.login") }</UnderlineLink>
                 <LanguageSelector />
                 <Button to={ user ? "/lobby" : "/register" } size="sm">
                     { t("nav.createRoom") }

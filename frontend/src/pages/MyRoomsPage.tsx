@@ -107,7 +107,7 @@ export const MyRoomsPage = () => {
       <div className="max-w-360 mx-auto px-4 md:px-14 2xl:px-0 py-6 md:py-16">
         <div className="flex items-start justify-between mb-6 flex-wrap gap-4">
           <div>
-            <h1 className="heading_1" style={{ color: C.base }}>{ t("nav.myRooms") }</h1>
+            <h1 className="heading_1" style={{ color: C.base }}>{ t("myroom.title") }</h1>
             <p className={ styles.text } style={{ color: C.muted }}>
               <strong>{ rooms.length }</strong> { t("myroom.saved") } · <strong>{ activeCount }</strong> { t("myroom.activeNow") }
             </p>
