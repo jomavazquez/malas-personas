@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, Footer, Logo, TopMenuMyAccount, UnderlineLink } from "../components";
@@ -46,6 +46,7 @@ export const MyCardsPage = () => {
   const [ modalForm, setModalForm ] = useState({ type: "BLACK" as "BLACK" | "WHITE", text: "" });
   const [ saving, setSaving ] = useState(false);
   const [ deleteId, setDeleteId ] = useState<string | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Redirect if no deck in state
   useEffect(() => {
@@ -68,6 +69,21 @@ export const MyCardsPage = () => {
   const openEdit = (card: Card) => { setModalForm({ type: card.type, text: card.text }); setModal({ mode: "edit", card }); };
   const closeModal = () => { setModal(null); setModalForm({ type: "BLACK", text: "" }); };
 
+  const insertGap = () => {
+    const textarea = textareaRef.current;
+    if( !textarea ) return;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = modalForm.text;
+    const newText = text.slice(0, start) + "______" + text.slice(end);
+    setModalForm((f) => ({ ...f, text: newText }));
+    // Restore cursor position after the inserted gap
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + 6, start + 6);
+    }, 0);
+  };
+
   const handleSave = async () => {
     if( !modalForm.text.trim() || !id ) return;
     setSaving(true);
@@ -88,20 +104,20 @@ export const MyCardsPage = () => {
     }
   };
 
-const handleDelete = async () => {
-  if( !deleteId || !id ) return;
-  try{
-    const deletedCard = cards.find((c) => c.id === deleteId);
-    await api.delete(`/decks/my/decks/${id}/cards/${deleteId}`);
-    setCards((prev) => prev.filter((c) => c.id !== deleteId));
-    setTotal((t) => t - 1);
-    setDeck((d) => d ? { ...d, _count: { cards: d._count.cards - 1 } } : d);
-    if( deletedCard?.type === "BLACK" ) setBlackCount((c) => c - 1);
-    if( deletedCard?.type === "WHITE" ) setWhiteCount((c) => c - 1);
-  }finally{
-    setDeleteId(null);
-  }
-};
+  const handleDelete = async () => {
+    if( !deleteId || !id ) return;
+    try{
+      const deletedCard = cards.find((c) => c.id === deleteId);
+      await api.delete(`/decks/my/decks/${id}/cards/${deleteId}`);
+      setCards((prev) => prev.filter((c) => c.id !== deleteId));
+      setTotal((t) => t - 1);
+      setDeck((d) => d ? { ...d, _count: { cards: d._count.cards - 1 } } : d);
+      if( deletedCard?.type === "BLACK" ) setBlackCount((c) => c - 1);
+      if( deletedCard?.type === "WHITE" ) setWhiteCount((c) => c - 1);
+    }finally{
+      setDeleteId(null);
+    }
+  };
 
   const handleFilterChange = (f: FilterType) => { setFilter(f); setPage(1); };
   const handleSearch = (s: string) => { setSearch(s); setPage(1); };
@@ -171,8 +187,25 @@ const handleDelete = async () => {
               </div>
             }
             <div style={{ marginBottom: 20 }}>
-              <label className="form_label" style={{ color: C.muted }}>{ t("mydecks.cardText") }</label>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+                <label className="form_label" style={{ color: C.muted, marginBottom: 0 }}>{ t("mydecks.cardText") }</label>
+                {
+                  modalForm.type === "BLACK" &&
+                  <button
+                    type="button"
+                    onClick={ insertGap }
+                    className={ styles.btn_gap }
+                    style={{ 
+                      color: C.accent, 
+                      border: `1.5px solid ${ C.accent }`
+                    }}
+                  >
+                    { t("mydecks.insertGap") }
+                  </button>
+                }
+              </div>
               <textarea
+                ref={ textareaRef }
                 className="input textarea"
                 rows={ 5 }
                 autoFocus
@@ -286,9 +319,7 @@ const handleDelete = async () => {
                   <span className={ styles.card_text } style={{ color: C.base }}>
                     <BlackCardText text={ card.text } color={ C.base } />
                   </span>
-                  <UnderlineLink onClick={() => openEdit(card)}>
-                    { t("mydecks.edit") }
-                  </UnderlineLink>
+                  <UnderlineLink onClick={() => openEdit(card)}>{ t("mydecks.edit") }</UnderlineLink>
                   <button 
                     onClick={ () => setDeleteId(card.id) } 
                     className="btn_red"

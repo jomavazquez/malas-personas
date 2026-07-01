@@ -240,7 +240,8 @@
     "cardQPlaceholder": "e.g. The daily meeting from yesterday was: ______.",
     "cardAPlaceholder": "An unorganized Figma with 412 unnamed layers designed by an intern.",
     "addCard": "Add card",
-    "saveCard": "Save changes"
+    "saveCard": "Save changes",
+    "insertGap": "Insert gap"
   },  
   "contact": {
     "subject_general": "General inquiry",

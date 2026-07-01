@@ -240,7 +240,8 @@
     "cardQPlaceholder": "Ej: La daily de que tuvimos ayer fue: ______.",
     "cardAPlaceholder": "Un Figma con 412 capas sin nombrar diseñado por un becario.",
     "addCard": "Añadir carta",
-    "saveCard": "Guardar cambios"
+    "saveCard": "Guardar cambios",
+    "insertGap": "Insertar hueco"
   },
   "contact": {
     "subject_general": "Duda general",
