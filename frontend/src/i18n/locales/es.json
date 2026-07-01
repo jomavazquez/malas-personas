@@ -3,7 +3,9 @@
     "howItWorks": "Cómo funciona",
     "login": "Iniciar sesión",
     "createRoom": "Crear sala",
-    "myRooms": "Mis salas"
+    "myRooms": "Mis salas",
+    "spanish": "Español",
+    "english": "Inglés"
   },
   "auth": {
     "email": "Email",
@@ -223,7 +225,21 @@
     "create": "Crear mazo",
     "deleteCard": "Eliminar carta",
     "deleteConfirmCard": "¿Estás seguro de que quieres eliminar esta carta? Esta acción no se puede deshacer.",
-    "searchCard": "Buscar carta..."
+    "searchCard": "Buscar carta...",
+    "questions": "Preguntas",
+    "answers": "Respuestas",
+    "edit": "Editar",
+    "nocards": "No hay cartas que mostrar.",
+    "white": "Respuesta",
+    "showing": "Mostrando",
+    "of": "de",
+    "newCard": "Nueva carta",
+    "editCard": "Editar carta",
+    "cardText": "Texto de la carta",
+    "cardQPlaceholder": "Ej: La daily de que tuvimos ayer fue: ______.",
+    "cardAPlaceholder": "Un Figma con 412 capas sin nombrar diseñado por un becario.",
+    "addCard": "Añadir carta",
+    "saveCard": "Guardar cambios"
   },
   "contact": {
     "subject_general": "Duda general",

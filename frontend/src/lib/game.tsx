@@ -1,4 +1,9 @@
-export const BlackCardText = ({ text }: { text: string }) => {
+interface Props {
+    color?: string;
+    text: string;
+}
+
+export const BlackCardText = ({ text, color = "#fff" }: Props ) => {
     const parts = text.split("______");
     return (
         <>
@@ -8,7 +13,7 @@ export const BlackCardText = ({ text }: { text: string }) => {
                 { part }
                 {
                     i < parts.length - 1 &&
-                    <span className="black_card_underline" />
+                    <span className="black_card_underline" style={{ borderBottom: `solid 2px ${color}` }} />
                 }
                 </span>
             ))

@@ -3,7 +3,9 @@
     "howItWorks": "How it works",
     "login": "Log in",
     "createRoom": "Create room",
-    "myRooms": "My rooms"
+    "myRooms": "My rooms",
+    "spanish": "Spanish",
+    "english": "English"
   },
   "auth": {
     "email": "Email",
@@ -223,7 +225,21 @@
     "create": "Create deck",
     "deleteCard": "Delete card",
     "deleteConfirmCard": "This card will be deleted. This action cannot be undone.",
-    "searchCard": "Search card..."
+    "searchCard": "Search card...",
+    "questions": "Questions",
+    "answers": "Answers",
+    "edit": "Edit",
+    "nocards": "There are no cards to show.",
+    "white": "Answer",
+    "showing": "Showing",
+    "of": "of",
+    "newCard": "New card",
+    "editCard": "Edit card",
+    "cardText": "Card text",
+    "cardQPlaceholder": "e.g. The daily meeting from yesterday was: ______.",
+    "cardAPlaceholder": "An unorganized Figma with 412 unnamed layers designed by an intern.",
+    "addCard": "Add card",
+    "saveCard": "Save changes"
   },  
   "contact": {
     "subject_general": "General inquiry",

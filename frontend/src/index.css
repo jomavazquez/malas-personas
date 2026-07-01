@@ -235,7 +235,6 @@ html, body {
 }
 
 .black_card_underline {
-    border-bottom: solid 2px #fff;
     display: inline-block;
     margin: 0 4px;
     padding-bottom: 2px;
