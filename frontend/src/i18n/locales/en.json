@@ -220,7 +220,10 @@
     "deckNamePlaceholder": "e.g. My team deck",
     "nameExists": "You already have a deck with that name.",
     "createError": "Error creating deck. Please try again.",
-    "create": "Create deck"
+    "create": "Create deck",
+    "deleteCard": "Delete card",
+    "deleteConfirmCard": "This card will be deleted. This action cannot be undone.",
+    "searchCard": "Search card..."
   },  
   "contact": {
     "subject_general": "General inquiry",

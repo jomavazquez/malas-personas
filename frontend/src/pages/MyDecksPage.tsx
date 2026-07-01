@@ -60,12 +60,12 @@ export const MyDecksPage = () => {
   };
 
   const handleDelete = async () => {
-    if (!deleteId) return;
-    try {
+    if( !deleteId ) return;
+    try{
       await api.delete(`/decks/my/decks/${deleteId}`);
       setDecks((prev) => prev.filter((d) => d.id !== deleteId));
-    } catch {
-    } finally {
+    }catch{
+    }finally{
       setDeleteId(null);
     }
   };
@@ -170,7 +170,7 @@ export const MyDecksPage = () => {
             <h1 className="heading_1" style={{ color: C.base }}>{ t("mydecks.title") }</h1>
             <p style={{ fontSize: 16, color: C.muted }}>{ decks.length }{" "}{ t(decks.length === 1 ? "mydecks.1deck" : "mydecks.decks") }</p>
           </div>
-          <div className={ styles.filter_search }>
+          <div className="filter_search">
             {/* Search */}
             <div style={{ position: "relative" }}>
               <span className="search_icon" style={{ color: C.faint }}>⌕</span>

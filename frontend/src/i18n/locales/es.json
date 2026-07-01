@@ -220,7 +220,10 @@
     "deckNamePlaceholder": "Ej: Mazo de oficina",
     "nameExists": "Ya tienes un mazo con ese nombre.",
     "createError": "Error al crear el mazo. Inténtalo de nuevo.",
-    "create": "Crear mazo"
+    "create": "Crear mazo",
+    "deleteCard": "Eliminar carta",
+    "deleteConfirmCard": "¿Estás seguro de que quieres eliminar esta carta? Esta acción no se puede deshacer.",
+    "searchCard": "Buscar carta..."
   },
   "contact": {
     "subject_general": "Duda general",

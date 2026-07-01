@@ -285,3 +285,10 @@ html, body {
     padding: 15px;
     transition: all 0.15s
 }
+
+.filter_search {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px
+}
