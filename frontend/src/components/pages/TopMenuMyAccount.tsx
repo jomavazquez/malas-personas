@@ -7,26 +7,31 @@ export const TopMenuMyAccount = () => {
   const { t } = useTranslation();
   const { user, logout } = useAuth();
 
+  const roomLabel = t(user ? "myroom.title" : "nav.login");
+  const deckLabel = t(user ? "mydecks.title" : "nav.login");
+  const roomLabelShort = t(user ? "myroom.titleShort" : "nav.login");
+  const deckLabelShort = t(user ? "mydecks.titleShort" : "nav.login");  
+
   const handleLogout = () => {
     logout();
     window.location.href = "/";
   };
 
   return (
-    <>
-      {/* DESKTOP */}
-      <div className="hidden md:flex items-center gap-6">
-        <UnderlineLink to={ user ? "/my-rooms" : "/login" }>{ t( user ? "nav.myRooms" : "nav.login") }</UnderlineLink>
-        <LanguageSelector />
+    <div className="flex items-center gap-5 lg:gap-8">
+      <UnderlineLink to={ user ? "/my-rooms" : "/login" }>
+        <span className="hidden lg:inline">{ roomLabel }</span>
+        <span className="lg:hidden">{ roomLabelShort }</span>
+      </UnderlineLink>
+      <UnderlineLink to={ user ? "/my-decks" : "/login" }>
+        <span className="hidden lg:inline">{ deckLabel }</span>
+        <span className="lg:hidden">{ deckLabelShort }</span>
+      </UnderlineLink>
+      <LanguageSelector />
+      <div className="hidden md:block">
         <Avatar user={ user?.username } showLabel />
-        <button className="btn_red" onClick={ handleLogout } title={ t("auth.logout") }>⏻</button>
       </div>
-      {/* MOBILE */}
-      <div className="flex md:hidden items-center gap-10">
-        <UnderlineLink to={ user ? "/my-rooms" : "/login" }>{ t( user ? "nav.myRooms" : "nav.login") }</UnderlineLink>
-        <LanguageSelector />
-        <button className="btn_red" onClick={ handleLogout } title={ t("auth.logout") }>⏻</button>
-      </div>
-    </>
+      <button className="btn_red" onClick={ handleLogout } title={ t("auth.logout") }>⏻</button>
+    </div>
   );
 };

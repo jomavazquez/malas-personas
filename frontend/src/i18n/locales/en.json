@@ -181,6 +181,7 @@
   },
   "myroom": {
     "title": "My rooms",
+    "titleShort": "Rooms",
     "saved": "saved rooms",
     "activeNow": "active right now",
     "filter_all": "All",
@@ -209,6 +210,7 @@
   },
   "mydecks": {
     "title": "My decks",
+    "titleShort": "Decks",
     "1deck": "deck",
     "decks": "decks",
     "search": "Search deck...",

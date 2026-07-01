@@ -181,6 +181,7 @@
   },
   "myroom": {
     "title": "Mis salas",
+    "titleShort": "Salas",
     "saved": "salas guardadas",
     "activeNow": "activas ahora mismo",
     "filter_all": "Todas",
@@ -209,6 +210,7 @@
   },
   "mydecks": {
     "title": "Mis mazos",
+    "titleShort": "Mazos",
     "1deck": "mazo",
     "decks": "mazos",
     "search": "Buscar mazo...",
