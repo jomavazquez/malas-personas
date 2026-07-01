@@ -1,38 +1,33 @@
 import prisma from "../../config/database.js";
 import { getSession, deleteSession } from "./game.state.js";
-import {
-  buildSession, addPlayer, removePlayer,
-  startGame, nextRound, playCard, pickWinner,
-  serializeSessionForPlayer, serializeReveal,
-} from "./game.service.js";
+import { buildSession, addPlayer, removePlayer, startGame, nextRound, playCard, pickWinner, serializeSessionForPlayer, serializeReveal } from "./game.service.js";
 
 // Map<socketId, { roomCode, userId, username }>
 const socketMeta = new Map();
 
-export const registerGameHandlers = (io, socket) => {
+export const registerGameHandlers = ( io, socket ) => {
 
   // ─── room:join ───────────────────────────────────────────────────────────────
-  socket.on("room:join", async ({ roomCode, userId, username, isGuest }, callback) => {
+  socket.on("room:join", async({ roomCode, userId, username, isGuest }, callback ) => {
     try {
       const code = roomCode.toUpperCase();
 
       let session = getSession(code);
 
-      if (!session) {
+      if( !session ){
         const room = await prisma.room.findUnique({
           where: { code },
           select: { id: true, code: true, hostId: true, deckId: true, maxPlayers: true, pointsToWin: true, isActive: true },
         });
 
-        if (!room || !room.isActive) {
-          return callback({ error: "Sala no encontrada o inactiva" });
+        if( !room || !room.isActive ){
+          return callback({ error: "ROOM_NOT_FOUND_OR_INACTIVE" });
         }
-
         session = await buildSession(room);
       }
 
-      if (session.status === "finished") {
-        return callback({ error: "La partida ha terminado" });
+      if( session.status === "finished" ){
+        return callback({ error: "GAME_IS_OVER" });
       }
 
       // Determina isGuest en el backend consultando la BD
@@ -48,27 +43,27 @@ export const registerGameHandlers = (io, socket) => {
 
       callback({ success: true, state: serializeSessionForPlayer(updated, userId), isReconnect });
 
-      if (!isReconnect) {
+      if( !isReconnect ){
         socket.to(code).emit("room:playerJoined", {
           userId, username, isGuest: !!isGuest,
           playerCount: updated.players.length,
         });
       }
-    } catch (err) {
+    }catch( err ){
       callback({ error: err.message });
     }
   });
 
   // ─── game:start ──────────────────────────────────────────────────────────────
-  socket.on("game:start", async ({ roomCode }, callback) => {
-    try {
+  socket.on("game:start", async( { roomCode }, callback ) => {
+    try{
       const code = roomCode.toUpperCase();
       const session = getSession(code);
-      if (!session) return callback({ error: "Sesión no encontrada" });
+      if( !session ) return callback({ error: "SESSION_NOT_FOUND" });
 
       const meta = socketMeta.get(socket.id);
-      if (session.hostId !== meta?.userId) {
-        return callback({ error: "Solo el anfitrión puede iniciar la partida" });
+      if( session.hostId !== meta?.userId ){
+        return callback({ error: "ONLY_HOST_CAN_INITIATE_A_GAME" });
       }
 
       const { session: updated, blackCard } = startGame(session);
@@ -92,20 +87,20 @@ export const registerGameHandlers = (io, socket) => {
       });
 
       callback({ success: true });
-    } catch (err) {
+    }catch( err ){
       callback({ error: err.message });
     }
   });
 
   // ─── round:playCard ──────────────────────────────────────────────────────────
-  socket.on("round:playCard", ({ roomCode, cardId }, callback) => {
-    try {
+  socket.on("round:playCard", ({ roomCode, cardId }, callback ) => {
+    try{
       const code = roomCode.toUpperCase();
       const session = getSession(code);
-      if (!session) return callback({ error: "Sesión no encontrada" });
+      if( !session ) return callback({ error: "SESSION_NOT_FOUND" });
 
       const meta = socketMeta.get(socket.id);
-      if (!meta) return callback({ error: "No identificado" });
+      if( !meta ) return callback({ error: "NO_IDENTIFIED" });
 
       const { session: updated, card, allPlayed } = playCard(session, { userId: meta.userId, cardId });
 
@@ -116,23 +111,23 @@ export const registerGameHandlers = (io, socket) => {
         totalNeeded: updated.players.length - 1,
       });
 
-      if (allPlayed) {
+      if( allPlayed ){
         io.to(code).emit("round:reveal", { cards: serializeReveal(updated) });
       }
-    } catch (err) {
+    }catch( err ){
       callback({ error: err.message });
     }
   });
 
   // ─── round:pickWinner ────────────────────────────────────────────────────────
-  socket.on("round:pickWinner", ({ roomCode, winnerUserId }, callback) => {
-    try {
+  socket.on("round:pickWinner", ({ roomCode, winnerUserId }, callback ) => {
+    try{
       const code = roomCode.toUpperCase();
       const session = getSession(code);
-      if (!session) return callback({ error: "Sesión no encontrada" });
+      if( !session ) return callback({ error: "SESSION_NOT_FOUND" });
 
       const meta = socketMeta.get(socket.id);
-      if (!meta) return callback({ error: "No identificado" });
+      if (!meta) return callback({ error: "NO_IDENTIFIED" });
 
       const { session: updated, winner, winnerPlay, gameOver } = pickWinner(session, {
         judgeUserId: meta.userId, winnerUserId,
@@ -144,7 +139,7 @@ export const registerGameHandlers = (io, socket) => {
         scores: updated.players.map((p) => ({ userId: p.userId, username: p.username, score: p.score })),
       });
 
-      if (gameOver) {
+      if( gameOver ){
         io.to(code).emit("game:over", {
           winner: { userId: winner.userId, username: winner.username, score: winner.score },
         });
@@ -167,13 +162,13 @@ export const registerGameHandlers = (io, socket) => {
       });
 
       callback({ success: true });
-    } catch (err) {
+    }catch( err ){
       callback({ error: err.message });
     }
   });
 
   // ─── room:leave ──────────────────────────────────────────────────────────────
-  socket.on("room:leave", ({ roomCode }, callback) => {
+  socket.on("room:leave", ({ roomCode }, callback ) => {
     handlePlayerLeave(io, socket, roomCode?.toUpperCase());
     callback?.({ success: true });
   });
@@ -181,21 +176,21 @@ export const registerGameHandlers = (io, socket) => {
   // ─── disconnect ──────────────────────────────────────────────────────────────
   socket.on("disconnect", () => {
     const meta = socketMeta.get(socket.id);
-    if (meta) handlePlayerLeave(io, socket, meta.roomCode);
+    if( meta ) handlePlayerLeave(io, socket, meta.roomCode);
   });
 };
 
-const handlePlayerLeave = (io, socket, roomCode) => {
-  if (!roomCode) return;
+const handlePlayerLeave = ( io, socket, roomCode ) => {
+  if( !roomCode ) return;
   const session = getSession(roomCode);
   const meta = socketMeta.get(socket.id);
-  if (!session || !meta) return;
+  if( !session || !meta ) return;
 
   const { session: updated, removed } = removePlayer(session, socket.id);
   socketMeta.delete(socket.id);
   socket.leave(roomCode);
 
-  if (!removed) return;
+  if( !removed ) return;
 
   io.to(roomCode).emit("room:playerLeft", {
     userId: removed.userId,

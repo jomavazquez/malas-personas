@@ -4,8 +4,9 @@ import { registerGameHandlers } from "../modules/game/game.gateway.js";
 
 let io;
 
-export function initSocket(httpServer) {
-  io = new Server(httpServer, {
+export const initSocket = ( httpServer ) => {
+
+  io = new Server( httpServer, {
     cors: {
       origin: env.CORS_ORIGIN,
       methods: ["GET", "POST"],
@@ -26,7 +27,7 @@ export function initSocket(httpServer) {
   return io;
 }
 
-export function getIO() {
-  if (!io) throw new Error("Socket.io not initialized");
+export const getIO = () => {
+  if( !io ) throw new Error("Socket.io not initialized");
   return io;
 }

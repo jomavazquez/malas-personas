@@ -12,7 +12,7 @@ export const getDecks = async () => {
 };
 
 // ── User's Decks
-export const getMyDecks = async (userId) => {
+export const getMyDecks = async( userId ) => {
   return prisma.deck.findMany({
     where: { userId },
     select: { id: true, name: true, language: true, _count: { select: { cards: true } } },
@@ -21,7 +21,7 @@ export const getMyDecks = async (userId) => {
 };
 
 // ── Cards of a deck with pagination and filters
-export const getDeckCards = async (userId, deckId, { page = 1, type, search }) => {
+export const getDeckCards = async( userId, deckId, { page = 1, type, search } ) => {
   const deck = await prisma.deck.findUnique({ where: { id: deckId } });
   if( !deck ) throw Object.assign(new Error("DECK_NOT_FOUND"), { status: 404 });
   if( deck.userId !== userId ) throw Object.assign(new Error("UNAUTHORIZED"), { status: 403 });
@@ -32,7 +32,7 @@ export const getDeckCards = async (userId, deckId, { page = 1, type, search }) =
     ...(search && { text: { contains: search, mode: "insensitive" } }),
   };
 
-  const [cards, total, blackCount, whiteCount] = await Promise.all([
+  const [ cards, total, blackCount, whiteCount ] = await Promise.all([
     prisma.card.findMany({
       where,
       select: { id: true, type: true, text: true },
@@ -51,7 +51,7 @@ export const getDeckCards = async (userId, deckId, { page = 1, type, search }) =
 };
 
 // ── Create User's Deck
-export const createDeck = async (userId, { name, language }) => {
+export const createDeck = async( userId, { name, language } ) => {
   return prisma.deck.create({
     data: { name, language, userId },
     select: { id: true, name: true, language: true, _count: { select: { cards: true } } },
@@ -59,7 +59,7 @@ export const createDeck = async (userId, { name, language }) => {
 };
 
 // ── Add Card to User's Deck
-export const addCardToDeck = async (userId, deckId, { type, text }) => {
+export const addCardToDeck = async( userId, deckId, { type, text } ) => {
   const deck = await prisma.deck.findUnique({ where: { id: deckId } });
   if( !deck ) throw Object.assign(new Error("DECK_NOT_FOUND"), { status: 404 });
   if( deck.userId !== userId ) throw Object.assign(new Error("UNAUTHORIZED"), { status: 403 });
@@ -67,7 +67,7 @@ export const addCardToDeck = async (userId, deckId, { type, text }) => {
 };
 
 // ── Edit card
-export const updateCard = async (userId, cardId, { text }) => {
+export const updateCard = async( userId, cardId, { text } ) => {
   const card = await prisma.card.findUnique({ where: { id: cardId }, include: { deck: true } });
   if( !card ) throw Object.assign(new Error("CARD_NOT_FOUND"), { status: 404 });
   if( card.deck.userId !== userId ) throw Object.assign(new Error("UNAUTHORIZED"), { status: 403 });
@@ -75,7 +75,7 @@ export const updateCard = async (userId, cardId, { text }) => {
 };
 
 // ── Delete card
-export const deleteCard = async (userId, cardId) => {
+export const deleteCard = async( userId, cardId ) => {
   const card = await prisma.card.findUnique({ where: { id: cardId }, include: { deck: true } });
   if( !card ) throw Object.assign(new Error("CARD_NOT_FOUND"), { status: 404 });
   if( card.deck.userId !== userId ) throw Object.assign(new Error("UNAUTHORIZED"), { status: 403 });
@@ -83,7 +83,7 @@ export const deleteCard = async (userId, cardId) => {
 };
 
 // ── Delete Deck
-export const deleteDeck = async (userId, deckId) => {
+export const deleteDeck = async( userId, deckId ) => {
   const deck = await prisma.deck.findUnique({ where: { id: deckId } });
   if( !deck ) throw Object.assign(new Error("DECK_NOT_FOUND"), { status: 404 });
   if( deck.userId !== userId ) throw Object.assign(new Error("UNAUTHORIZED"), { status: 403 });
@@ -91,7 +91,7 @@ export const deleteDeck = async (userId, deckId) => {
   return prisma.deck.delete({ where: { id: deckId } });
 };
 
-export const getDeckById = async (id) => {
+export const getDeckById = async( id ) => {
   const deck = await prisma.deck.findUnique({
     where: { id },
     select: { id: true, name: true, language: true, _count: { select: { cards: true } } },

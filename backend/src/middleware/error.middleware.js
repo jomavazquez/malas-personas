@@ -1,8 +1,8 @@
-export function errorMiddleware(err, _req, res, _next) {
+export const errorMiddleware = ( err, _req, res, _next ) => {
   const status = err.status ?? err.statusCode ?? 500;
   const message = err.message ?? "Internal server error";
 
-  if (status >= 500) {
+  if( status >= 500 ){
     console.error("❌ Server error:", err);
   }
 

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { env } from "../config/env.js";
 
-export const authMiddleware = (req, res, next) => {
+export const authMiddleware = ( req, res, next ) => {
   const authHeader = req.headers.authorization;
 
   if( !authHeader?.startsWith("Bearer ") ){

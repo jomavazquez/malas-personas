@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import prisma from "../../config/database.js";
 import { env } from "../../config/env.js";
 
-export const registerUser = async ({ email, username, password }) => {
+export const registerUser = async({ email, username, password }) => {
 
   const existingUser = await prisma.user.findFirst({
     where: { OR: [{ email }, { username }] },
@@ -26,7 +26,7 @@ export const registerUser = async ({ email, username, password }) => {
   return { user, token };
 };
 
-export const loginUser = async ({ identifier, password }) => {
+export const loginUser = async({ identifier, password }) => {
   const isEmail = identifier.includes("@");
 
   const user = await prisma.user.findFirst({

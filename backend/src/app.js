@@ -12,13 +12,13 @@ import decksRoutes from "./modules/decks/decks.routes.js";
 const app = express();
 
 // ── Security headers
-app.use(helmet());
+app.use( helmet() );
 
 // ── CORS
 app.use(cors({ origin: env.CORS_ORIGIN, credentials: true }));
 
 // ── Body parser
-app.use(express.json());
+app.use( express.json() );
 
 // ── Rate limiters
 const globalLimiter = rateLimit({
@@ -37,7 +37,7 @@ const authLimiter = rateLimit({
     message: { success: false, message: "RATE_LIMIT_EXCEEDED" },
 });
 
-app.use(globalLimiter);
+app.use( globalLimiter );
 
 // ── Routes
 app.use("/api/auth", authLimiter, authRoutes);
@@ -47,6 +47,6 @@ app.use("/api/decks", decksRoutes);
 
 app.get("/health", (_req, res) => res.json({ status: "ok", project: "malas-personas" }));
 
-app.use(errorMiddleware);
+app.use( errorMiddleware );
 
 export default app;

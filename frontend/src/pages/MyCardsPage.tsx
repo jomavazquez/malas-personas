@@ -93,6 +93,8 @@ export const MyCardsPage = () => {
         setCards((prev) => [data.card, ...prev].slice(0, PAGE_SIZE));
         setTotal((t) => t + 1);
         setDeck((d) => d ? { ...d, _count: { cards: d._count.cards + 1 } } : d);
+        if( modalForm.type === "BLACK" ) setBlackCount((c) => c + 1);
+        if( modalForm.type === "WHITE" ) setWhiteCount((c) => c + 1);
       }else if( modal?.mode === "edit" && modal.card ){
         const data = await api.patch<{ card: Card }>(`/decks/my/decks/${id}/cards/${modal.card.id}`, { text: modalForm.text });
         setCards((prev) => prev.map((c) => c.id === data.card.id ? data.card : c));
@@ -248,7 +250,7 @@ export const MyCardsPage = () => {
             <div>
               <div className="heading_1" style={{ fontSize: 22, color: C.base }}>{ deck?.name ?? "..." }</div>
               <div className={ styles.maze_sub } style={{ color: C.faint }}>
-                { deck?._count.cards ?? 0}{" "}{ t( (deck?._count.cards ?? 0) > 0 ? "mydecks.cards" : "mydecks.card") }{" "}-{" "}{ deck?.language === "ES" ? t("nav.spanish") : t("nav.english") }
+                { deck?._count.cards ?? 0}{" "}{ t( (deck?._count.cards ?? 0) === 1 ? "mydecks.card" : "mydecks.cards") }{" "}-{" "}{ deck?.language === "ES" ? t("nav.spanish") : t("nav.english") }
               </div>
             </div>
           </div>

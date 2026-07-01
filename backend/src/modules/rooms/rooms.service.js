@@ -5,7 +5,7 @@ const ROOM_CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const generateRoomCode = async () => {
   let code;
   let exists = true;
-  while (exists) {
+  while( exists ){
     code = Array.from({ length: 6 }, () =>
       ROOM_CODE_CHARS[Math.floor(Math.random() * ROOM_CODE_CHARS.length)]
     ).join("");
@@ -15,20 +15,20 @@ const generateRoomCode = async () => {
   return code;
 };
 
-export const createRoom = async (hostId, { deckId, maxPlayers, pointsToWin, name }) => {
+export const createRoom = async( hostId, { deckId, maxPlayers, pointsToWin, name } ) => {
   const activeRoom = await prisma.room.findFirst({
     where: { hostId, isActive: true },
   });
 
-  if (activeRoom) {
+  if( activeRoom ){
     const error = new Error("ROOM_ALREADY_ACTIVE");
     error.status = 409;
     throw error;
   }
 
   const deck = await prisma.deck.findUnique({ where: { id: deckId } });
-  if (!deck) {
-    const error = new Error("El mazo seleccionado no existe");
+  if( !deck ){
+    const error = new Error("SELECTED_DECK_NOT_EXISTS");
     error.status = 404;
     throw error;
   }
@@ -47,7 +47,7 @@ export const createRoom = async (hostId, { deckId, maxPlayers, pointsToWin, name
   return room;
 };
 
-export const getRoomByCode = async (code) => {
+export const getRoomByCode = async( code ) => {
   const room = await prisma.room.findUnique({
     where: { code: code.toUpperCase() },
     select: {
@@ -58,8 +58,8 @@ export const getRoomByCode = async (code) => {
     },
   });
 
-  if (!room) {
-    const error = new Error("Sala no encontrada");
+  if( !room ){
+    const error = new Error("ROOM_NOT_FOUND");
     error.status = 404;
     throw error;
   }
@@ -67,21 +67,21 @@ export const getRoomByCode = async (code) => {
   return room;
 };
 
-export const closeRoom = async (hostId, code) => {
+export const closeRoom = async( hostId, code ) => {
   const room = await prisma.room.findUnique({ where: { code: code.toUpperCase() } });
 
-  if (!room) {
-    const error = new Error("Sala no encontrada");
+  if( !room ){
+    const error = new Error("ROOM_NOT_FOUND");
     error.status = 404;
     throw error;
   }
-  if (room.hostId !== hostId) {
-    const error = new Error("Solo el anfitrión puede cerrar la sala");
+  if( room.hostId !== hostId ){
+    const error = new Error("ONLY_HOST_CAN_CLOSE_THE_ROOM");
     error.status = 403;
     throw error;
   }
-  if (!room.isActive) {
-    const error = new Error("La sala ya está cerrada");
+  if( !room.isActive ){
+    const error = new Error("ROOM_ALREADY_CLOSE");
     error.status = 409;
     throw error;
   }
@@ -93,7 +93,7 @@ export const closeRoom = async (hostId, code) => {
   });
 };
 
-export const getMyRooms = async (userId) => {
+export const getMyRooms = async( userId ) => {
   return prisma.room.findMany({
     where: { hostId: userId },
     select: {
@@ -105,10 +105,10 @@ export const getMyRooms = async (userId) => {
   });
 };
 
-export const deleteRoom = async (userId, code) => {
+export const deleteRoom = async( userId, code ) => {
   const room = await prisma.room.findUnique({ where: { code } });
-  if (!room) throw Object.assign(new Error("ROOM_NOT_FOUND"), { code: "ROOM_NOT_FOUND" });
-  if (room.hostId !== userId) throw Object.assign(new Error("UNAUTHORIZED"), { code: "UNAUTHORIZED" });
+  if( !room ) throw Object.assign(new Error("ROOM_NOT_FOUND"), { code: "ROOM_NOT_FOUND" });
+  if( room.hostId !== userId ) throw Object.assign(new Error("UNAUTHORIZED"), { code: "UNAUTHORIZED" });
   await prisma.room.delete({ where: { code } });
   return { success: true };
 };

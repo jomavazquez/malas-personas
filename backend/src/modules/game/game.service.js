@@ -6,19 +6,19 @@ const MIN_PLAYERS_TO_START = 2;
 
 const shuffle = (arr) => {
   const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
+  for( let i = a.length - 1; i > 0; i-- ){
     const j = Math.floor(Math.random() * (i + 1));
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
 };
 
-const dealCards = (whiteDeck, count) => {
+const dealCards = ( whiteDeck, count ) => {
   const dealt = whiteDeck.splice(0, count);
   return { dealt, whiteDeck };
 };
 
-export const buildSession = async (room) => {
+export const buildSession = async( room ) => {
   const cards = await prisma.card.findMany({
     where: { deckId: room.deckId },
     select: { id: true, type: true, text: true },
@@ -49,18 +49,18 @@ export const buildSession = async (room) => {
 
 export const addPlayer = (session, { socketId, userId, username, isGuest }) => {
   const existing = session.players.find((p) => p.userId === userId);
-  if (existing) {
+  if( existing ){
     existing.socketId = socketId;
     return { session, player: existing, isReconnect: true };
   }
 
-  if (session.status === "playing") {
+  if( session.status === "playing" ){
     const error = new Error("GAME_ALREADY_STARTED");
     error.code = "GAME_ALREADY_STARTED";
     throw error;
   }
 
-  if (session.players.length >= session.maxPlayers) {
+  if( session.players.length >= session.maxPlayers ){
     const error = new Error("ROOM_FULL");
     error.code = "ROOM_FULL";
     throw error;
@@ -75,28 +75,28 @@ export const addPlayer = (session, { socketId, userId, username, isGuest }) => {
   return { session, player, isReconnect: false };
 };
 
-export const removePlayer = (session, socketId) => {
+export const removePlayer = ( session, socketId ) => {
   const index = session.players.findIndex((p) => p.socketId === socketId);
-  if (index === -1) return { session, removed: null };
+  if( index === -1 ) return { session, removed: null };
 
-  const [removed] = session.players.splice(index, 1);
+  const [ removed ] = session.players.splice(index, 1);
 
-  if (session.judgeIndex >= session.players.length && session.players.length > 0) {
+  if( session.judgeIndex >= session.players.length && session.players.length > 0 ){
     session.judgeIndex = 0;
   }
 
   return { session, removed };
 };
 
-export const startGame = (session) => {
-  if (session.players.length < MIN_PLAYERS_TO_START) {
+export const startGame = ( session ) => {
+  if( session.players.length < MIN_PLAYERS_TO_START ){
     const error = new Error(`Se necesitan al menos ${MIN_PLAYERS_TO_START} jugadores para empezar`);
     error.code = "NOT_ENOUGH_PLAYERS";
     throw error;
   }
 
-  if (session.status !== "waiting") {
-    const error = new Error("La partida ya ha empezado");
+  if( session.status !== "waiting" ){
+    const error = new Error("GAME_ALREADY_STARTED");
     error.code = "ALREADY_STARTED";
     throw error;
   }
@@ -107,8 +107,8 @@ export const startGame = (session) => {
   return nextRound(session);
 };
 
-export const nextRound = (session) => {
-  if (session.blackDeck.length === 0) {
+export const nextRound = ( session ) => {
+  if( session.blackDeck.length === 0 ){
     session.status = "finished";
     return { session, blackCard: null, finished: true };
   }
@@ -120,35 +120,35 @@ export const nextRound = (session) => {
   return { session, blackCard, finished: false };
 };
 
-export const playCard = (session, { userId, cardId }) => {
+export const playCard = ( session, { userId, cardId } ) => {
   const player = session.players.find((p) => p.userId === userId);
-  if (!player) {
-    const error = new Error("Jugador no encontrado");
+  if( !player ){
+    const error = new Error("PLAYER_NOT_FOUND");
     error.code = "PLAYER_NOT_FOUND";
     throw error;
   }
 
   const judge = session.players[session.judgeIndex];
-  if (judge.userId === userId) {
-    const error = new Error("El juez no puede jugar una carta");
+  if( judge.userId === userId ){
+    const error = new Error("JUDGE_CANNOT_PLAY");
     error.code = "JUDGE_CANNOT_PLAY";
     throw error;
   }
 
-  if (session.playedCards.find((p) => p.userId === userId)) {
-    const error = new Error("Ya has jugado una carta esta ronda");
+  if( session.playedCards.find((p) => p.userId === userId) ){
+    const error = new Error("ALREADY_PLAYED");
     error.code = "ALREADY_PLAYED";
     throw error;
   }
 
   const cardIndex = player.hand.findIndex((c) => c.id === cardId);
-  if (cardIndex === -1) {
-    const error = new Error("Carta no encontrada en tu mano");
+  if( cardIndex === -1 ){
+    const error = new Error("CARD_NOT_IN_HAND");
     error.code = "CARD_NOT_IN_HAND";
     throw error;
   }
 
-  const [card] = player.hand.splice(cardIndex, 1);
+  const [ card ] = player.hand.splice(cardIndex, 1);
   session.playedCards.push({ userId, username: player.username, card });
 
   const { dealt, whiteDeck } = dealCards(session.whiteDeck, 1);
@@ -156,24 +156,22 @@ export const playCard = (session, { userId, cardId }) => {
   player.hand.push(...dealt);
 
   const nonJudgePlayers = session.players.filter((p) => p.userId !== judge.userId);
-  const allPlayed = nonJudgePlayers.every((p) =>
-    session.playedCards.find((pc) => pc.userId === p.userId)
-  );
+  const allPlayed = nonJudgePlayers.every( (p) => session.playedCards.find((pc) => pc.userId === p.userId) );
 
   return { session, card, allPlayed };
 };
 
-export const pickWinner = (session, { judgeUserId, winnerUserId }) => {
+export const pickWinner = ( session, { judgeUserId, winnerUserId } ) => {
   const judge = session.players[session.judgeIndex];
-  if (judge.userId !== judgeUserId) {
+  if( judge.userId !== judgeUserId ){
     const error = new Error("Solo el juez puede elegir al ganador");
     error.code = "NOT_THE_JUDGE";
     throw error;
   }
 
   const winnerPlay = session.playedCards.find((p) => p.userId === winnerUserId);
-  if (!winnerPlay) {
-    const error = new Error("Jugador ganador no encontrado");
+  if( !winnerPlay ){
+    const error = new Error("WINNER_NOT_FOUND");
     error.code = "WINNER_NOT_FOUND";
     throw error;
   }
@@ -187,7 +185,7 @@ export const pickWinner = (session, { judgeUserId, winnerUserId }) => {
   return { session, winner, winnerPlay, gameOver };
 };
 
-export const serializeSessionForPlayer = (session, userId) => ({
+export const serializeSessionForPlayer = ( session, userId ) => ({
   roomCode: session.roomCode,
   hostId: session.hostId,
   status: session.status,
@@ -208,5 +206,4 @@ export const serializeSessionForPlayer = (session, userId) => ({
   playedCount: session.playedCards.length,
 });
 
-export const serializeReveal = (session) =>
-  session.playedCards.map(({ userId, username, card }) => ({ userId, username, card }));
+export const serializeReveal = (session) => session.playedCards.map(({ userId, username, card }) => ({ userId, username, card }));
