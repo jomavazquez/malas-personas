@@ -215,7 +215,7 @@ export const MyDecksPage = () => {
                     </div>
                     <div style={{ padding: "20px" }}>
                       <div className={ styles.card_title } style={{ color: C.base }}>{ deck.name }</div>
-                      <div className={ styles.card_number } style={{ color: C.faint }}>{ deck._count.cards }{" "}{ t(deck._count.cards > 1 ? "mydecks.cards" : "mydecks.card") }</div>
+                      <div className={ styles.card_number } style={{ color: C.faint }}>{ deck._count.cards }{" "}{ t(deck._count.cards === 1 ? "mydecks.card" : "mydecks.cards") }</div>
                       <div style={{ display: "flex", gap: 10 }}>
                         <Button
                           onClick={() => navigate("/my-cards", { state: { deck } })}
