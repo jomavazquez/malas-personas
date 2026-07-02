@@ -99,3 +99,14 @@ export const getDeckById = async( id ) => {
   if( !deck ) throw Object.assign(new Error("DECK_NOT_FOUND"), { status: 404 });
   return deck;
 };
+
+export const updateDeck = async( userId, deckId, { name, language } ) => {
+  const deck = await prisma.deck.findUnique({ where: { id: deckId } });
+  if( !deck ) throw Object.assign(new Error("DECK_NOT_FOUND"), { status: 404 });
+  if( deck.userId !== userId ) throw Object.assign(new Error("UNAUTHORIZED"), { status: 403 });
+  return prisma.deck.update({
+    where: { id: deckId },
+    data: { name, language },
+    select: { id: true, name: true, language: true, _count: { select: { cards: true } } },
+  });
+};

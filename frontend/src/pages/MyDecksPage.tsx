@@ -27,6 +27,10 @@ export const MyDecksPage = () => {
   const [ newForm, setNewForm ] = useState({ name: "", language: "ES" as "ES" | "EN" });
   const [ creating, setCreating ] = useState(false);
   const [ createError, setCreateError ] = useState("");
+  const [ editDeck, setEditDeck ] = useState<Deck | null>(null);
+  const [ editForm, setEditForm ] = useState({ name: "", language: "ES" as "ES" | "EN" });
+  const [ editError, setEditError ] = useState("");
+  const [ saving, setSaving ] = useState(false);
 
   useEffect(() => {
     api.get<{ decks: Deck[] }>("/decks/my/decks").then((data) => {
@@ -59,6 +63,31 @@ export const MyDecksPage = () => {
     }
   };
 
+  const openEdit = (deck: Deck) => {
+    setEditDeck(deck);
+    setEditForm({ name: deck.name, language: deck.language });
+    setEditError("");
+  };
+
+  const handleEdit = async () => {
+    if( !editForm.name.trim() || !editDeck ) return;
+    const exists = decks.some((d) => d.id !== editDeck.id && d.name.toLowerCase() === editForm.name.trim().toLowerCase());
+    if( exists ){ 
+      setEditError(t("mydecks.nameExists")); 
+      return; 
+    }
+    setSaving(true);
+    try{
+      const data = await api.patch<{ deck: Deck }>(`/decks/my/decks/${editDeck.id}`, editForm);
+      setDecks((prev) => prev.map((d) => d.id === data.deck.id ? data.deck : d));
+      setEditDeck(null);
+    }catch{
+      setEditError(t("mydecks.createError"));
+    }finally{
+      setSaving(false);
+    }
+  };
+
   const handleDelete = async () => {
     if( !deleteId ) return;
     try{
@@ -72,6 +101,60 @@ export const MyDecksPage = () => {
 
   return (
     <div style={{ background: C.surface, position: "relative" }}>
+      {/* EDIT MODAL */}
+      {
+        editDeck &&
+        <div className="fixed inset-0 flex items-center justify-center z-50 px-6 modal_bg" onClick={ () => setEditDeck(null) }>
+          <div className="modal_container" onClick={ (e) => e.stopPropagation() }>
+            <div className="modal_title" style={{ color: C.base }}>{ t("mydecks.editDeck") }</div>
+            <div style={{ marginBottom: 20 }}>
+              <label className="form_label" style={{ color: C.muted }}>{ t("mydecks.deckName") }</label>
+              <input
+                className="input"
+                style={{ border: `1.5px solid ${C.border}`, color: C.base }}
+                placeholder={ t("mydecks.deckNamePlaceholder") }
+                value={ editForm.name }
+                onChange={ (e) => { setEditForm((f) => ({ ...f, name: e.target.value })); setEditError(""); } }
+                maxLength={ 60 }
+                autoFocus
+                onKeyDown={ (e) => e.key === "Enter" && handleEdit() }
+              />
+              { editError && <p className="error" style={{ marginTop: 5 }}>{ editError }</p> }
+            </div>
+            <div style={{ marginBottom: 20 }}>
+              <label className="form_label" style={{ color: C.muted }}>{ t("lobby.gameLang") }</label>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                {
+                  (["ES", "EN"] as const).map((lang) => (
+                    <button
+                      key={ lang }
+                      onClick={ () => setEditForm((f) => ({ ...f, language: lang })) }
+                      className="langBt"
+                      style={{
+                        border: `1.5px solid ${ editForm.language === lang ? C.accent : C.border }`,
+                        background: editForm.language === lang ? `color-mix(in srgb, ${ C.accent } 10%, #fff)` : "#fff",
+                        color: C.base,
+                      }}
+                    >
+                      { editForm.language === lang && <Dot /> }
+                      { lang === "ES" ? "Español" : "English" }
+                    </button>
+                  ))
+                }
+              </div>
+            </div>
+            <Button
+              bgColor={ C.accent }
+              textColor="#000"
+              disabled={ !editForm.name.trim() || saving }
+              onClick={ handleEdit }
+              style={{ width: "100%" }}
+            >
+              { saving ? "..." : t("mydecks.saveCard") }
+            </Button>
+          </div>
+        </div>
+      }
       {/* DELETE MODAL */}
       {
         deleteId &&
@@ -223,6 +306,12 @@ export const MyDecksPage = () => {
                           style={{ flex: 1 }}
                         >
                           { t("mydecks.manage") }
+                        </Button>
+                        <Button
+                          onClick={ () => openEdit(deck) }
+                          size="sm"
+                        >
+                          { t("mydecks.edit", "Editar") }
                         </Button>
                       <button
                         onClick={ () => setDeleteId(deck.id) }

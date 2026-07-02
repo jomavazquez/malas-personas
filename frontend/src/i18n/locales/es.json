@@ -245,7 +245,8 @@
     "cardAPlaceholder": "Un Figma con 412 capas sin nombrar diseñado por un becario.",
     "addCard": "Añadir carta",
     "saveCard": "Guardar cambios",
-    "insertGap": "Insertar hueco"
+    "insertGap": "Insertar hueco",
+    "editDeck": "Editar mazo"
   },
   "contact": {
     "subject_general": "Duda general",

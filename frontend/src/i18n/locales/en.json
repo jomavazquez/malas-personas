@@ -245,7 +245,8 @@
     "cardAPlaceholder": "An unorganized Figma with 412 unnamed layers designed by an intern.",
     "addCard": "Add card",
     "saveCard": "Save changes",
-    "insertGap": "Insert gap"
+    "insertGap": "Insert gap",
+    "editDeck": "Edit deck"
   },  
   "contact": {
     "subject_general": "General inquiry",
