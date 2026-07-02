@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
@@ -12,9 +12,11 @@ export const LobbyPage = () => {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   // Create room state
   const [ decks, setDecks ] = useState<Deck[]>([]);
+  const [ myDecks, setMyDecks ] = useState<Deck[]>([]);
   const [ roomName, setRoomName ] = useState("");
   const [ selectedLang, setSelectedLang ] = useState<"ES" | "EN">( i18n.language.startsWith("es") ? "ES" : "EN" );
   const [ selectedDeck, setSelectedDeck ] = useState("");
@@ -32,21 +34,54 @@ export const LobbyPage = () => {
   const NO_FILTER_NAMES = ["No Filter", "Sin filtro"];
 
   useEffect(() => {
-    api.get<{ decks: Deck[] }>("/decks").then((data) => {
-      const filtered = data.decks.filter((d) => d.language === selectedLang);
-      const list = filtered.length ? filtered : data.decks;
+    api.get<{ official: Deck[]; mine: Deck[] }>("/decks/all").then((data) => {
+      const filtered = data.official.filter((d) => d.language === selectedLang);
+      const list = filtered.length ? filtered : data.official;
       setDecks(list);
-      const preferNoFilter = !selectedDeck || NO_FILTER_NAMES.includes(
-        data.decks.find((d) => d.id === selectedDeck)?.name ?? ""
-      );
-      const match = list.find((d) =>
-        preferNoFilter
-          ? NO_FILTER_NAMES.includes(d.name)
-          : !NO_FILTER_NAMES.includes(d.name)
-      );
-      setSelectedDeck(match?.id ?? list[0]?.id ?? "");
+      setMyDecks(data.mine);
+      // Solo cambiar el mazo seleccionado si es uno oficial (no uno propio del usuario)
+      const isUserDeck = data.mine.some((d) => d.id === selectedDeck);
+      if (!isUserDeck) {
+        const preferNoFilter = !selectedDeck || NO_FILTER_NAMES.includes(
+          data.official.find((d) => d.id === selectedDeck)?.name ?? ""
+        );
+        const match = list.find((d) =>
+          preferNoFilter
+            ? NO_FILTER_NAMES.includes(d.name)
+            : !NO_FILTER_NAMES.includes(d.name)
+        );
+        setSelectedDeck(match?.id ?? list[0]?.id ?? "");
+      }
     });
   }, [ selectedLang ]);
+
+  const scrollCarousel = (dir: "left" | "right") => {
+    const el = carouselRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir === "left" ? -200 : 200, behavior: "smooth" });
+  };
+
+  const handleCarouselDrag = (() => {
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    return {
+      onMouseDown: (e: React.MouseEvent) => {
+        isDown = true;
+        startX = e.pageX - (carouselRef.current?.offsetLeft ?? 0);
+        scrollLeft = carouselRef.current?.scrollLeft ?? 0;
+      },
+      onMouseLeave: () => { isDown = false; },
+      onMouseUp: () => { isDown = false; },
+      onMouseMove: (e: React.MouseEvent) => {
+        if (!isDown || !carouselRef.current) return;
+        e.preventDefault();
+        const x = e.pageX - (carouselRef.current.offsetLeft ?? 0);
+        const walk = (x - startX) * 1.5;
+        carouselRef.current.scrollLeft = scrollLeft - walk;
+      },
+    };
+  })();
 
   const handleCreate = async () => {
     if( !selectedDeck || !roomName.trim() ) return;
@@ -131,38 +166,103 @@ export const LobbyPage = () => {
             {/* Deck cards */}
             <div style={{ marginBottom: 25 }}>
               <label className="form_label">{ t("lobby.selectDeck") }</label>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                {
-                  decks.map((d) => {
-                    const isForAll = d.name === "All";
-                    const isSelected = selectedDeck === d.id;
-                    const label = isForAll ? t("myroom.forEveryone") : t("myroom.noFilter");
-                    const desc = isForAll ? t("myroom.forEveryoneDesc") : t("myroom.noFilterDesc");
-                    return (
-                      <button
-                        key={ d.id }
-                        onClick={() => setSelectedDeck(d.id)}
-                        className={ styles.card }
-                        style={{ border: `1.5px solid ${isSelected ? C.accent : C.border}`, background: isSelected ? `color-mix(in srgb, ${C.accent} 10%, #fff)` : "#fff" }}
-                      >
-                        <div className={ styles.card_container }>
-                          <span className={ styles.card_title } style={{ color: C.base }}>{ label }</span>
-                          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                            {
-                              !isForAll &&
-                              <span className={ `hidden lg:inline ${ styles.card_icons } ${ styles.plusAge }` }>+18</span>
-                            }
-                            {
-                              isSelected &&
-                              <span className={ `${ styles.card_icons } ${ styles.selected }` } style={{ background: C.accent, color: C.base }}>✓</span>
-                            }
-                        </div>
-                      </div>
-                      <p className={ `hidden lg:inline ${ styles.card_desc }` } style={{ color: C.muted }}>{ desc }</p>
-                    </button>
-                  );
-                })}
-              </div>
+              {
+                myDecks.length === 0
+                ?
+                  /* No custom decks — grid 2 columns */
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                    {
+                      decks.map((d) => {
+                        const isOfficialAll = d.name === "All";
+                        const isSelected = selectedDeck === d.id;
+                        const label = isOfficialAll ? t("myroom.forEveryone") : t("myroom.noFilter");
+                        const desc = isOfficialAll ? t("myroom.forEveryoneDesc") : t("myroom.noFilterDesc");
+                        return (
+                          <button
+                            key={ d.id }
+                            onClick={ () => setSelectedDeck(d.id) }
+                            className={ styles.card }
+                            style={{ border: `1.5px solid ${ isSelected ? C.accent : C.border }`, background: isSelected ? `color-mix(in srgb, ${ C.accent } 10%, #fff)` : "#fff" }}
+                          >
+                            <div className={ styles.card_container }>
+                              <span className={ styles.card_title } style={{ color: C.base }}>{ label }</span>
+                              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                {
+                                  !isOfficialAll &&
+                                  <span className={ `hidden lg:inline ${ styles.card_icons } ${ styles.plusAge }` }>+18</span>
+                                }
+                                {
+                                  isSelected &&
+                                  <span className={ `${ styles.card_icons } ${ styles.selected }` } style={{ background: C.accent, color: C.base }}>✓</span>
+                                }
+                              </div>
+                            </div>
+                            <p className={ `hidden lg:inline ${ styles.card_desc }` } style={{ color: C.muted }}>{ desc }</p>
+                          </button>
+                        );
+                      })
+                    }
+                  </div>
+                :
+                  /* Con mazos propios — carrusel */
+                  <div style={{ position: "relative" }}>
+                    <button
+                      onClick={ () => scrollCarousel("left") }
+                      className={ styles.carousel_btn }
+                      style={{ left: -14, border: `1.5px solid ${ C.border }`, color: C.base }}
+                    >‹</button>
+                    <button
+                      onClick={ () => scrollCarousel("right") }
+                      className={ styles.carousel_btn }
+                      style={{ right: -14, border: `1.5px solid ${ C.border }`, color: C.base }}
+                    >›</button>
+                    <div
+                      ref={ carouselRef }
+                      className={ styles.carousel }
+                      { ...handleCarouselDrag }
+                      style={{ cursor: "grab", userSelect: "none" }}
+                    >
+                      {
+                        [...decks, ...myDecks].map((d) => {
+                          const isOfficialAll = d.name === "All";
+                          const isUserDeck = myDecks.some((m) => m.id === d.id);
+                          const isSelected = selectedDeck === d.id;
+                          const label = isUserDeck ? d.name : isOfficialAll ? t("myroom.forEveryone") : t("myroom.noFilter");
+                          const desc = isUserDeck
+                            ? `${ d._count.cards } ${ d._count.cards === 1 ? t("mydecks.card") : t("mydecks.cards") } · ${ d.language }`
+                            : isOfficialAll ? t("myroom.forEveryoneDesc") : t("myroom.noFilterDesc");
+                          return (
+                            <button
+                              key={ d.id }
+                              onClick={ () => setSelectedDeck(d.id) }
+                              className={ styles.card }
+                              style={{ 
+                                border: `1.5px solid ${ isSelected ? C.accent : C.border }`, 
+                                background: isSelected ? `color-mix(in srgb, ${ C.accent } 10%, #fff)` : "#fff", 
+                                flexShrink: 0 
+                              }}
+                            >
+                              <div className={ styles.card_container }>
+                                <span className={ styles.card_title } style={{ color: C.base }}>{ label }</span>
+                                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                  {
+                                    !isOfficialAll && !isUserDeck &&
+                                    <span className={ `${ styles.card_icons } ${ styles.plusAge }` }>+18</span>
+                                  }
+                                  {
+                                    isSelected &&
+                                    <span className={ `${ styles.card_icons } ${ styles.selected }` } style={{ background: C.accent, color: C.base }}>✓</span>
+                                  }
+                                </div>
+                              </div>
+                              <p className={ styles.card_desc } style={{ color: C.muted }}>{ desc }</p>
+                            </button>
+                          );
+                        })
+                      }
+                    </div>
+                  </div>
+              }
             </div>
             {/* PLAYERS + POINTS */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4" style={{ marginBottom: 25 }}>

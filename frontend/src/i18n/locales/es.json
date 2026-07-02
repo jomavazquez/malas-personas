@@ -130,6 +130,8 @@
     "GAME_ALREADY_STARTED": "El juego ya ha empezado. ¡Espera a que termine o conéctate a otra sala!",
     "ROOM_ALREADY_ACTIVE": "Ya tienes una sala activa. Ciérrala antes de crear una nueva.",
     "ROOM_FULL": "Esta sala ya está llena. Prueba una diferente.",
+    "DECK_IN_USE": "Este mazo está siendo usado en una sala activa.",
+    "DECK_IN_EXISTING_ROOM": "Para borrar este mazo, tienes que eliminar la sala(s) que lo esté usando.",
     "notFoundTitle": "No hay ninguna sala con ese código.",
     "theCode": "El código",
     "theCode2": "no existe o está mal escrito. Revísalo con quien te invitó y vuelve a intentarlo.",

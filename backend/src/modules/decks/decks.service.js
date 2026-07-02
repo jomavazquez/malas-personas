@@ -2,6 +2,23 @@ import prisma from "../../config/database.js";
 
 const PAGE_SIZE = 10;
 
+// ── Official + User Decks
+export const getAllDecks = async( userId ) => {
+  const [ official, mine ] = await Promise.all([
+    prisma.deck.findMany({
+      where: { userId: null },
+      select: { id: true, name: true, language: true, _count: { select: { cards: true } } },
+      orderBy: { name: "asc" },
+    }),
+    userId ? prisma.deck.findMany({
+      where: { userId },
+      select: { id: true, name: true, language: true, _count: { select: { cards: true } } },
+      orderBy: { createdAt: "desc" },
+    }) : Promise.resolve([]),
+  ]);
+  return { official, mine };
+};
+
 // ── Official Decks (userId null)
 export const getDecks = async () => {
   return prisma.deck.findMany({
@@ -87,6 +104,8 @@ export const deleteDeck = async( userId, deckId ) => {
   const deck = await prisma.deck.findUnique({ where: { id: deckId } });
   if( !deck ) throw Object.assign(new Error("DECK_NOT_FOUND"), { status: 404 });
   if( deck.userId !== userId ) throw Object.assign(new Error("UNAUTHORIZED"), { status: 403 });
+  const roomCount = await prisma.room.count({ where: { deckId } });
+  if( roomCount > 0 ) throw Object.assign(new Error("DECK_IN_EXISTING_ROOM"), { status: 409 });
   await prisma.card.deleteMany({ where: { deckId } });
   return prisma.deck.delete({ where: { id: deckId } });
 };

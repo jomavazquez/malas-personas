@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { authMiddleware } from "../../middleware/auth.middleware.js";
-import { handleGetDecks, handleGetDeckById, handleGetMyDecks, handleGetDeckCards, handleCreateDeck, handleAddCard, handleUpdateCard, handleDeleteCard, handleDeleteDeck, handleUpdateDeck } from "./decks.controller.js";
+import { authMiddleware, optionalAuthMiddleware } from "../../middleware/auth.middleware.js";
+import { handleGetDecks, handleGetAllDecks, handleGetDeckById, handleGetMyDecks, handleGetDeckCards, handleCreateDeck, handleAddCard, handleUpdateCard, handleDeleteCard, handleDeleteDeck, handleUpdateDeck } from "./decks.controller.js";
 
 const router = Router();
 
 // ── Public
 router.get("/", handleGetDecks);
+router.get("/all", optionalAuthMiddleware, handleGetAllDecks);
 router.get("/:id", handleGetDeckById);
 
 // ── Private

@@ -18,3 +18,16 @@ export const authMiddleware = ( req, res, next ) => {
     return res.status(401).json({ success: false, message: "TOKEN_INVALID" });
   }
 };
+
+export const optionalAuthMiddleware = ( req, res, next ) => {
+  const header = req.headers.authorization;
+  if( !header ) return next();
+  try{
+    const token = header.split(" ")[1];
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = payload;
+  }catch{
+    // Token inválido — continuamos sin usuario
+  }
+  next();
+};

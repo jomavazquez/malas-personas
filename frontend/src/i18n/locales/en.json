@@ -130,6 +130,8 @@
     "GAME_ALREADY_STARTED": "The game has already started. Wait a bit or connect to other room!",
     "ROOM_ALREADY_ACTIVE": "You already have an active room. Close it before creating a new one.",
     "ROOM_FULL": "This room is already full. Try another one.",
+    "DECK_IN_USE": "This deck is being used in an active room.",
+    "DECK_IN_EXISTING_ROOM": "To delete this deck, you need to erase the room(s) which is using for.",
     "notFoundTitle": "There is no room with this code.",
     "theCode": "The code",
     "theCode2": "does not exist or has been entered incorrectly. Please check it with the person who invited you and try again.",

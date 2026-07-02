@@ -1,4 +1,4 @@
-import { getDecks, getDeckById, getMyDecks, getDeckCards, createDeck, addCardToDeck, updateCard, deleteCard, deleteDeck, updateDeck  } from "./decks.service.js";
+import { getDecks, getAllDecks, getDeckById, getMyDecks, getDeckCards, createDeck, addCardToDeck, updateCard, deleteCard, deleteDeck, updateDeck  } from "./decks.service.js";
 
 export const handleGetDecks = async( req, res, next ) => {
   try{
@@ -92,5 +92,15 @@ export const handleUpdateDeck = async( req, res, next ) => {
     res.json({ success: true, deck });
   }catch( err ){ 
     next(err); 
+  }
+};
+
+export const handleGetAllDecks = async( req, res, next ) => {
+  try{
+    const userId = req.user?.userId ?? null;
+    const decks = await getAllDecks(userId);
+    res.json({ success: true, ...decks });
+  }catch( err ){
+    next(err);
   }
 };
