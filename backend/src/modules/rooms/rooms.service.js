@@ -16,16 +16,6 @@ const generateRoomCode = async () => {
 };
 
 export const createRoom = async( hostId, { deckId, maxPlayers, pointsToWin, name } ) => {
-  const activeRoom = await prisma.room.findFirst({
-    where: { hostId, isActive: true },
-  });
-
-  if( activeRoom ){
-    const error = new Error("ROOM_ALREADY_ACTIVE");
-    error.status = 409;
-    throw error;
-  }
-
   const deck = await prisma.deck.findUnique({ where: { id: deckId } });
   if( !deck ){
     const error = new Error("SELECTED_DECK_NOT_EXISTS");
