@@ -2,7 +2,7 @@
 
 A free, open web game inspired by Cards Against Humanity — playable online with your team or friends, in Spanish and English.
 
-<a href="https://www.malaspersonas.com" target="_blank">→ malaspersonas.com</a>
+**→ [malaspersonas.com](https://www.malaspersonas.com)**
 
 ---
 
@@ -57,21 +57,26 @@ No install needed — just share a room code and play from any browser.
 
 ```
 malas-personas/
-├── frontend/          # React + TypeScript + Vite
+├── frontend/           # React + TypeScript + Vite
 │   ├── src/
-│   │   ├── pages/
 │   │   ├── components/
 │   │   ├── context/
-│   │   ├── lib/
 │   │   ├── hooks/
-│   │   └── i18n/
-└── backend/           # Node.js + Express + Prisma
+│   │   ├── i18n/
+│   │   ├── lib/
+│   │   ├── pages/
+│   │   └── types/
+└── backend/            # Node.js + Express + Prisma
     ├── src/
+    │   └── config/
+    │   └── lib/
+    │   └── middleware/
     │   └── modules/
     │       ├── auth/
-    │       ├── rooms/
     │       ├── decks/
-    │       └── game/      # Socket.io game engine
+    │       ├── game/   # Socket.io game engine
+    │       ├── rooms/
+    │       └── users/      
     └── prisma/
 ```
 
@@ -102,7 +107,6 @@ npm run dev
 
 ```bash
 cd backend
-cp .env.example .env
 # Fill in DATABASE_URL, JWT_SECRET
 npm install
 npx prisma migrate dev
@@ -112,7 +116,6 @@ npm run dev
 
 ```bash
 cd frontend
-cp .env.example .env
 # Set VITE_API_URL and VITE_SOCKET_URL
 npm install
 npm run dev
