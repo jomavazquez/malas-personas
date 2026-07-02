@@ -1,8 +1,8 @@
-# Malas Personas 🃏
+# Malas Personas
 
 A free, open web game inspired by Cards Against Humanity — playable online with your team or friends, in Spanish and English.
 
-**→ [malaspersonas.com](https://malaspersonas.com)**
+<a href="https://www.malaspersonas.com" target="_blank">→ malaspersonas.com</a>
 
 ---
 
