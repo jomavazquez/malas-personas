@@ -31,6 +31,7 @@ export const MyDecksPage = () => {
   const [ editForm, setEditForm ] = useState({ name: "", language: "ES" as "ES" | "EN" });
   const [ editError, setEditError ] = useState("");
   const [ saving, setSaving ] = useState(false);
+  const [ deleteError, setDeleteError ] = useState("");
 
   useEffect(() => {
     api.get<{ decks: Deck[] }>("/decks/my/decks").then((data) => {
@@ -89,13 +90,16 @@ export const MyDecksPage = () => {
   };
 
   const handleDelete = async () => {
+    setDeleteError("");
     if( !deleteId ) return;
     try{
       await api.delete(`/decks/my/decks/${deleteId}`);
       setDecks((prev) => prev.filter((d) => d.id !== deleteId));
-    }catch{
-    }finally{
       setDeleteId(null);
+      setDeleteError("");
+    }catch( err ){
+      const code = (err as Error).message;
+      setDeleteError(t(`errors.${code}`, code));
     }
   };
 
@@ -162,17 +166,21 @@ export const MyDecksPage = () => {
           <div className="modal_container" onClick={ (e) => e.stopPropagation() }>
             <div className="modal_title" style={{ color: C.base }}>{ t("mydecks.deleteTitle") }</div>
             <p className="modal_body" style={{ color: C.muted }}>{ t("mydecks.deleteConfirm") }</p>
+            { 
+              deleteError && 
+              <p className="error" style={{ marginTop: -10, marginBottom: 20 }}>{ deleteError }</p> 
+            }
             <div style={{ display: "flex", gap: 10 }}>
               <button
                 className="btn btn_cancel"
-                onClick={ () => setDeleteId(null) }
+                onClick={ () => { setDeleteId(null); setDeleteError(""); } }
                 style={{ border: `1.5px solid ${C.border}`, color: C.base }}
               >
                 { t("myroom.cancel") }
               </button>
               <button
                 className="btn btn_delete"
-                onClick={handleDelete}
+                onClick={ handleDelete }
               >
                 { t("myroom.delete") }
               </button>
@@ -314,7 +322,7 @@ export const MyDecksPage = () => {
                           { t("mydecks.edit", "Editar") }
                         </Button>
                       <button
-                        onClick={ () => setDeleteId(deck.id) }
+                        onClick={ () => { setDeleteId(deck.id); setDeleteError(""); } }
                         className="btn_red"
                         style={{ borderRadius: 12, fontSize: 14, height: "auto" }}
                         title={ t("myroom.delete") }
