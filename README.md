@@ -159,7 +159,7 @@ Registered users can create their own decks with custom black (question) and whi
 
 ## Legal
 
-Malas Personas is an independent project and is not affiliated with, sponsored by, or endorsed by Cards Against Humanity LLC. The game mechanic (question/answer cards with a rotating judge) is not subject to copyright. All card content is original.
+Malas Personas is an independent project and is not affiliated with, sponsored by, or endorsed by Cards Against Humanity LLC.
 
 This project is free to play and not monetised.
 
@@ -167,4 +167,4 @@ This project is free to play and not monetised.
 
 ## License
 
-MIT
+Creative Commons Attribution–NonCommercial–ShareAlike 2.0 (CC BY-NC-SA 2.0)
