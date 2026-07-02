@@ -6,6 +6,13 @@ import { Blob, Button, Logo } from "../../components";
 import { C, F, goToSection, scrollToTop,  } from "../../lib";
 import styles from "./Footer.module.css";
 
+interface FooterPropLink {
+    to?: string;
+    onClick?: () => void;
+    children: React.ReactNode
+    target?: '_self' | '_blank';
+}
+
 export const Footer = () => {
 
     const { t } = useTranslation();
@@ -21,7 +28,7 @@ export const Footer = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const FooterLink = ({ to, onClick, children }: { to?: string; onClick?: () => void; children: React.ReactNode }) => {
+    const FooterLink = ({ to, onClick, children, target = '_self' }: FooterPropLink ) => {
         if( onClick ){
             return (
                 <button 
@@ -38,6 +45,7 @@ export const Footer = () => {
             <Link 
                 to={ to ?? "#" } 
                 className={ styles.link }
+                target={ target }
                 onMouseEnter={ (e) => (e.currentTarget.style.color = "#fff") }
                 onMouseLeave={ (e) => (e.currentTarget.style.color = "#9AA3AB") }
             >
@@ -90,6 +98,7 @@ export const Footer = () => {
                         <div className={ styles.column_label }>{ t("footer.resources") }</div>
                         <FooterLink to="/help-center">{ t("footer.helpCenter") }</FooterLink>
                         <FooterLink to="/">{ t("footer.teamIdeas") }</FooterLink>
+                        <FooterLink to="https://www.github.com" target="_blank">{ t("footer.pOnGitHub") }</FooterLink>
                         <FooterLink to="/contact">{ t("footer.contact") }</FooterLink>
                     </div>
                     <div>

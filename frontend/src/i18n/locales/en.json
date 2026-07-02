@@ -146,7 +146,8 @@
     "legalNotice": "Legal notice - Terms of use",
     "privacyPolicy": "Privacy policy",
     "cookiePolicy": "Cookies policy",
-    "tagline": "The card game that brings out the wild side of your teams. Made for laughs and good company." 
+    "tagline": "The card game that brings out the wild side of your teams. Made for laughs and good company.",
+    "pOnGitHub": "Project on GitHub"
   },
   "login": {
     "welcome": "Welcome back to the wild side.",

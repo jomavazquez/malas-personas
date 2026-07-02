@@ -146,7 +146,8 @@
     "legalNotice": "Aviso legal - Términos de uso",
     "privacyPolicy": "Política de privacidad",
     "cookiePolicy": "Política de cookies",
-    "tagline": "El juego de cartas para sacar el lado salvaje de tus equipos. Hecho con humor y estar en buena compañía."
+    "tagline": "El juego de cartas para sacar el lado salvaje de tus equipos. Hecho con humor y estar en buena compañía.",
+    "pOnGitHub": "Proyecto en GitHub"
   },
   "login": {
     "welcome": "Bienvenido de vuelta al lado salvaje.",
