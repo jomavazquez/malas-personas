@@ -99,7 +99,8 @@ cd malas-personas
 ### 2. Run backend and frontend in one time in the root
 
 ```bash
-npm run setup
+npm run setup   # First time only — installs dependencies, sets up the database and starts the app
+npm run dev     # Every other time
 ```
 
 
