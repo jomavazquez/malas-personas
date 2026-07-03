@@ -9,7 +9,8 @@
     "db:start": "docker compose -f backend/docker-compose.yml up -d db",
     "db:migrate": "npm run db:migrate --prefix backend",
     "db:seed": "npm run db:seed --prefix backend",
-    "setup": "npm install && npm install --prefix frontend && npm install --prefix backend && npm run db:start && npm run db:migrate && npm run db:seed && npm run dev"
+    "db:reset": "npm run db:reset --prefix backend",
+    "setup": "npm install && npm install --prefix frontend && npm install --prefix backend && npm run db:start && npm run db:reset && npm run dev"
   },
   "keywords": [],
   "author": "",
