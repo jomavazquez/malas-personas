@@ -238,7 +238,9 @@ export const ForgotPasswordPage = () => {
                             step === 2 &&
                             <>
                                 <h1 className="heading_1" style={{ color: C.base }}>{ t("forgot.title2") }</h1>
-                                <p className="welcome_sub" style={{ color: C.muted }}>{ t("forgot.desc2") }{" "}<strong>{email}</strong>.</p>
+                                <p className="welcome_sub" style={{ color: C.muted, maxWidth: 500 }}>
+                                    { t("forgot.desc2") }{" "}<strong style={{ color: C.base }}>{ email }</strong>.<br />{ t("forgot.desc2Spam") }
+                                </p>
                                 <div className="form">
                                     {/* CODE INPUTS */}
                                     <div style={{ display: "flex", gap: 10 }}>

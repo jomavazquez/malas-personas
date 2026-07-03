@@ -329,6 +329,7 @@
     "backTo": "Back to",
     "title2": "Enter the code",
     "desc2": "I sent a six-digit code to",
+    "desc2Spam": "I you don't see it, check your spam folder.",
     "expiresIn": "Expires in",
     "resend": "Resend code",
     "verifyCode": "Verify code",

@@ -329,6 +329,7 @@
     "backTo": "Volver a",
     "title2": "Introduce el código",
     "desc2": "Envié un código de 6 dígitos a",
+    "desc2Spam": "Si no lo ves, revisa tu carpeta de spam.",
     "expiresIn": "Caduca en",
     "resend": "Reenviar código",
     "verifyCode": "Verificar código",
