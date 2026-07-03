@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useIsMobile } from "../hooks";
 import { Badge, Footer, Logo, UnderlineLink } from "../components";
 import { api, C } from "../lib";
 import styles from "./ForgotPasswordPage.module.css";
@@ -27,7 +28,7 @@ export const ForgotPasswordPage = () => {
     const [ resendTimer, setResendTimer ] = useState(0);
 
     const codeRefs = useRef<(HTMLInputElement | null)[]>([]);
-    const isMobile = window.innerWidth < 768;
+    const isMobile = useIsMobile();
 
     const MINUTES = 600;
 

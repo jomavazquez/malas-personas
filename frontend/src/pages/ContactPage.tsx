@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useIsMobile } from "../hooks";
 import { Badge, Button, Footer, Logo, UnderlineLink } from "../components";
 import { api, C, F } from "../lib";
 import styles from "./ContactPage.module.css";
@@ -15,7 +16,7 @@ export const ContactPage = () => {
   const [ loading, setLoading ] = useState(false);
   const [ sent, setSent ] = useState(false);
   const [ error, setError ] = useState("");
-  const isMobile = window.innerWidth < 768;
+  const isMobile = useIsMobile();
 
   const subjects: { key: Subject; label: string }[] = [
     { 

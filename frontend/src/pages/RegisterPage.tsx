@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
+import { useIsMobile } from "../hooks";
 import { Badge, Footer, Logo, UnderlineLink } from "../components";
 import { api, C, F } from "../lib";
 import type { User } from "../types";
@@ -16,7 +17,7 @@ export const RegisterPage = () => {
   const [ acceptTerms, setAcceptTerms ] = useState(false);
   const [ error, setError ] = useState("");
   const [ loading, setLoading ] = useState(false);
-  const isMobile = window.innerWidth < 768;
+  const isMobile = useIsMobile();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 

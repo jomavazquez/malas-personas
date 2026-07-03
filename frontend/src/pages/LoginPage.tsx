@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth, useJoinModal } from "../context";
+import { useIsMobile } from "../hooks";
 import { Badge, FloatingQuestion, Footer, Logo, UnderlineLink } from "../components";
 import { api, C, F } from "../lib";
 import type { User } from "../types";
@@ -18,7 +19,7 @@ export const LoginPage = () => {
   const [ keepSession, setKeepSession ] = useState(true);
   const [ error, setError ] = useState("");
   const [ loading, setLoading ] = useState(false);
-  const isMobile = window.innerWidth < 768;
+  const isMobile = useIsMobile();
 
   const isEmail = form.identifier.includes("@");
 
