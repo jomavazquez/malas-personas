@@ -99,7 +99,7 @@ cd malas-personas
 ### 2. Run backend and frontend in one time in the root
 
 ```bash
-npm run dev
+npm run setup
 ```
 
 
@@ -107,10 +107,11 @@ npm run dev
 
 ```bash
 cd backend
+docker compose up -d db    # Start PostgreSQL
 # Fill in DATABASE_URL, JWT_SECRET
-npm install
-npx prisma migrate dev
-node prisma/seed.js   # Seeds official decks
+npm install                # Installs dependencies + generates Prisma client
+npx prisma migrate dev     # Run migrations
+node prisma/seed.js        # Seeds official decks
 npm run dev
 ```
 

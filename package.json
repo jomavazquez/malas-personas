@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix frontend\" \"npm run dev --prefix backend\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:start": "docker compose -f backend/docker-compose.yml up -d db",
+    "db:migrate": "npm run db:migrate --prefix backend",
+    "db:seed": "npm run db:seed --prefix backend",
+    "setup": "npm install && npm install --prefix frontend && npm install --prefix backend && npm run db:start && npm run db:migrate && npm run db:seed && npm run dev"
   },
   "keywords": [],
   "author": "",
