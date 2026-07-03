@@ -98,7 +98,7 @@ export const Footer = () => {
                         <div className={ styles.column_label }>{ t("footer.resources") }</div>
                         <FooterLink to="/help-center">{ t("footer.helpCenter") }</FooterLink>
                         <FooterLink to="/">{ t("footer.teamIdeas") }</FooterLink>
-                        <FooterLink to="https://www.github.com" target="_blank">{ t("footer.pOnGitHub") }</FooterLink>
+                        <FooterLink to="https://github.com/jomavazquez/malas-personas" target="_blank">{ t("footer.pOnGitHub") }</FooterLink>
                         <FooterLink to="/contact">{ t("footer.contact") }</FooterLink>
                     </div>
                     <div>

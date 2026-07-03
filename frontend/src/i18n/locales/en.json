@@ -132,6 +132,7 @@
     "ROOM_FULL": "This room is already full. Try another one.",
     "DECK_IN_USE": "This deck is being used in an active room.",
     "DECK_IN_EXISTING_ROOM": "To delete this deck, you need to erase the room(s) which is using for.",
+    "CONTACT_ERROR": "There was an error. Try again, please.",
     "notFoundTitle": "There is no room with this code.",
     "theCode": "The code",
     "theCode2": "does not exist or has been entered incorrectly. Please check it with the person who invited you and try again.",

@@ -132,6 +132,7 @@
     "ROOM_FULL": "Esta sala ya está llena. Prueba una diferente.",
     "DECK_IN_USE": "Este mazo está siendo usado en una sala activa.",
     "DECK_IN_EXISTING_ROOM": "Para borrar este mazo, tienes que eliminar la sala(s) que lo esté usando.",
+    "CONTACT_ERROR": "Ha ocurrido un error. Inténtalo de nuevo.",
     "notFoundTitle": "No hay ninguna sala con ese código.",
     "theCode": "El código",
     "theCode2": "no existe o está mal escrito. Revísalo con quien te invitó y vuelve a intentarlo.",

@@ -1,35 +1,36 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Badge, Button, Footer, Logo, UnderlineLink } from "../components";
-import { C, F } from "../lib";
+import { api, C, F } from "../lib";
 import styles from "./ContactPage.module.css";
 
-type Subject = "general" | "game" | "cards" | "press";
+type Subject = "General inquiry" | "Problem in a game" | "Suggest cards" | "Press";
 
 export const ContactPage = () => {
 
   const { t } = useTranslation();
   const [ form, setForm ] = useState({ name: "", email: "", message: "" });
-  const [ subject, setSubject ] = useState<Subject>("general");
+  const [ subject, setSubject ] = useState<Subject>("General inquiry");
   const [ accepted, setAccepted ] = useState(false);
   const [ loading, setLoading ] = useState(false);
   const [ sent, setSent ] = useState(false);
+  const [ error, setError ] = useState("");
 
   const subjects: { key: Subject; label: string }[] = [
     { 
-      key: "general",
+      key: "General inquiry",
       label: t("contact.subject_general") 
     },
     { 
-      key: "game",
+      key: "Problem in a game",
       label: t("contact.subject_game")
     },
     { 
-      key: "cards",
+      key: "Suggest cards",
       label: t("contact.subject_cards")
     },
     { 
-      key: "press",
+      key: "Press",
       label: t("contact.subject_press")
     },
   ];
@@ -39,11 +40,16 @@ export const ContactPage = () => {
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if( !accepted ) return;
+    setError("");
     setLoading(true);
-    // Aquí iría la llamada al backend cuando esté listo
-    await new Promise((r) => setTimeout(r, 1000));
-    setSent(true);
-    setLoading(false);
+    try{
+      await api.post("/contact", { ...form, subject });
+      setSent(true);
+    }catch{
+      setError(t("errors.CONTACT_ERROR"));
+    }finally{
+      setLoading(false);
+    }
   };
 
   return (
@@ -164,6 +170,10 @@ export const ContactPage = () => {
                           {" "}{ t("contact.privacy") }
                         </span>
                       </div>
+                      { 
+                        error && 
+                        <p className="error">{ error }</p> 
+                      }
                       <button
                         type="submit"
                         disabled={ loading || !accepted }
