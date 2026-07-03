@@ -1,13 +1,3 @@
-.welcome_sub {
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 1.6em;
-    margin-top: 25px;
-    max-width: 375px;
-    position: relative;
-    z-index: 1
-}
-
 .forgot_pwd {
     font-size: 14px;
     font-weight: 600;

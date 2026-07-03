@@ -1,4 +1,5 @@
 export * from "./ContactPage";
+export * from "./ForgotPasswordPage";
 export * from "./GamePage";
 export * from "./HelpCenterPage";
 export * from "./HomePage";

@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import { saveCode, verifyCode, deleteCode } from "./reset.store.js";
 import jwt from "jsonwebtoken";
 import prisma from "../../config/database.js";
 import { env } from "../../config/env.js";
@@ -54,3 +55,41 @@ export const loginUser = async({ identifier, password }) => {
 };
 
 const signToken = (userId) => jwt.sign({ userId }, env.JWT_SECRET, { expiresIn: env.JWT_EXPIRES_IN });
+const generateCode = () => String(Math.floor(100000 + Math.random() * 900000));
+
+export const requestPasswordReset = async( email ) => {
+  const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
+  if( !user ){
+    const error = new Error("EMAIL_NOT_FOUND");
+    error.status = 404;
+    throw error;
+  }
+  const code = generateCode();
+  saveCode(email, code);
+  return { code, username: user.username };
+};
+
+export const verifyResetCode = ( email, code ) => {
+  if( !verifyCode(email, code) ){
+    const error = new Error("INVALID_OR_EXPIRED_CODE");
+    error.status = 400;
+    throw error;
+  }
+};
+
+export const resetPassword = async( email, code, newPassword ) => {
+  if( !verifyCode(email, code) ){
+    const error = new Error("INVALID_OR_EXPIRED_CODE");
+    error.status = 400;
+    throw error;
+  }
+  const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
+  if( !user ){
+    const error = new Error("EMAIL_NOT_FOUND");
+    error.status = 404;
+    throw error;
+  }
+  const passwordHash = await bcrypt.hash(newPassword, 12);
+  await prisma.user.update({ where: { email: email.toLowerCase() }, data: { passwordHash } });
+  deleteCode(email);
+};

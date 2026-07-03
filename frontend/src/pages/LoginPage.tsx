@@ -42,7 +42,7 @@ export const LoginPage = () => {
 
   return (
     <div style={{ background: "#fff", display: "flex", flexDirection: "column" }}>
-      {/* ── GREEN BG HALF ── */}
+      {/* ── ORANGE BG HALF ── */}
       <div className="hidden md:block fixed top-0 left-0 bottom-0 w-[45%]" style={{ background: C.accent, zIndex: 0 }} />
       <div className="relative flex-1 flex flex-col" style={{ zIndex: 1 }}>
         {/* NAV */}
@@ -62,7 +62,7 @@ export const LoginPage = () => {
                 <FloatingQuestion left={ 295 } top={ 75 } />
               </div>
               <h3 className="heading_1" style={{ color: C.base }}>{ t("login.welcome") }</h3>
-              <p className={ styles.welcome_sub } style={{ color: C.accentDeep }}>{ t("login.welcomeSub") }</p>
+              <p className="welcome_sub" style={{ color: C.accentDeep }}>{ t("login.welcomeSub") }</p>
             </div>
             {/* RIGHT */}
             <div className="px-10 lg:px-25">
@@ -110,7 +110,10 @@ export const LoginPage = () => {
                 </div>
                 <div className={ styles.keepme_container } onClick={ () => setKeepSession(!keepSession) }>
                   <div className="checkbox" style={{ border: `2px solid ${ keepSession ? C.accent : C.border }`, background: keepSession ? C.accent : "#fff" }}>
-                    { keepSession && <span style={{ color: C.base, fontFamily: F.display }}>✓</span> }
+                    { 
+                      keepSession && 
+                      <span style={{ color: C.base, fontFamily: F.display }}>✓</span> 
+                    }
                   </div>
                   <span style={{ fontFamily: F.body, fontSize: 14, color: C.muted }}>{ t("login.keepSession") }</span>
                 </div>
