@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Footer, Logo, TopMenu } from "../components";
+import { Footer, TopMenu } from "../components";
 import { F } from "../lib";
 import styles from "./LegalPage.module.css";
 
@@ -34,12 +34,7 @@ export const LegalPage = ({ doc }: LegalPageProps) => {
 
   return (
     <div style={{ background: "#fff", fontFamily: F.body, position: "relative" }}>
-      <nav className="flex items-center justify-between px-4 md:px-14 h-16 relative pt-6 md:pt-10" style={{ zIndex: 2 }}>
-        <div className="max-w-360 mx-auto w-full flex items-center justify-between">
-          <Logo />
-          <TopMenu />
-        </div>
-      </nav>
+      <TopMenu />
       <div className="flex-1 px-4 md:px-14 py-12">
         <div className="max-w-360 mx-auto">
           <div

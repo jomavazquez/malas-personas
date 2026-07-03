@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { useAuth, useJoinModal } from "../context";
 import { getLenis } from "../hooks";
-import { Avatar, Blob, Logo, Button, UnderlineLink, Footer, TopMenu, Badge, FloatingQuestion, BlackCard } from "../components";
+import { Avatar, Blob, Button, UnderlineLink, Footer, TopMenu, Badge, FloatingQuestion, BlackCard } from "../components";
 import { C, F } from "../lib";
 import styles from "./HomePage.module.css";
 
@@ -29,16 +29,11 @@ export const HomePage = () => {
     };
     
     setTimeout(attempt, 200);
-  }, [location.state]);
+  }, [ location.state ]);
 
   return (
     <div style={{ background: C.surface, position: "relative" }}>
-      <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 10 }}>
-        <div className="max-w-360 mx-auto w-full flex items-center justify-between">
-          <Logo />
-          <TopMenu />
-        </div>
-      </nav>
+      <TopMenu />
       {/* ── HERO ── */}
       <div className="relative px-4 md:px-14 pt-6 pb-10 md:pb-16" style={{ zIndex: 3 }}>
         <div className="max-w-360 mx-auto grid grid-cols-1 md:grid-cols-[1.05fr_0.95fr] gap-5 items-center" style={{ minHeight: 520, position: "relative", zIndex: 4 }}>

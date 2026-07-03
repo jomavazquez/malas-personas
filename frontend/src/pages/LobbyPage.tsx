@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
-import { Badge, Button, Dot, Footer, Logo, TopMenuMyAccount } from "../components";
+import { Badge, Button, Dot, Footer, TopMenu } from "../components";
 import { api, C, getOrCreateGuestId } from "../lib";
 import type { Deck } from "../types";
 import styles from "./LobbyPage.module.css";
@@ -115,12 +115,7 @@ export const LobbyPage = () => {
 
   return (
     <div style={{ background: C.surface, position: "relative" }}>
-      <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 2 }}>
-        <div className="max-w-360 mx-auto w-full flex items-center justify-between flex-col md:flex-row gap-4 md:gap-0">
-          <Logo />
-          <TopMenuMyAccount />
-        </div>
-      </nav>
+      <TopMenu />
       <div className="max-w-360 mx-auto px-4 md:px-14 2xl:px-0 py-6 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
           {/* ── CREATE ROOM ── */}
@@ -163,7 +158,7 @@ export const LobbyPage = () => {
                 ))}
               </div>
             </div>
-            {/* Deck cards */}
+            {/* DECK CARDS */}
             <div style={{ marginBottom: 25 }}>
               <label className="form_label">{ t("lobby.selectDeck") }</label>
               {
@@ -204,7 +199,7 @@ export const LobbyPage = () => {
                     }
                   </div>
                 :
-                  /* Con mazos propios — carrusel */
+                  /* OWN DECKS — Carousel */
                   <div style={{ position: "relative" }}>
                     <button
                       onClick={ () => scrollCarousel("left") }

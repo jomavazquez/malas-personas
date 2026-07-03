@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useJoinModal } from "../../context";
-import { Badge, Button, Footer, Logo, TopMenu, UnderlineLink } from "../../components";
+import { Badge, Button, Footer, TopMenu, UnderlineLink } from "../../components";
 import { C, F } from "../../lib";
 import styles from "./RoomNotFound.module.css";
 
@@ -20,12 +20,7 @@ export const RoomNotFound = ({ code, error }: RoomNotFoundProps) => {
 
     return (
         <div style={{ background: C.surface, position: "relative" }}>
-            <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 10 }}>
-                <div className="max-w-360 mx-auto w-full flex items-center justify-between">
-                    <Logo />
-                    <TopMenu />
-                </div>
-            </nav>        
+            <TopMenu />
             <div className={ styles.container }>
                 <div className={ styles.cards_containter }>
                     <div className={ `${ styles.card } ${ styles.card_black }` } />

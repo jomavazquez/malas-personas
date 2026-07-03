@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import confetti from "canvas-confetti";
 import { C } from "../../lib";
-import { Avatar, Button, Footer, Logo, TopMenu } from "../../components";
+import { Avatar, Button, Footer, TopMenu } from "../../components";
 import type { Player } from "../../types";
 import styles from "./GameOver.module.css";
 
@@ -33,12 +33,7 @@ export const GameOver = ({ winner, players }: GameOverProps) => {
 
     return (
         <div style={{ background: C.surface, position: "relative" }}>
-            <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 2 }}>
-                <div className="max-w-360 mx-auto w-full flex items-center justify-between flex-col md:flex-row gap-4 md:gap-0">
-                    <Logo />
-                    <TopMenu />
-                </div>
-            </nav>
+            <TopMenu />
             <div className="max-w-360 mx-auto w-full px-10 2xl:px-0 mt-10" style={{ maxWidth: 500 }}>
                 <div className={ styles.go_pre } style={{ color: C.base }}>{ t("game.gameOver") }</div>
                 <h1 className="heading_1" style={{ color: C.base, textAlign: "center" }}>{ t("game.winsTitle", { username: winner.username }) }{" "}🏆</h1>

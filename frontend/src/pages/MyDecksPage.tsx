@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Button, Dot, Footer, Logo, TopMenuMyAccount } from "../components";
+import { Button, Dot, Footer, TopMenu } from "../components";
 import { api, C } from "../lib";
 import styles from "./MyDecksPage.module.css";
 
@@ -249,12 +249,7 @@ export const MyDecksPage = () => {
           </div>
         </div>
       )}
-      <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 2 }}>
-        <div className="max-w-360 mx-auto w-full flex items-center justify-between flex-col md:flex-row gap-4 md:gap-0">
-          <Logo />
-          <TopMenuMyAccount />
-        </div>
-      </nav>
+      <TopMenu />
       <div className="max-w-360 mx-auto px-4 md:px-14 2xl:px-0 py-6 md:py-16">
         <div className="flex items-start justify-between flex-wrap gap-4 mb-8">
           <div>

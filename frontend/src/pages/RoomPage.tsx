@@ -3,7 +3,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
 import { C, getOrCreateGuestId, connectSocket } from "../lib";
-import { Footer, Logo, TopMenu, TopMenuMyAccount, RoomNotFound, Avatar, Button } from "../components";
+import { Footer, TopMenu, RoomNotFound, Avatar, Button } from "../components";
 import type { Player, GameState } from "../types";
 import styles from "./RoomPage.module.css";
 
@@ -116,14 +116,7 @@ export const RoomPage = () => {
   if( needsName ){
     return (
       <div style={{ background: C.surface, position: "relative" }}>
-        <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 10 }}>
-          <div className="max-w-360 mx-auto w-full flex items-center justify-between flex-col md:flex-row gap-4 md:gap-0">
-            <Logo />
-            {
-              isGuest ? <TopMenu /> : <TopMenuMyAccount />
-            }
-          </div>
-        </nav>
+        <TopMenu />
         <div className="max-w-360 mx-auto px-4 md:px-14 2xl:px-0 py-6 md:py-16">
           <div className="mx-auto" style={{ maxWidth: 480 }}>
             <div className={ styles.players_box } style={{ border: `1.5px solid ${ C.borderMid }`}}>
@@ -161,14 +154,7 @@ export const RoomPage = () => {
   
   return (
     <div style={{ background: C.surface, position: "relative" }}>
-      <nav className="flex items-center justify-between px-4 md:px-14 relative pt-6 md:pt-10" style={{ zIndex: 10 }}>
-        <div className="max-w-360 mx-auto w-full flex items-center justify-between flex-col md:flex-row gap-4 md:gap-0">
-          <Logo />
-          {
-            isGuest ? <TopMenu /> : <TopMenuMyAccount />
-          }
-        </div>
-      </nav>
+      <TopMenu />
       <div className="max-w-360 mx-auto px-4 md:px-14 2xl:px-0 py-6 md:py-16">
         <div className="mx-auto" style={{ maxWidth: 480 }}>
           <div style={{ textAlign: "center", marginBottom: 25 }}>
