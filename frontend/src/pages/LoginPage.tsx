@@ -18,6 +18,7 @@ export const LoginPage = () => {
   const [ keepSession, setKeepSession ] = useState(true);
   const [ error, setError ] = useState("");
   const [ loading, setLoading ] = useState(false);
+  const isMobile = window.innerWidth < 768;
 
   const isEmail = form.identifier.includes("@");
 
@@ -49,7 +50,7 @@ export const LoginPage = () => {
         <nav className="px-4 md:px-14 pt-6 md:pt-10 h-16 flex items-center">
           <div className="max-w-360 mx-auto w-full grid grid-cols-1 md:grid-cols-[45%_55%]">
             <div className="flex items-center">
-              <Logo dot="#a06a19" />
+              <Logo dot={ isMobile ? C.accent : "#a06a19" } />
             </div>
           </div>
         </nav>

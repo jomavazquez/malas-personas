@@ -16,6 +16,7 @@ export const RegisterPage = () => {
   const [ acceptTerms, setAcceptTerms ] = useState(false);
   const [ error, setError ] = useState("");
   const [ loading, setLoading ] = useState(false);
+  const isMobile = window.innerWidth < 768;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
@@ -45,7 +46,7 @@ export const RegisterPage = () => {
         <nav className="px-4 md:px-14 pt-6 md:pt-10 h-16 flex items-center">
           <div className="max-w-360 mx-auto w-full grid grid-cols-1 md:grid-cols-[45%_55%]">
             <div className="flex items-center">
-              <Logo dot="#a06a19" />
+              <Logo dot={ isMobile ? C.accent : "#a06a19" } />
             </div>
           </div>
         </nav>
@@ -130,9 +131,9 @@ export const RegisterPage = () => {
                   </div>
                   <span style={{ fontFamily: F.body, fontSize: 14, color: C.muted }}>
                     { t("register.accept") }{" "}
-                    <UnderlineLink to="/legal-notice">{ t("register.terms") }</UnderlineLink>
+                    <UnderlineLink to="/legal-notice" target="_blank">{ t("register.terms") }</UnderlineLink>
                     {" "}{ t("register.and") }{" "}
-                    <UnderlineLink to="/privacy-policy">{ t("footer.privacyPolicy").toLowerCase() }</UnderlineLink>.
+                    <UnderlineLink to="/privacy-policy" target="_blank">{ t("footer.privacyPolicy").toLowerCase() }</UnderlineLink>.
                   </span>
                 </div>
                 {

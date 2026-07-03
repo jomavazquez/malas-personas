@@ -27,6 +27,7 @@ export const ForgotPasswordPage = () => {
     const [ resendTimer, setResendTimer ] = useState(0);
 
     const codeRefs = useRef<(HTMLInputElement | null)[]>([]);
+    const isMobile = window.innerWidth < 768;
 
     const MINUTES = 600;
 
@@ -146,7 +147,7 @@ export const ForgotPasswordPage = () => {
             <nav className="px-4 md:px-14 pt-6 md:pt-10 h-16 flex items-center">
                 <div className="max-w-360 mx-auto w-full grid grid-cols-1 md:grid-cols-[45%_55%]">
                     <div className="flex items-center">
-                        <Logo dot="#a06a19" />
+                        <Logo dot={ isMobile ? C.accent : "#a06a19" } />
                     </div>
                 </div>
             </nav>

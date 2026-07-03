@@ -15,6 +15,7 @@ export const ContactPage = () => {
   const [ loading, setLoading ] = useState(false);
   const [ sent, setSent ] = useState(false);
   const [ error, setError ] = useState("");
+  const isMobile = window.innerWidth < 768;
 
   const subjects: { key: Subject; label: string }[] = [
     { 
@@ -60,7 +61,7 @@ export const ContactPage = () => {
         <nav className="px-4 md:px-14 pt-6 md:pt-10 h-16 flex items-center">
           <div className="max-w-360 mx-auto w-full grid grid-cols-1 md:grid-cols-[45%_55%]">
             <div className="flex items-center">
-              <Logo dot="#a06a19" />
+              <Logo dot={ isMobile ? C.accent : "#a06a19" } />
             </div>
           </div>
         </nav>

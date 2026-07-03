@@ -10,6 +10,7 @@ interface BaseProps {
 interface LinkProps extends BaseProps {
     to: string;
     onClick?: never;
+    target?: '_self' | '_blank';
 }
 
 interface ButtonProps extends BaseProps {
@@ -50,7 +51,7 @@ export const UnderlineLink = ({ color = C.accentDeep, children, ...props }: Unde
     }
 
     return (
-        <Link to={ props.to! } { ...sharedProps }>
+        <Link to={ props.to! } target={ props.target } { ...sharedProps }>
             { children }
         </Link>
     );
