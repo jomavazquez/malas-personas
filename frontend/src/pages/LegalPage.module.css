@@ -21,34 +21,35 @@
 }
 
 .legal ul li {
+  font-size: 18px;
   list-style: disc;
-  margin: 10px 20px;
+  margin: 10px 20px
 }
 
 .legal a {
   color: var(--primary);
   font-weight: 600;
-  transition: all 0.25s ease;
+  transition: all 0.25s ease
 }
 
 .legal a:hover {
-  border-bottom: solid 1px var(--primary);
+  border-bottom: solid 1px var(--primary)
 }
 
 .legal table {
   width: 100%;
   border-collapse: collapse;
-  margin: 16px 0;
+  margin: 16px 0
 }
 
 .legal th, .legal td {
   padding: 10px 14px;
   border: 1px solid #D6DCDC;
   font-size: 14px;
-  text-align: left;
+  text-align: left
 }
 
 .legal th {
   font-weight: 700;
-  background: #E7EEEE;
+  background: #E7EEEE
 }
