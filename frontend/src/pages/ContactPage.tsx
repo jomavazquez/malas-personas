@@ -168,7 +168,7 @@ export const ContactPage = () => {
                         </div>
                         <span style={{ fontFamily: F.body, fontSize: 14, color: C.muted }}>
                           { t("register.accept") }{" "}
-                          <UnderlineLink to="/privacy-policy">{ t("footer.privacyPolicy").toLowerCase() }</UnderlineLink>
+                          <UnderlineLink to="/privacy-policy" target="_blank">{ t("footer.privacyPolicy").toLowerCase() }</UnderlineLink>
                           {" "}{ t("contact.privacy") }
                         </span>
                       </div>
