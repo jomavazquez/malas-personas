@@ -187,7 +187,9 @@ export const GamePage = () => {
               revealedCards && !roundResult 
               ? 
                 <div>
-                  <p className={ `my-5 ${ styles.judge_desc }` } style={{ color: C.muted }}>{ t("game.pickWinner") } · {revealedCards.length}{" "}{ t("game.answers") }</p>
+                  <p className={ `my-5 ${ styles.judge_desc }` } style={{ color: C.accent }}>
+                    { t("game.pickWinner") } · { revealedCards.length }{" "}{ revealedCards.length === 1 ? t("mydecks.white").toLowerCase() : t("game.answers") }
+                  </p>
                   <div className={ `mb-10 ${ styles.judge_grid }` }>
                   {
                     revealedCards.map(({ userId, card }) => (
@@ -207,7 +209,7 @@ export const GamePage = () => {
                   </div>
                 </div>
             : !roundResult 
-              ? <p className={ `my-5 mb-10 ${ styles.judge_desc }` } style={{ color: C.muted }}>{ t("game.waitingForPlayers") }{" "}({playedCount} / {totalNeeded})</p>
+              ? <p className={ `my-5 mb-10 ${ styles.judge_desc }` } style={{ color: C.accent }}>{ t("game.waitingForPlayers") }{" "}({playedCount} / {totalNeeded})</p>
               : null
             }
           </div>
@@ -222,11 +224,11 @@ export const GamePage = () => {
               }
               {
                 hasPlayed && !revealedCards &&
-                <p className={ `my-5 ${ styles.judge_desc }` } style={{ color: C.muted }}>{ t("game.played", { count: playedCount, total: totalNeeded })}</p>
+                <p className={ `my-5 ${ styles.judge_desc }` } style={{ color: C.accent }}>{ t("game.played", { count: playedCount, total: totalNeeded })}</p>
               }
               {
                 revealedCards && !roundResult &&
-                <p className={ `mt-5 ${ styles.judge_desc }` } style={{ color: C.muted }}>{ t("game.waitingForJudge") }</p>
+                <p className={ `mt-5 ${ styles.judge_desc }` } style={{ color: C.accent }}>{ t("game.waitingForJudge") }</p>
               }
             </div>
             {/* RIGHT: HAND */}
