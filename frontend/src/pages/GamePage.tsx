@@ -187,7 +187,7 @@ export const GamePage = () => {
               revealedCards && !roundResult 
               ? 
                 <div>
-                  <p className={ `my-5 ${ styles.judge_desc }` } style={{ color: C.accent }}>
+                  <p className={ `my-5 ${ styles.judge_desc } ${ styles.anim }` } style={{ color: C.accent }}>
                     { t("game.pickWinner") } · { revealedCards.length }{" "}{ revealedCards.length === 1 ? t("mydecks.white").toLowerCase() : t("game.answers") }
                   </p>
                   <div className={ `mb-10 ${ styles.judge_grid }` }>
@@ -209,7 +209,7 @@ export const GamePage = () => {
                   </div>
                 </div>
             : !roundResult 
-              ? <p className={ `my-5 mb-10 ${ styles.judge_desc }` } style={{ color: C.accent }}>{ t("game.waitingForPlayers") }{" "}({playedCount} / {totalNeeded})</p>
+              ? <p className={ `my-5 mb-10 ${ styles.judge_desc } ${ styles.anim }` } style={{ color: C.accent }}>{ t("game.waitingForPlayers") }{" "}({playedCount} / {totalNeeded})</p>
               : null
             }
           </div>
@@ -228,7 +228,7 @@ export const GamePage = () => {
               }
               {
                 revealedCards && !roundResult &&
-                <p className={ `mt-5 ${ styles.judge_desc }` } style={{ color: C.accent }}>{ t("game.waitingForJudge") }</p>
+                <p className={ `mt-5 ${ styles.judge_desc } ${ styles.anim }` } style={{ color: C.accent }}>{ t("game.waitingForJudge") }</p>
               }
             </div>
             {/* RIGHT: HAND */}
