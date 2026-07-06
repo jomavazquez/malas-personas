@@ -255,6 +255,7 @@
     "editDeck": "Edit deck"
   },  
   "contact": {
+    "leftTitle": "Have a question, an idea, or a new deck?",
     "subject_general": "General inquiry",
     "subject_game": "Problem in a game",
     "subject_cards": "Suggest cards",
@@ -269,7 +270,9 @@
     "name": "Your name",
     "subject": "Subject",
     "privacy": "and the processing of my personal data.",
-    "send": "Send message"
+    "send": "Send message",
+    "message": "Message",
+    "messagePlaceholder": "Tell us how we can help you..."
   },
   "help": {
     "categories": "Categories",

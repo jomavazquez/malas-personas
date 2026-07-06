@@ -255,6 +255,7 @@
     "editDeck": "Editar mazo"
   },
   "contact": {
+    "leftTitle": "¿Una duda, una idea o un mazo nuevo?",
     "subject_general": "Duda general",
     "subject_game": "Problema en una partida",
     "subject_cards": "Sugerir cartas",
@@ -269,7 +270,9 @@
     "name": "Tu nombre",
     "subject": "Asunto",
     "privacy": "y el tratamiento de mis datos.",
-    "send": "Enviar mensaje"
+    "send": "Enviar mensaje",
+    "message": "Mensaje",
+    "messagePlaceholder": "Cuéntanos en qué podemos ayudarte..."
   },
   "help": {
     "categories": "Categorías",

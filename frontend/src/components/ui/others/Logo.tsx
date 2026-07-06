@@ -5,13 +5,14 @@ import { Dot } from "../../../components";
 interface Props {
     color?: string;
     dot?: string;
+    fontSize?: number;
 }
 
-export const Logo = ({ color = "#000", dot = C.accent }: Props) => {
+export const Logo = ({ color = "#000", dot = C.accent, fontSize = 22 }: Props) => {
     return (
         <Link
             to="/"
-            style={{ fontFamily: F.display, fontWeight: 800, fontSize: 22, letterSpacing: "-0.03em", color, textDecoration: "none" }}
+            style={{ fontFamily: F.display, fontWeight: 800, fontSize, letterSpacing: "-0.03em", color, textDecoration: "none" }}
         >
             <span style={{ marginRight: 5 }}>MALAS PERSONAS</span><Dot color={ dot } />
         </Link>

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth, useJoinModal } from "../../context";
 import { Blob, Button, Logo } from "../../components";
+import { useIsMobile } from "../../hooks";
 import { C, F, goToSection, scrollToTop,  } from "../../lib";
 import styles from "./Footer.module.css";
 
@@ -19,6 +20,7 @@ export const Footer = () => {
     const { user } = useAuth();
     const { openJoinModal } = useJoinModal();
     const navigate = useNavigate();
+    const isMobile = useIsMobile();
 
     const [ showScrollUp, setShowScrollUp ] = useState(false);
 
@@ -56,7 +58,17 @@ export const Footer = () => {
 
     return (
         <footer style={{ background: "#000", position: "relative", overflow: "hidden" }}>
-            <Blob size={ 1024 } color={ C.accent } blur={ 80 } style={{ bottom: 550, left: "50%", transform: "translateX(-50%)" }} />
+            <Blob 
+                size={ isMobile ? 512 : 1024 } 
+                color={ C.accent } 
+                blur={ 80 } 
+                style={{ 
+                    top: isMobile ? -256 : "auto", 
+                    bottom: isMobile ? "auto" : 550,
+                    left: "50%", 
+                    transform: "translateX(-50%)" 
+                }} 
+            />
             <div className="relative overflow-hidden px-8 md:px-14 py-16 text-center">
                 <div className="relative">
                     <h2 className="text-[32px] md:text-[42px]" style={{ fontFamily: F.display, fontWeight: 800, letterSpacing: "-0.035em", color: "#fff", margin: "0 0 15px", lineHeight: 1.05 }}>
@@ -75,7 +87,7 @@ export const Footer = () => {
             <div className="max-w-360 mx-auto w-full items-center">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 px-8 md:px-14 py-12 md:py-16">
                     <div className="col-span-1">
-                        <Logo color="#fff" />
+                        <Logo color="#fff" fontSize={ 20 } />
                         <p className={ styles.tagline }>{ t("footer.tagline") }</p>
                         <div className="flex gap-2">
                             <a href="https://www.linkedin.com/in/jomavazquez/" target="_blank" className={ styles.social_link }>LinkedIn</a>
