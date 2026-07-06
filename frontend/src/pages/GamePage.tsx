@@ -29,9 +29,12 @@ export const GamePage = () => {
   const [ gameOver, setGameOver ] = useState<{ userId: string; username: string; score: number } | null>(null);
   const [ playedCount, setPlayedCount ] = useState(0);
   const [ selectedWinner, setSelectedWinner ] = useState<string | null>(null);
+  const [ playedCards, setPlayedCards ] = useState<{ id: string; text: string }[]>([]);
+  const [ winnerCardId, setWinnerCardId ] = useState<string | null>(null);
+  const [ showingResult, setShowingResult ] = useState(false);
   
   const clock = 60;
-  const [timer, setTimer] = useState(clock);
+  const [ timer, setTimer ] = useState(clock);
 
   const isJudge = gameState?.judge?.userId === myId;
 
@@ -79,21 +82,29 @@ export const GamePage = () => {
     socket.on("hand:update", ({ hand: h }: { hand: Card[] }) => { setHand(h); setSelectedCard(null); });
 
     socket.on("round:new", ({ blackCard, judge }: { blackCard: Card; judge?: GameState["judge"] }) => {
+      setShowingResult(false);
       setGameState((s) => s ? { ...s, currentBlackCard: blackCard, judge: judge ?? s.judge } : s);
       setHasPlayed(false);
       setRevealedCards(null);
       setRoundResult(null);
       setPlayedCount(0);
       setSelectedWinner(null);
+      setPlayedCards([]);
+      setWinnerCardId(null);
       setTimer(clock);
       // selectedCard se limpia cuando llegan nuevas cartas (hand:update)
     });
 
-    socket.on("round:cardPlayed", ({ playedCount: c }: { playedCount: number }) => setPlayedCount(c));
+    socket.on("round:cardPlayed", ({ playedCount: c, card }: { playedCount: number; card?: { id: string; text: string } }) => {
+      setPlayedCount(c);
+      if( card ) setPlayedCards((prev) => [...prev, card]);
+    });
     socket.on("round:reveal", ({ cards }: { cards: PlayedCard[] }) => setRevealedCards(cards));
 
     socket.on("round:winner", ({ winner, winningCard, scores }: { winner: { userId: string; username: string; score: number }; winningCard: Card; scores: GameState["players"] }) => {
       setRoundResult({ winner, winningCard });
+      setWinnerCardId(winningCard.id);
+      setShowingResult(true);
       setGameState((s) => s ? { ...s, players: scores } : s);
     });
 
@@ -184,32 +195,52 @@ export const GamePage = () => {
               <BlackCard question={ gameState.currentBlackCard.text } />
             }
             {
-              revealedCards && !roundResult 
+              revealedCards && (!roundResult || showingResult)
               ? 
                 <div>
                   <p className={ `my-5 ${ styles.judge_desc } ${ styles.anim }` } style={{ color: C.accent }}>
-                    { t("game.pickWinner") } · { revealedCards.length }{" "}{ revealedCards.length === 1 ? t("mydecks.white").toLowerCase() : t("game.answers") }
+                    { roundResult ? `🏆 ${roundResult.winner.username}` : `${ t("game.pickWinner") } · ${ revealedCards.length } ${ revealedCards.length === 1 ? t("mydecks.white").toLowerCase() : t("game.answers") }` }
                   </p>
                   <div className={ `mb-10 ${ styles.judge_grid }` }>
                   {
-                    revealedCards.map(({ userId, card }) => (
-                      <div
-                        key={ userId }
-                        onClick={ () => handlePickWinner(userId) }
-                        className={ styles.judge_cards }
-                        style={{
-                          background: selectedWinner === userId ? `color-mix(in srgb, ${C.accent} 12%, #fff)` : "#fff",
-                          border: `1.5px solid ${ selectedWinner === userId ? C.accent : C.border }` 
-                        }}
-                      >
-                        <div className={ styles.judge_cards_title } style={{ color: C.base }}>{ card.text }</div>
-                      </div>
-                    ))
+                    revealedCards.map(({ userId, card }) => {
+                      const isWinner = winnerCardId === card.id;
+                      return (
+                        <div
+                          key={ userId }
+                          onClick={ () => !roundResult && handlePickWinner(userId) }
+                          className={ styles.judge_cards }
+                          style={{
+                            background: isWinner ? C.accent : selectedWinner === userId ? `color-mix(in srgb, ${C.accent} 12%, #fff)` : "#fff",
+                            border: `1.5px solid ${ isWinner || selectedWinner === userId ? C.accent : C.border }`,
+                            cursor: roundResult ? "default" : "pointer",
+                          }}
+                        >
+                          <div className={ styles.judge_cards_title } style={{ color: C.base }}>{ card.text }</div>
+                          { isWinner && <span className={ styles.player_card_check } style={{ background: C.base, color: "#fff" }}>🏆</span> }
+                        </div>
+                      );
+                    })
                   }
                   </div>
                 </div>
-            : !roundResult 
-              ? <p className={ `my-5 mb-10 ${ styles.judge_desc } ${ styles.anim }` } style={{ color: C.accent }}>{ t("game.waitingForPlayers") }{" "}({playedCount} / {totalNeeded})</p>
+            : !roundResult
+              ?
+                <>
+                  <p className={ `my-5 ${ styles.judge_desc } ${ styles.anim }` } style={{ color: C.accent }}>{ t("game.waitingForPlayers") }{" "}({playedCount} / {totalNeeded})</p>
+                  { 
+                    playedCards.length > 0 &&
+                    <div className={ `mb-10 ${ styles.judge_grid }` }>
+                      { 
+                        playedCards.map((card) => (
+                        <div key={ card.id } className={ styles.judge_cards } style={{ background: "#fff", border: `1.5px solid ${C.border}`, cursor: "default" }}>
+                          <div className={ styles.judge_cards_title } style={{ color: C.base }}>{ card.text }</div>
+                        </div>
+                        ))
+                      }
+                    </div>
+                  }
+                </>
               : null
             }
           </div>
@@ -223,12 +254,41 @@ export const GamePage = () => {
                 <BlackCard question={ gameState.currentBlackCard.text } />
               }
               {
-                hasPlayed && !revealedCards &&
-                <p className={ `my-5 ${ styles.judge_desc }` } style={{ color: C.accent }}>{ t("game.played", { count: playedCount, total: totalNeeded })}</p>
-              }
-              {
-                revealedCards && !roundResult &&
-                <p className={ `mt-5 ${ styles.judge_desc } ${ styles.anim }` } style={{ color: C.accent }}>{ t("game.waitingForJudge") }</p>
+                hasPlayed && playedCards.length > 0 && (!roundResult || showingResult) &&
+                <>
+                  <p className={ `my-5 ${ styles.judge_desc } ${ styles.anim }` } style={{ color: C.accent }}>
+                    { roundResult ? `🏆 ${roundResult.winner.username}` : revealedCards ? t("game.waitingForJudge") : t("game.played", { count: playedCount, total: totalNeeded }) }
+                  </p>
+                  <div className={ `mb-10 ${ styles.judge_grid }` }>
+                    {
+                      (revealedCards ?? playedCards.map((c) => ({ userId: "", card: c }))).map(({ userId, card }, i) => {
+                        const isMyCard = revealedCards ? userId === myId : i === playedCards.findIndex((c) => c.id === selectedCard);
+                        const isWinner = winnerCardId === card.id;
+                        return (
+                          <div
+                            key={ card.id }
+                            className={ styles.judge_cards }
+                            style={{
+                              background: isWinner ? C.accent : isMyCard ? `color-mix(in srgb, ${C.accent} 12%, #fff)` : "#fff",
+                              border: `1.5px solid ${ isWinner ? C.accent : isMyCard ? C.accent : C.border }`,
+                              cursor: "default",
+                            }}
+                          >
+                            <div className={ styles.judge_cards_title } style={{ color: C.base }}>{ card.text }</div>
+                            { 
+                              isMyCard && !isWinner && 
+                              <span className={ styles.player_card_check } style={{ background: C.accent, color: C.base }}>✓</span> 
+                            }
+                            { 
+                              isWinner && 
+                              <span className={ styles.player_card_check } style={{ background: C.base, color: "#fff" }}>🏆</span> 
+                            }
+                          </div>
+                        );
+                      })
+                    }
+                  </div>
+                </>
               }
             </div>
             {/* RIGHT: HAND */}

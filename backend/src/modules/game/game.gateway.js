@@ -109,6 +109,7 @@ export const registerGameHandlers = ( io, socket ) => {
       io.to(code).emit("round:cardPlayed", {
         playedCount: updated.playedCards.length,
         totalNeeded: updated.players.length - 1,
+        card: { id: card.id, text: card.text },
       });
 
       if( allPlayed ){
@@ -152,14 +153,16 @@ export const registerGameHandlers = ( io, socket ) => {
       const { blackCard } = nextRound(updated);
       const newJudge = updated.players[updated.judgeIndex];
 
-      io.to(code).emit("round:new", {
-        blackCard,
-        judge: { userId: newJudge.userId, username: newJudge.username },
-      });
+      setTimeout(() => {
+        io.to(code).emit("round:new", {
+          blackCard,
+          judge: { userId: newJudge.userId, username: newJudge.username },
+        });
 
-      updated.players.forEach((p) => {
-        io.to(p.socketId).emit("hand:update", { hand: p.hand });
-      });
+        updated.players.forEach((p) => {
+          io.to(p.socketId).emit("hand:update", { hand: p.hand });
+        });
+      }, 2000);
 
       callback({ success: true });
     }catch( err ){
