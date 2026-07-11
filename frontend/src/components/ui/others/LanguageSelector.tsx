@@ -1,8 +1,8 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useLayoutEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsMobile } from "../../../hooks";
 import { C, F } from "../../../lib";
-import { Dot } from "./Dot";
+import { Dot } from "../../../components";
 
 const STORAGE_KEY = "mp_language";
 
@@ -21,9 +21,13 @@ export const LanguageSelector = () => {
     const btnRefs = useRef<(HTMLButtonElement | null)[]>([]);
     const [ pillStyle, setPillStyle ] = useState({ left: 5, width: 0 });
 
-    useEffect(() => {
-        const btn = btnRefs.current[activeIndex];
-        if( btn ) setPillStyle({ left: btn.offsetLeft, width: btn.offsetWidth });
+    useLayoutEffect(() => {
+        const measure = () => {
+            const btn = btnRefs.current[activeIndex];
+            if( btn ) setPillStyle({ left: btn.offsetLeft, width: btn.offsetWidth });
+        };
+        measure();
+        document.fonts?.ready.then( measure );
     }, [ activeIndex, isMobile ]);
 
     const handleChange = (code: string) => {
