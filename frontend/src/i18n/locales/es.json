@@ -93,7 +93,9 @@
     "winsTitle": "¡{{username}} gana la partida!",
     "playAgain": "Jugar de nuevo",
     "leaveRoom": "Salir de la sala",
-    "loading": "Cargando partida..."
+    "loading": "Cargando partida...",
+    "playerLeft": "{{username}} ha abandonado la sala",
+    "youWonRound": "¡Enhorabuena, ganaste la ronda!"
   },
   "how": {
     "eyebrow": "Cómo se juega",

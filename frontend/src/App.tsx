@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { AuthProvider, useAuth, JoinModalProvider } from "./context";
-import { useLenis } from "./hooks";
-import { HomePage, GamePage, LobbyPage, LoginPage, RegisterPage, ForgotPasswordPage, MyRoomsPage, RoomPage, LegalPage, ContactPage, HelpCenterPage, MyDecksPage, MyCardsPage } from "./pages";
 import "./i18n";
+import { AuthProvider, useAuth, JoinModalProvider, ToastProvider } from "./context";
+import { useLenis } from "./hooks";
 import { scrollToTop } from "./lib";
+import { HomePage, GamePage, LobbyPage, LoginPage, RegisterPage, ForgotPasswordPage, MyRoomsPage, RoomPage, LegalPage, ContactPage, HelpCenterPage, MyDecksPage, MyCardsPage } from "./pages";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   
@@ -51,9 +51,11 @@ const AppInner = () => {
 const App = () => (
   <BrowserRouter>
     <AuthProvider>
-      <JoinModalProvider>
-        <AppInner />
-      </JoinModalProvider>
+      <ToastProvider>
+        <JoinModalProvider>
+          <AppInner />
+        </JoinModalProvider>
+      </ToastProvider>
     </AuthProvider>
   </BrowserRouter>
 );

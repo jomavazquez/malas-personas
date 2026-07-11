@@ -1,0 +1,54 @@
+.container {
+    top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    left: 50%;
+    padding: 0 15px;
+    position: fixed;
+    transform: translateX(-50%);
+    width: 100%;
+    z-index: 1000
+}
+
+.toast {
+    align-items: center;
+    animation: slide_in 0.25s ease;
+    background: #fff;
+    border-radius: 999px;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, .25);
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+    max-width: 360px;
+    padding: 10px 20px
+}
+
+.toast_out {
+    animation: fade_out 0.3s ease forwards
+}
+
+.dot {
+    border-radius: 999px;
+    flex-shrink: 0;
+    height: 8px;
+    width: 8px
+}
+
+.message {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3em
+}
+
+@keyframes slide_in {
+    from { opacity: 0; transform: translateY(-15px) }
+    to { opacity: 1; transform: translateY(0) }
+}
+
+@keyframes fade_out {
+    from { opacity: 1; transform: translateY(0) }
+    to { opacity: 0; transform: translateY(-10px) }
+}

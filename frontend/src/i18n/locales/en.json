@@ -93,7 +93,9 @@
     "winsTitle": "{{username}} wins the game!",
     "playAgain": "Play again",
     "leaveRoom": "Leave room",
-    "loading": "Loading game..."
+    "loading": "Loading game...",
+    "playerLeft": "{{username}} left the room",
+    "youWonRound": "Congrats, you won the round!"
   },
   "how": {
     "eyebrow": "How to play",

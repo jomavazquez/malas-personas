@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../context";
+import { useAuth, useToast } from "../context";
 import { C, connectSocket } from "../lib";
 import { Avatar, BlackCard, Button, Footer, Logo, GameOver, LoadingRoom } from "../components";
 import type { GameState, PlayedCard, Card } from "../types";
@@ -11,6 +11,7 @@ export const GamePage = () => {
  
   const { t } = useTranslation();
   const { user } = useAuth();
+  const { showToast } = useToast();
   const { code } = useParams<{ code: string }>();
   const navigate = useNavigate();
   const location = useLocation();
@@ -93,6 +94,7 @@ export const GamePage = () => {
       setWinnerCardId(null);
       setTimer(clock);
       // selectedCard se limpia cuando llegan nuevas cartas (hand:update)
+      if( judge && judge.userId === myId ) showToast(t("game.youAreJudge"), "info");
     });
 
     socket.on("round:cardPlayed", ({ playedCount: c, card }: { playedCount: number; card?: { id: string; text: string } }) => {
@@ -106,12 +108,18 @@ export const GamePage = () => {
       setWinnerCardId(winningCard.id);
       setShowingResult(true);
       setGameState((s) => s ? { ...s, players: scores } : s);
+      if( winner.userId === myId ){
+        showToast(t("game.youWonRound"), "success");
+      }else{
+        showToast(t("game.roundWinner", { username: winner.username }), "success");
+      }
     });
 
     socket.on("game:over", ({ winner }: { winner: { userId: string; username: string; score: number } }) => setGameOver(winner));
 
-    socket.on("room:playerLeft", ({ userId }: { userId: string }) => {
+    socket.on("room:playerLeft", ({ userId, username }: { userId: string; username: string }) => {
       setGameState((s) => s ? { ...s, players: s.players.filter((p) => p.userId !== userId) } : s);
+      showToast(t("game.playerLeft", { username }), "info");
     });
 
     return () => {
@@ -134,7 +142,7 @@ export const GamePage = () => {
     if( !selectedCard || hasPlayed || isJudge ) return;
     const socket = connectSocket();
     socket.emit("round:playCard", { roomCode: code, cardId: selectedCard }, (res: { error?: string }) => {
-      if( res.error ){ alert(res.error); return; }
+      if( res.error ){ showToast(res.error, "error"); return; }
       setHasPlayed(true);
     });
   };
@@ -144,7 +152,7 @@ export const GamePage = () => {
     setSelectedWinner(winnerUserId);
     const socket = connectSocket();
     socket.emit("round:pickWinner", { roomCode: code, winnerUserId }, (res: { error?: string }) => {
-      if( res.error ){ alert(res.error); setSelectedWinner(null); }
+      if( res.error ){ showToast(res.error, "error"); setSelectedWinner(null); }
     });
   };
 
@@ -254,41 +262,42 @@ export const GamePage = () => {
                 <BlackCard question={ gameState.currentBlackCard.text } />
               }
               {
+                playedCount > 0 && (!roundResult || showingResult) &&
+                <p className={ `my-5 ${ styles.judge_desc } ${ styles.anim }` } style={{ color: C.accent }}>
+                  { roundResult ? `🏆 ${roundResult.winner.username}` : revealedCards ? t("game.waitingForJudge") : t("game.played", { count: playedCount, total: totalNeeded }) }
+                </p>
+              }
+              {
                 hasPlayed && playedCards.length > 0 && (!roundResult || showingResult) &&
-                <>
-                  <p className={ `my-5 ${ styles.judge_desc } ${ styles.anim }` } style={{ color: C.accent }}>
-                    { roundResult ? `🏆 ${roundResult.winner.username}` : revealedCards ? t("game.waitingForJudge") : t("game.played", { count: playedCount, total: totalNeeded }) }
-                  </p>
-                  <div className={ `mb-10 ${ styles.judge_grid }` }>
-                    {
-                      (revealedCards ?? playedCards.map((c) => ({ userId: "", card: c }))).map(({ userId, card }, i) => {
-                        const isMyCard = revealedCards ? userId === myId : i === playedCards.findIndex((c) => c.id === selectedCard);
-                        const isWinner = winnerCardId === card.id;
-                        return (
-                          <div
-                            key={ card.id }
-                            className={ styles.judge_cards }
-                            style={{
-                              background: isWinner ? C.accent : isMyCard ? `color-mix(in srgb, ${C.accent} 12%, #fff)` : "#fff",
-                              border: `1.5px solid ${ isWinner ? C.accent : isMyCard ? C.accent : C.border }`,
-                              cursor: "default",
-                            }}
-                          >
-                            <div className={ styles.judge_cards_title } style={{ color: C.base }}>{ card.text }</div>
-                            { 
-                              isMyCard && !isWinner && 
-                              <span className={ styles.player_card_check } style={{ background: C.accent, color: C.base }}>✓</span> 
-                            }
-                            { 
-                              isWinner && 
-                              <span className={ styles.player_card_check } style={{ background: C.base, color: "#fff" }}>🏆</span> 
-                            }
-                          </div>
-                        );
-                      })
-                    }
-                  </div>
-                </>
+                <div className={ `mb-10 ${ styles.judge_grid }` }>
+                  {
+                    (revealedCards ?? playedCards.map((c) => ({ userId: "", card: c }))).map(({ userId, card }, i) => {
+                      const isMyCard = revealedCards ? userId === myId : i === playedCards.findIndex((c) => c.id === selectedCard);
+                      const isWinner = winnerCardId === card.id;
+                      return (
+                        <div
+                          key={ card.id }
+                          className={ styles.judge_cards }
+                          style={{
+                            background: isWinner ? C.accent : isMyCard ? `color-mix(in srgb, ${C.accent} 12%, #fff)` : "#fff",
+                            border: `1.5px solid ${ isWinner ? C.accent : isMyCard ? C.accent : C.border }`,
+                            cursor: "default",
+                          }}
+                        >
+                          <div className={ styles.judge_cards_title } style={{ color: C.base }}>{ card.text }</div>
+                          {
+                            isMyCard && !isWinner &&
+                            <span className={ styles.player_card_check } style={{ background: C.accent, color: C.base }}>✓</span>
+                          }
+                          {
+                            isWinner &&
+                            <span className={ styles.player_card_check } style={{ background: C.base, color: "#fff" }}>🏆</span>
+                          }
+                        </div>
+                      );
+                    })
+                  }
+                </div>
               }
             </div>
             {/* RIGHT: HAND */}
