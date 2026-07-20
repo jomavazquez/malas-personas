@@ -3,14 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, Dot, Footer, TopMenu } from "../components";
 import { api, C } from "../lib";
+import type { Deck } from "../types";
 import styles from "./MyDecksPage.module.css";
-
-interface Deck {
-  id: string;
-  name: string;
-  language: "ES" | "EN";
-  _count: { cards: number };
-}
 
 const CARD_COLORS = [ C.base, C.accent ];
 

@@ -1,8 +1,11 @@
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import { C } from "../../lib";
 import { Footer, TopMenu } from "../../components";
 
 export const LoadingRoom = () => {
+
+    const { t } = useTranslation();
+    
     return (
         <div style={{ background: C.surface, position: "relative" }}>
             <TopMenu />

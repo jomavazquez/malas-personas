@@ -91,7 +91,6 @@ export const RoomPage = () => {
     socket.emit("room:join", { roomCode: code, userId: resolvedId, username: resolvedName, isGuest: isGuestResolved }, (res: { error?: string; state?: GameState }) => {
       if (res.error) { setError(res.error); return; }
       setConnected(true);
-      console.log("state received:", res.state?.hostId, "myId:", resolvedId);
       setHostId(res.state!.hostId ?? null);
       setPlayers(res.state!.players);
     });

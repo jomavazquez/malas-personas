@@ -1,4 +1,4 @@
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import { BlackCardText, C } from "../../lib";
 import styles from "./BlackCard.module.css";
 
@@ -9,6 +9,8 @@ interface Props {
 }
 
 export const BlackCard = ({ question, showSub = false, fontSize = 22 }: Props ) => {
+
+    const { t } = useTranslation();
     
     return (
         <div className={ styles.black_card }>

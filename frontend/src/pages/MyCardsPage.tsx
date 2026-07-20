@@ -3,20 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, Footer, TopMenu, UnderlineLink } from "../components";
 import { api, BlackCardText, C } from "../lib";
+import type { Card, Deck } from "../types";
 import styles from "./MyCardsPage.module.css";
-
-interface Card {
-  id: string;
-  type: "BLACK" | "WHITE";
-  text: string;
-}
-
-interface Deck {
-  id: string;
-  name: string;
-  language: "ES" | "EN";
-  _count: { cards: number };
-}
 
 type FilterType = "ALL" | "BLACK" | "WHITE";
 
