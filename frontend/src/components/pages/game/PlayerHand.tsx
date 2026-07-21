@@ -8,17 +8,31 @@ interface Props {
   hand: Card[];
   selectedCard: string | null;
   hasPlayed: boolean;
+  hasRedrawn: boolean;
   onPlayCard: (cardId: string) => void;
   onSendCard: () => void;
+  onRedrawHand: () => void;
 }
 
-export const PlayerHand = ({ hand, selectedCard, hasPlayed, onPlayCard, onSendCard }: Props) => {
+export const PlayerHand = ({ hand, selectedCard, hasPlayed, hasRedrawn, onPlayCard, onSendCard, onRedrawHand }: Props) => {
 
   const { t } = useTranslation();
 
   return (
     <div>
-      <div className="player_pick_answer" style={{ color: C.faint }}>{ t("game.pickCard") }</div>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, marginBottom: 10 }}>
+        <div className="player_pick_answer" style={{ color: C.faint, marginBottom: 0 }}>{ t("game.pickCard") }</div>
+        {
+          !hasRedrawn &&
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={ onRedrawHand }
+          >
+            { t("game.redrawHand") }
+          </Button>
+        }
+      </div>
       <div className={ styles.player_card_container }>
         {
           hand.map((card) => {

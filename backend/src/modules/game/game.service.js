@@ -74,7 +74,7 @@ export const addPlayer = (session, { socketId, userId, username, isGuest }) => {
     : dealCards(session.whiteDeck, HAND_SIZE);
   session.whiteDeck = whiteDeck;
 
-  const player = { socketId, userId, username, isGuest: !!isGuest, hand: dealt, score: 0, isSpectator };
+  const player = { socketId, userId, username, isGuest: !!isGuest, hand: dealt, score: 0, isSpectator, hasRedrawn: false };
   session.players.push(player);
 
   return { session, player, isReconnect: false };
@@ -180,6 +180,34 @@ export const playCard = ( session, { userId, cardId } ) => {
   return { session, card, allPlayed, totalNeeded: nonJudgePlayers.length };
 };
 
+export const redrawHand = ( session, { userId } ) => {
+  const player = session.players.find((p) => p.userId === userId);
+  if( !player ){
+    const error = new Error("PLAYER_NOT_FOUND");
+    error.code = "PLAYER_NOT_FOUND";
+    throw error;
+  }
+
+  if( player.isSpectator ){
+    const error = new Error("SPECTATOR_CANNOT_PLAY");
+    error.code = "SPECTATOR_CANNOT_PLAY";
+    throw error;
+  }
+
+  if( player.hasRedrawn ){
+    const error = new Error("REDRAW_ALREADY_USED");
+    error.code = "REDRAW_ALREADY_USED";
+    throw error;
+  }
+
+  const { dealt, whiteDeck } = dealCards(session.whiteDeck, HAND_SIZE);
+  session.whiteDeck = whiteDeck;
+  player.hand = dealt;
+  player.hasRedrawn = true;
+
+  return { session, hand: player.hand };
+};
+
 export const pickWinner = ( session, { judgeUserId, winnerUserId } ) => {
   const judge = session.players[session.judgeIndex];
   if( judge.userId !== judgeUserId ){
@@ -223,6 +251,7 @@ export const serializeSessionForPlayer = ( session, userId ) => ({
     isSpectator: !!p.isSpectator,
   })),
   hand: session.players.find((p) => p.userId === userId)?.hand ?? [],
+  hasRedrawn: session.players.find((p) => p.userId === userId)?.hasRedrawn ?? false,
   playedCount: session.playedCards.length,
 });
 

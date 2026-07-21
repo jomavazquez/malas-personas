@@ -32,6 +32,7 @@ export const GamePage = () => {
   const [ playedCards, setPlayedCards ] = useState<{ id: string; text: string }[]>([]);
   const [ winnerCardId, setWinnerCardId ] = useState<string | null>(null);
   const [ showingResult, setShowingResult ] = useState(false);
+  const [ hasRedrawn, setHasRedrawn ] = useState(false);
 
   const clock = 60;
   const [ timer, setTimer ] = useState(clock);
@@ -78,6 +79,7 @@ export const GamePage = () => {
       if( res.error ){ navigate("/"); return; }
       setGameState(res.state!);
       setHand(res.state!.hand ?? []);
+      setHasRedrawn(res.state!.hasRedrawn ?? false);
     });
 
     socket.on("hand:update", ({ hand: h }: { hand: Card[] }) => { setHand(h); setSelectedCard(null); });
@@ -158,6 +160,18 @@ export const GamePage = () => {
     });
   };
 
+  const handleRedrawHand = () => {
+    if( hasRedrawn || isJudge || isSpectator ) return;
+    const socket = connectSocket();
+    socket.emit("hand:redraw", { roomCode: code }, (res: { error?: string; hand?: Card[] }) => {
+      if( res.error ){ showToast(res.error, "error"); return; }
+      setHand(res.hand!);
+      setSelectedCard(null);
+      setHasRedrawn(true);
+      showToast(t("game.handRedrawn"), "success");
+    });
+  };
+
   const handlePickWinner = ( winnerUserId: string ) => {
     if( roundResult ) return;
     setSelectedWinner(winnerUserId);
@@ -218,8 +232,10 @@ export const GamePage = () => {
               selectedCard={ selectedCard }
               hand={ hand }
               isSpectator={ isSpectator }
+              hasRedrawn={ hasRedrawn }
               onPlayCard={ handlePlayCard }
               onSendCard={ handleSendCard }
+              onRedrawHand={ handleRedrawHand }
             />
         }
         {/* ── SCOREBOARD ── */}

@@ -86,6 +86,8 @@
     "waitingForJudge": "Wait! The judge is choosing...",
     "answers": "answers",
     "sendCard": "Send card",
+    "redrawHand": "Swap hand (once per game)",
+    "handRedrawn": "You got a new hand!",
     "score": "Score",
     "cardsOnTable": "cards",
     "judgeLabel": "Judge",

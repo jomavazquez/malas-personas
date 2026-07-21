@@ -1,6 +1,6 @@
 import prisma from "../../config/database.js";
 import { getSession, deleteSession } from "./game.state.js";
-import { buildSession, addPlayer, removePlayer, startGame, nextRound, playCard, pickWinner, serializeSessionForPlayer, serializeReveal } from "./game.service.js";
+import { buildSession, addPlayer, removePlayer, startGame, nextRound, playCard, pickWinner, redrawHand, serializeSessionForPlayer, serializeReveal } from "./game.service.js";
 
 // Map<socketId, { roomCode, userId, username }>
 const socketMeta = new Map();
@@ -116,6 +116,24 @@ export const registerGameHandlers = ( io, socket ) => {
       if( allPlayed ){
         io.to(code).emit("round:reveal", { cards: serializeReveal(updated) });
       }
+    }catch( err ){
+      callback({ error: err.message });
+    }
+  });
+
+  // ─── hand:redraw ─────────────────────────────────────────────────────────────
+  socket.on("hand:redraw", ({ roomCode }, callback ) => {
+    try{
+      const code = roomCode.toUpperCase();
+      const session = getSession(code);
+      if( !session ) return callback({ error: "SESSION_NOT_FOUND" });
+
+      const meta = socketMeta.get(socket.id);
+      if( !meta ) return callback({ error: "NO_IDENTIFIED" });
+
+      const { hand } = redrawHand(session, { userId: meta.userId });
+
+      callback({ success: true, hand });
     }catch( err ){
       callback({ error: err.message });
     }

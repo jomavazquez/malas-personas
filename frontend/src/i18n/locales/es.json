@@ -86,6 +86,8 @@
     "waitingForJudge": "¡Espera! El juez está eligiendo...",
     "answers": "respuestas",
     "sendCard": "Enviar carta",
+    "redrawHand": "Cambiar mano (1 vez por partida)",
+    "handRedrawn": "¡Tienes mano nueva!",
     "score": "Marcador",
     "cardsOnTable": "cartas",
     "judgeLabel": "Juez",

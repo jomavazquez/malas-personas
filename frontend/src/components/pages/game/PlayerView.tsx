@@ -23,11 +23,13 @@ interface Props {
   selectedCard: string | null;
   hand: Card[];
   isSpectator: boolean;
+  hasRedrawn: boolean;
   onPlayCard: (cardId: string) => void;
   onSendCard: () => void;
+  onRedrawHand: () => void;
 }
 
-export const PlayerView = ({ blackCard, playedCount, totalNeeded, roundResult, showingResult, revealedCards, hasPlayed, playedCards, winnerCardId, myId, selectedCard, hand, isSpectator, onPlayCard, onSendCard }: Props) => {
+export const PlayerView = ({ blackCard, playedCount, totalNeeded, roundResult, showingResult, revealedCards, hasPlayed, playedCards, winnerCardId, myId, selectedCard, hand, isSpectator, hasRedrawn, onPlayCard, onSendCard, onRedrawHand }: Props) => {
 
   const { t } = useTranslation();
   const cardsToShow = revealedCards ?? playedCards.map((c) => ({ userId: "", username: "", card: c }));
@@ -76,8 +78,10 @@ export const PlayerView = ({ blackCard, playedCount, totalNeeded, roundResult, s
             hand={ hand }
             selectedCard={ selectedCard }
             hasPlayed={ hasPlayed }
+            hasRedrawn={ hasRedrawn }
             onPlayCard={ onPlayCard }
             onSendCard={ onSendCard }
+            onRedrawHand={ onRedrawHand }
           />
       }
     </div>

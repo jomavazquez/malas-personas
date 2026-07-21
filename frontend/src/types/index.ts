@@ -51,6 +51,7 @@ export interface GameState {
   currentBlackCard: Card | null;
   players: Player[];
   hand: Card[];
+  hasRedrawn: boolean;
   playedCount: number;
 }
 
