@@ -84,9 +84,9 @@ export const GamePage = () => {
 
     socket.on("hand:update", ({ hand: h }: { hand: Card[] }) => { setHand(h); setSelectedCard(null); });
 
-    socket.on("round:new", ({ blackCard, judge }: { blackCard: Card; judge?: GameState["judge"] }) => {
+    socket.on("round:new", ({ blackCard, judge, players }: { blackCard: Card; judge?: GameState["judge"]; players?: GameState["players"] }) => {
       setShowingResult(false);
-      setGameState((s) => s ? { ...s, currentBlackCard: blackCard, judge: judge ?? s.judge } : s);
+      setGameState((s) => s ? { ...s, currentBlackCard: blackCard, judge: judge ?? s.judge, players: players ?? s.players } : s);
       setHasPlayed(false);
       setRevealedCards(null);
       setRoundResult(null);

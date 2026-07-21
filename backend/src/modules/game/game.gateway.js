@@ -156,7 +156,14 @@ export const registerGameHandlers = ( io, socket ) => {
       io.to(code).emit("round:winner", {
         winner: { userId: winner.userId, username: winner.username, score: winner.score },
         winningCard: winnerPlay.card,
-        scores: updated.players.map((p) => ({ userId: p.userId, username: p.username, score: p.score })),
+        scores: updated.players.map((p) => ({
+          userId: p.userId,
+          username: p.username,
+          score: p.score,
+          isGuest: p.isGuest,
+          isJudge: p.userId === updated.players[updated.judgeIndex]?.userId,
+          isSpectator: !!p.isSpectator,
+        })),
       });
 
       if( gameOver ){
@@ -176,6 +183,14 @@ export const registerGameHandlers = ( io, socket ) => {
         io.to(code).emit("round:new", {
           blackCard,
           judge: { userId: newJudge.userId, username: newJudge.username },
+          players: updated.players.map((p) => ({
+            userId: p.userId,
+            username: p.username,
+            score: p.score,
+            isGuest: p.isGuest,
+            isJudge: p.userId === newJudge.userId,
+            isSpectator: !!p.isSpectator,
+          })),
         });
 
         updated.players.forEach((p) => {
