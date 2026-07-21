@@ -54,22 +54,27 @@ export const addPlayer = (session, { socketId, userId, username, isGuest }) => {
     return { session, player: existing, isReconnect: true };
   }
 
-  if( session.status === "playing" ){
-    const error = new Error("GAME_ALREADY_STARTED");
-    error.code = "GAME_ALREADY_STARTED";
-    throw error;
-  }
-
   if( session.players.length >= session.maxPlayers ){
     const error = new Error("ROOM_FULL");
     error.code = "ROOM_FULL";
     throw error;
   }
 
-  const { dealt, whiteDeck } = dealCards(session.whiteDeck, HAND_SIZE);
+  const nameTaken = session.players.some((p) => p.username.trim().toLowerCase() === username.trim().toLowerCase());
+  if( nameTaken ){
+    const error = new Error("DUPLICATE_PLAYER");
+    error.code = "DUPLICATE_PLAYER";
+    throw error;
+  }
+
+  // Si la partida ya está en marcha, entra como espectador: sin mano hasta la siguiente ronda
+  const isSpectator = session.status === "playing";
+  const { dealt, whiteDeck } = isSpectator
+    ? { dealt: [], whiteDeck: session.whiteDeck }
+    : dealCards(session.whiteDeck, HAND_SIZE);
   session.whiteDeck = whiteDeck;
 
-  const player = { socketId, userId, username, isGuest: !!isGuest, hand: dealt, score: 0 };
+  const player = { socketId, userId, username, isGuest: !!isGuest, hand: dealt, score: 0, isSpectator };
   session.players.push(player);
 
   return { session, player, isReconnect: false };
@@ -113,6 +118,14 @@ export const nextRound = ( session ) => {
     return { session, blackCard: null, finished: true };
   }
 
+  // Los espectadores que se unieron durante la ronda anterior pasan a jugar desde ahora
+  session.players.filter((p) => p.isSpectator).forEach((p) => {
+    const { dealt, whiteDeck } = dealCards(session.whiteDeck, HAND_SIZE);
+    session.whiteDeck = whiteDeck;
+    p.hand = dealt;
+    p.isSpectator = false;
+  });
+
   const blackCard = session.blackDeck.shift();
   session.currentBlackCard = blackCard;
   session.playedCards = [];
@@ -132,6 +145,12 @@ export const playCard = ( session, { userId, cardId } ) => {
   if( judge.userId === userId ){
     const error = new Error("JUDGE_CANNOT_PLAY");
     error.code = "JUDGE_CANNOT_PLAY";
+    throw error;
+  }
+
+  if( player.isSpectator ){
+    const error = new Error("SPECTATOR_CANNOT_PLAY");
+    error.code = "SPECTATOR_CANNOT_PLAY";
     throw error;
   }
 
@@ -155,10 +174,10 @@ export const playCard = ( session, { userId, cardId } ) => {
   session.whiteDeck = whiteDeck;
   player.hand.push(...dealt);
 
-  const nonJudgePlayers = session.players.filter((p) => p.userId !== judge.userId);
+  const nonJudgePlayers = session.players.filter((p) => p.userId !== judge.userId && !p.isSpectator);
   const allPlayed = nonJudgePlayers.every( (p) => session.playedCards.find((pc) => pc.userId === p.userId) );
 
-  return { session, card, allPlayed };
+  return { session, card, allPlayed, totalNeeded: nonJudgePlayers.length };
 };
 
 export const pickWinner = ( session, { judgeUserId, winnerUserId } ) => {
@@ -201,6 +220,7 @@ export const serializeSessionForPlayer = ( session, userId ) => ({
     score: p.score,
     isGuest: p.isGuest,
     isJudge: p.userId === session.players[session.judgeIndex]?.userId,
+    isSpectator: !!p.isSpectator,
   })),
   hand: session.players.find((p) => p.userId === userId)?.hand ?? [],
   playedCount: session.playedCards.length,

@@ -112,6 +112,27 @@
     padding: 6px 12px
 }
 
+.spectator_box {
+    align-items: center;
+    border-radius: 12px;
+    display: flex;
+    font-size: 15px;
+    font-weight: 600;
+    justify-content: center;
+    min-height: 160px;
+    padding: 30px;
+    text-align: center
+}
+
+.spectator_label {
+    background: #fff;
+    border-radius: 999px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px
+}
+
 .dot {
     border-radius: 999px;
     display: inline-block;

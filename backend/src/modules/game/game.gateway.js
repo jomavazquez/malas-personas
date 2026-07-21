@@ -45,7 +45,8 @@ export const registerGameHandlers = ( io, socket ) => {
 
       if( !isReconnect ){
         socket.to(code).emit("room:playerJoined", {
-          userId, username, isGuest: !!isGuest,
+          userId, username, isGuest: resolvedIsGuest,
+          isSpectator: player.isSpectator,
           playerCount: updated.players.length,
         });
       }
@@ -102,13 +103,13 @@ export const registerGameHandlers = ( io, socket ) => {
       const meta = socketMeta.get(socket.id);
       if( !meta ) return callback({ error: "NO_IDENTIFIED" });
 
-      const { session: updated, card, allPlayed } = playCard(session, { userId: meta.userId, cardId });
+      const { session: updated, card, allPlayed, totalNeeded } = playCard(session, { userId: meta.userId, cardId });
 
       callback({ success: true, card });
 
       io.to(code).emit("round:cardPlayed", {
         playedCount: updated.playedCards.length,
-        totalNeeded: updated.players.length - 1,
+        totalNeeded,
         card: { id: card.id, text: card.text },
       });
 

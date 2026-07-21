@@ -29,6 +29,7 @@ export const RoomPage = () => {
   const [ error, setError ] = useState("");
   const [ connected, setConnected ] = useState(false);
   const [ nameInput, setNameInput ] = useState(user?.username ?? "");
+  const [ nameError, setNameError ] = useState("");
   const [ confirmed, setConfirmed ] = useState(!!guestName || !!user);
   const [ resolvedName, setResolvedName ] = useState(myName);
   const [ resolvedId, setResolvedId ] = useState(myId);
@@ -71,6 +72,7 @@ export const RoomPage = () => {
 
   const handleNameSubmit = () => {
     if (!nameInput.trim()) return;
+    setNameError("");
     const id = user ? user.id : getOrCreateGuestId();
     setResolvedId(id);
     setResolvedName(nameInput.trim());
@@ -89,14 +91,28 @@ export const RoomPage = () => {
     const socket = connectSocket();
 
     socket.emit("room:join", { roomCode: code, userId: resolvedId, username: resolvedName, isGuest: isGuestResolved }, (res: { error?: string; state?: GameState }) => {
-      if (res.error) { setError(res.error); return; }
+      if (res.error) {
+        // Nombre ya usado por otro jugador de la sala: vuelve al formulario para elegir otro
+        if (res.error === "DUPLICATE_PLAYER" && !user) {
+          setNameError(t("errors.DUPLICATE_PLAYER"));
+          setConfirmed(false);
+          return;
+        }
+        setError(res.error);
+        return;
+      }
+      // La partida ya está en marcha: entra directo como espectador
+      if (res.state!.status === "playing") {
+        navigate(`/game/${code}`, { state: { guestId: resolvedId, guestName: resolvedName } });
+        return;
+      }
       setConnected(true);
       setHostId(res.state!.hostId ?? null);
       setPlayers(res.state!.players);
     });
 
     socket.on("room:playerJoined", ({ userId, username, isGuest: g }: { userId: string; username: string; isGuest: boolean }) => {
-      setPlayers((prev) => prev.find((p) => p.userId === userId) ? prev : [...prev, { userId, username, score: 0, isGuest: g, isJudge: false }]);
+      setPlayers((prev) => prev.find((p) => p.userId === userId) ? prev : [...prev, { userId, username, score: 0, isGuest: g, isJudge: false, isSpectator: false }]);
     });
 
     socket.on("room:playerLeft", ({ userId }: { userId: string }) => {
@@ -126,12 +142,16 @@ export const RoomPage = () => {
                 style={{ border: `1.5px solid ${C.border}`, color: C.base, marginBottom: 20 }}
                 placeholder="Marina"
                 value={ nameInput }
-                onChange={ (e) => setNameInput(e.target.value) }
+                onChange={ (e) => { setNameInput(e.target.value); setNameError(""); } }
                 maxLength={ 20 }
                 autoFocus
                 readOnly={ !!user }
                 onKeyDown={ (e) => e.key === "Enter" && handleNameSubmit() }
               />
+              {
+                nameError &&
+                <p className="error" style={{ marginTop: -10, marginBottom: 20 }}>{ nameError }</p>
+              }
               <Button
                 onClick={ handleNameSubmit }
                 disabled={ !nameInput.trim() }

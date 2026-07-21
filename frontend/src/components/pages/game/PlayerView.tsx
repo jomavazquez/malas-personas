@@ -22,11 +22,12 @@ interface Props {
   myId: string;
   selectedCard: string | null;
   hand: Card[];
+  isSpectator: boolean;
   onPlayCard: (cardId: string) => void;
   onSendCard: () => void;
 }
 
-export const PlayerView = ({ blackCard, playedCount, totalNeeded, roundResult, showingResult, revealedCards, hasPlayed, playedCards, winnerCardId, myId, selectedCard, hand, onPlayCard, onSendCard }: Props) => {
+export const PlayerView = ({ blackCard, playedCount, totalNeeded, roundResult, showingResult, revealedCards, hasPlayed, playedCards, winnerCardId, myId, selectedCard, hand, isSpectator, onPlayCard, onSendCard }: Props) => {
 
   const { t } = useTranslation();
   const cardsToShow = revealedCards ?? playedCards.map((c) => ({ userId: "", username: "", card: c }));
@@ -65,14 +66,20 @@ export const PlayerView = ({ blackCard, playedCount, totalNeeded, roundResult, s
           </div>
         }
       </div>
-      {/* RIGHT: HAND */}
-      <PlayerHand 
-        hand={ hand } 
-        selectedCard={ selectedCard } 
-        hasPlayed={ hasPlayed } 
-        onPlayCard={ onPlayCard } 
-        onSendCard={ onSendCard } 
-      />
+      {/* RIGHT: HAND (or spectator notice) */}
+      {
+        isSpectator
+        ? <div className={ styles.spectator_box } style={{ border: `1.5px dashed ${ C.border }`, color: C.muted }}>
+            { t("game.spectatorNotice") }
+          </div>
+        : <PlayerHand
+            hand={ hand }
+            selectedCard={ selectedCard }
+            hasPlayed={ hasPlayed }
+            onPlayCard={ onPlayCard }
+            onSendCard={ onSendCard }
+          />
+      }
     </div>
   );
 };

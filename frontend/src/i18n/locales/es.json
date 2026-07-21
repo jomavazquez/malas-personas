@@ -95,7 +95,10 @@
     "leaveRoom": "Salir de la sala",
     "loading": "Cargando partida...",
     "playerLeft": "{{username}} ha abandonado la sala",
-    "youWonRound": "¡Enhorabuena, ganaste la ronda!"
+    "youWonRound": "¡Enhorabuena, ganaste la ronda!",
+    "playerJoinedGame": "{{username}} se ha unido a la partida",
+    "spectatorLabel": "Observando",
+    "spectatorNotice": "Estás viendo esta ronda como espectador — podrás jugar a partir de la siguiente."
   },
   "how": {
     "eyebrow": "Cómo se juega",
@@ -127,7 +130,7 @@
     "ACCEPT_TERMS": "Debes aceptar los términos y condiciones",
     "INVALID_DATA": "Datos incorrectos o el usuario ya existe",
     "EMAIL_IN_USE": "Este email ya se está usando",
-    "DUPLICATE_PLAYER": "Ya hay un jugador con ese nombre desde esta red",
+    "DUPLICATE_PLAYER": "Nombre de usuario ya elegido",
     "ROOM_NOT_FOUND": "Sala no encontrada",
     "GAME_ALREADY_STARTED": "El juego ya ha empezado. ¡Espera a que termine o conéctate a otra sala!",
     "ROOM_ALREADY_ACTIVE": "Ya tienes una sala activa. Ciérrala antes de crear una nueva.",

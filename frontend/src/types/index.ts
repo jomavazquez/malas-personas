@@ -37,6 +37,7 @@ export interface Player {
   score: number;
   isGuest: boolean;
   isJudge: boolean;
+  isSpectator: boolean;
   cardCount?: number;
 }
 

@@ -50,6 +50,10 @@ export const Scoreboard = ({ players, judgeId, myId, pointsToWin, playedCount, s
                   isJ &&
                   <span className={ styles.score_judge_label }>{ t("game.judgeLabel").toUpperCase() }</span>
                 }
+                {
+                  p.isSpectator &&
+                  <span className={ styles.spectator_label } style={{ color: C.faint }}>{ t("game.spectatorLabel").toUpperCase() }</span>
+                }
                 <span className={ styles.score } style={{ color: C.base }}>{ p.score }</span>
               </div>
             );

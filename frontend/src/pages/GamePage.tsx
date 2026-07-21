@@ -37,6 +37,7 @@ export const GamePage = () => {
   const [ timer, setTimer ] = useState(clock);
 
   const isJudge = gameState?.judge?.userId === myId;
+  const isSpectator = gameState?.players.find((p) => p.userId === myId)?.isSpectator ?? false;
 
   // Timer
   useEffect(() => {
@@ -67,7 +68,7 @@ export const GamePage = () => {
     });
   }, [ timer ]);
 
-  const totalNeeded = (gameState?.players?.length ?? 1) - 1;
+  const totalNeeded = gameState?.players.filter((p) => !p.isJudge && !p.isSpectator).length ?? 1;
 
   useEffect(() => {
     if( !code || !myId || !myName ) return;
@@ -121,6 +122,16 @@ export const GamePage = () => {
       showToast(t("game.playerLeft", { username }), "info");
     });
 
+    socket.on("room:playerJoined", ({ userId, username, isGuest: g, isSpectator: spectator }: { userId: string; username: string; isGuest: boolean; isSpectator: boolean }) => {
+      setGameState((s) => s ? {
+        ...s,
+        players: s.players.some((p) => p.userId === userId)
+          ? s.players
+          : [...s.players, { userId, username, score: 0, isGuest: g, isJudge: false, isSpectator: spectator }],
+      } : s);
+      showToast(t("game.playerJoinedGame", { username }), "info");
+    });
+
     return () => {
       socket.off("hand:update");
       socket.off("round:new");
@@ -129,6 +140,7 @@ export const GamePage = () => {
       socket.off("round:winner");
       socket.off("game:over");
       socket.off("room:playerLeft");
+      socket.off("room:playerJoined");
     };
   }, [ myId, myName, code, navigate ]);
 
@@ -205,6 +217,7 @@ export const GamePage = () => {
               myId={ myId }
               selectedCard={ selectedCard }
               hand={ hand }
+              isSpectator={ isSpectator }
               onPlayCard={ handlePlayCard }
               onSendCard={ handleSendCard }
             />

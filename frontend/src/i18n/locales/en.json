@@ -95,7 +95,10 @@
     "leaveRoom": "Leave room",
     "loading": "Loading game...",
     "playerLeft": "{{username}} left the room",
-    "youWonRound": "Congrats, you won the round!"
+    "youWonRound": "Congrats, you won the round!",
+    "playerJoinedGame": "{{username}} joined the game",
+    "spectatorLabel": "Watching",
+    "spectatorNotice": "You're watching this round — you'll be able to play starting next round."
   },
   "how": {
     "eyebrow": "How to play",
@@ -127,7 +130,7 @@
     "ACCEPT_TERMS": "You must agree to the Terms and Conditions",
     "INVALID_DATA": "Invalid data or the user already exists",
     "EMAIL_IN_USE": "Email already in use",
-    "DUPLICATE_PLAYER": "A player with that name is already in the game from this network",
+    "DUPLICATE_PLAYER": "Username already taken",
     "ROOM_NOT_FOUND": "Room not found",
     "GAME_ALREADY_STARTED": "The game has already started. Wait a bit or connect to other room!",
     "ROOM_ALREADY_ACTIVE": "You already have an active room. Close it before creating a new one.",
