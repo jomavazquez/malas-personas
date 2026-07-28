@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
 import { Badge, Button, Dot, Footer, TopMenu } from "../components";
@@ -12,10 +12,11 @@ export const LobbyPage = () => {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const carouselRef = useRef<HTMLDivElement>(null);
 
   // Create room state
-  const [ gameType, setGameType ] = useState<GameType>("MALAS_PERSONAS");
+  const [ gameType, setGameType ] = useState<GameType>(( location.state as { gameType?: GameType } | null )?.gameType ?? "MALAS_PERSONAS");
   const [ decks, setDecks ] = useState<Deck[]>([]);
   const [ myDecks, setMyDecks ] = useState<Deck[]>([]);
   const [ roomName, setRoomName ] = useState("");

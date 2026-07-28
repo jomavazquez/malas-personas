@@ -122,7 +122,7 @@ export const HomePage = () => {
             </h3>
             <p className={ styles.eyebrow_sub } style={{ color: C.faint }}>{ t("vomPromo.desc") }</p>
             <div className="flex flex-wrap gap-3">
-              <Button to={ user ? "/lobby" : "/register" } bgColor={ C.accent } textColor={ C.base }>
+              <Button to={ user ? "/lobby" : "/register" } state={ user ? { gameType: "V_O_M" } : undefined } bgColor={ C.accent } textColor={ C.base }>
                 { t("vomPromo.cta") } →
               </Button>
               <Button textColor="#fff" onClick={ () => goToSection(navigate, "how") }>
