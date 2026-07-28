@@ -12,6 +12,8 @@ export interface Deck {
   _count: { cards: number };
 }
 
+export type GameType = "MALAS_PERSONAS" | "V_O_M";
+
 export interface Room {
   id: string;
   code: string;
@@ -20,9 +22,10 @@ export interface Room {
   isActive: boolean;
   maxPlayers: number;
   pointsToWin: number;
+  gameType: GameType;
   createdAt: string;
   finishedAt?: string;
-  deck: { id: string; name: string; language: string };
+  deck: { id: string; name: string; language: string } | null;
 }
 
 export interface Card {
@@ -59,4 +62,44 @@ export interface PlayedCard {
   userId: string;
   username: string;
   card: Card;
+}
+
+// Verdad o Mentira
+
+export type VomPlayerStatus = "idle" | "writing" | "awaiting_statements" | "focus" | "thinking" | "voted" | "spectator";
+
+export interface VomPlayer {
+  userId: string;
+  username: string;
+  score: number;
+  isGuest: boolean;
+  isSpectator: boolean;
+  status: VomPlayerStatus;
+}
+
+export interface VomStatement {
+  id: string;
+  text: string;
+  isLie?: boolean;
+}
+
+export interface VomVote {
+  userId: string;
+  username: string;
+  statementId: string;
+}
+
+export type VomPhase =
+  | { kind: "loading" }
+  | { kind: "writing"; isProtagonist: boolean }
+  | { kind: "voting"; statements: VomStatement[]; voteDeadlineAt: number; isProtagonist: boolean; myVote: string | null }
+  | { kind: "reveal"; statements: VomStatement[]; votes: VomVote[]; fooledCount: number }
+  | { kind: "gameOver"; winner: { userId: string; username: string; score: number } };
+
+export interface VomPrompt {
+  id: string;
+  language: "ES" | "EN";
+  truthOne: string;
+  truthTwo: string;
+  lie: string;
 }

@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { Button } from "../../../components";
-import { C } from "../../../lib";
-import type { Card } from "../../../types";
-import styles from "./Game.module.css";
+import { Button } from "../../../../components";
+import { C } from "../../../../lib";
+import type { Card } from "../../../../types";
+import styles from "./m_p.module.css";
 
 interface Props {
   hand: Card[];

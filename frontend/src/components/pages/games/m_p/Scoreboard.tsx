@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { Avatar } from "../../../components";
-import { C } from "../../../lib";
-import type { Player } from "../../../types";
-import styles from "./Game.module.css";
+import { Avatar } from "../../../../components";
+import { C } from "../../../../lib";
+import type { Player } from "../../../../types";
+import styles from "./m_p.module.css";
 
 interface Props {
   players: Player[];

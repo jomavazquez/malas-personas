@@ -1,6 +1,7 @@
 import { Server } from "socket.io";
 import { env } from "../config/env.js";
-import { registerGameHandlers } from "../modules/game/game.gateway.js";
+import { registerGameHandlers } from "../modules/games/malas_personas.gateway.js";
+import { registerVerdadOMentiraHandlers } from "../modules/games/v_o_m.gateway.js";
 
 let io;
 
@@ -18,6 +19,7 @@ export const initSocket = ( httpServer ) => {
     console.log(`🔌 Socket connected: ${socket.id}`);
 
     registerGameHandlers(io, socket);
+    registerVerdadOMentiraHandlers(io, socket);
 
     socket.on("disconnect", () => {
       console.log(`🔌 Socket disconnected: ${socket.id}`);

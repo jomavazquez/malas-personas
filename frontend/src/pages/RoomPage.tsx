@@ -3,8 +3,8 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context";
 import { C, getOrCreateGuestId, connectSocket } from "../lib";
-import { Footer, TopMenu, RoomNotFound, Avatar, Button } from "../components";
-import type { Player, GameState } from "../types";
+import { Footer, TopMenu, RoomNotFound, Avatar, Badge, Button } from "../components";
+import type { Player, GameState, GameType } from "../types";
 import styles from "./RoomPage.module.css";
 
 export const RoomPage = () => {
@@ -24,6 +24,7 @@ export const RoomPage = () => {
 
   const [ players, setPlayers ] = useState<Player[]>([]);
   const [ hostId, setHostId ] = useState<string | null>(null);
+  const [ gameType, setGameType ] = useState<GameType | null>(null);
   const [ copied, setCopied ] = useState(false);
   const [ copiedUrl, setCopiedUrl ] = useState(false);
   const [ error, setError ] = useState("");
@@ -35,25 +36,26 @@ export const RoomPage = () => {
   const [ resolvedId, setResolvedId ] = useState(myId);
   const [ isGuestResolved, setIsGuestResolved ] = useState(!user && !!guestId);
 
-  // Si el usuario carga después del primer render, actualiza resolvedName/resolvedId
+  // If user loads after first render, update resolvedName/resolvedId
   useEffect(() => {
-    if (user?.username) {
+    if( user?.username ){
       setResolvedName(user.username);
       setResolvedId(user.id);
       setNameInput(user.username);
       setIsGuestResolved(false);
     }
-  }, [user?.username]);
+  }, [ user?.username ]);
 
   const isHost = resolvedId === hostId;
   const canStart = players.length >= 2;
 
-  // Mostrar formulario hasta que el usuario confirme explícitamente
+  // Show form until user's confirmation
   const needsName = !confirmed;
 
   const handleStart = () => {
     const socket = connectSocket();
-    socket.emit("game:start", { roomCode: code }, (res: { error?: string }) => {
+    const event = gameType === "V_O_M" ? "vom:start" : "game:start";
+    socket.emit(event, { roomCode: code }, (res: { error?: string }) => {
       if( res.error ) setError(res.error);
     });
   };
@@ -71,7 +73,7 @@ export const RoomPage = () => {
   };
 
   const handleNameSubmit = () => {
-    if (!nameInput.trim()) return;
+    if( !nameInput.trim() ) return;
     setNameError("");
     const id = user ? user.id : getOrCreateGuestId();
     setResolvedId(id);
@@ -90,10 +92,10 @@ export const RoomPage = () => {
     if( !code || !resolvedId || !resolvedName ) return;
     const socket = connectSocket();
 
-    socket.emit("room:join", { roomCode: code, userId: resolvedId, username: resolvedName, isGuest: isGuestResolved }, (res: { error?: string; state?: GameState }) => {
-      if (res.error) {
-        // Nombre ya usado por otro jugador de la sala: vuelve al formulario para elegir otro
-        if (res.error === "DUPLICATE_PLAYER" && !user) {
+    socket.emit("room:join", { roomCode: code, userId: resolvedId, username: resolvedName, isGuest: isGuestResolved }, (res: { error?: string; state?: GameState & { gameType?: GameType } }) => {
+      if( res.error ){
+        // Name already user by other player in the room: going back to the form to choose another one
+        if( res.error === "DUPLICATE_PLAYER" && !user ){
           setNameError(t("errors.DUPLICATE_PLAYER"));
           setConfirmed(false);
           return;
@@ -101,14 +103,15 @@ export const RoomPage = () => {
         setError(res.error);
         return;
       }
-      // La partida ya está en marcha: entra directo como espectador
-      if (res.state!.status === "playing") {
+      // Game already started: entering like observer
+      if( res.state!.status === "playing" ){
         navigate(`/game/${code}`, { state: { guestId: resolvedId, guestName: resolvedName } });
         return;
       }
       setConnected(true);
       setHostId(res.state!.hostId ?? null);
       setPlayers(res.state!.players);
+      setGameType(res.state!.gameType ?? "MALAS_PERSONAS");
     });
 
     socket.on("room:playerJoined", ({ userId, username, isGuest: g }: { userId: string; username: string; isGuest: boolean }) => {
@@ -205,6 +208,11 @@ export const RoomPage = () => {
                 </button>
               </div>
             </div>
+          </div>
+          <div style={{ textAlign: "center", marginBottom: 25, marginTop: -10 }}>
+            <Badge marginBottom={ 0 } color={ C.accent }>
+              { t(`myroom.gameType_${gameType}`) }
+            </Badge>
           </div>
           <div className={ styles.players_box } style={{ border: `1.5px solid ${ C.borderMid }`}}>
             <div className={ styles.players_th } style={{ color: C.faint }}>{ t("room.players") }{" "}({ players.length })</div>

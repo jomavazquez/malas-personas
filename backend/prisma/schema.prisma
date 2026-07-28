@@ -35,6 +35,7 @@ model Room {
   isActive     Boolean    @default(true)
   maxPlayers   Int        @default(10)
   pointsToWin  Int        @default(5)
+  gameType     GameType   @default(MALAS_PERSONAS)
   createdAt    DateTime   @default(now())
   finishedAt   DateTime?
 
@@ -42,9 +43,9 @@ model Room {
   hostId String
   host   User   @relation(fields: [hostId], references: [id])
 
-  // Deck used in this room
-  deckId String
-  deck   Deck   @relation(fields: [deckId], references: [id])
+  // Deck used in this room — only applies to Malas Personas rooms
+  deckId String?
+  deck   Deck?   @relation(fields: [deckId], references: [id])
 
   @@map("rooms")
 }
@@ -53,6 +54,11 @@ enum RoomStatus {
   WAITING
   PLAYING
   FINISHED
+}
+
+enum GameType {
+  MALAS_PERSONAS
+  V_O_M
 }
 
 // ─────────────────────────────────────────
@@ -97,4 +103,20 @@ model Card {
 enum CardType {
   BLACK
   WHITE
+}
+
+// ─────────────────────────────────────────
+// VERDAD O MENTIRA — example prompts bank
+// ─────────────────────────────────────────
+
+model VomPrompt {
+  id        String   @id @default(cuid())
+  language  Language @default(ES)
+  truthOne  String
+  truthTwo  String
+  lie       String
+  createdAt DateTime @default(now())
+
+  @@index([language])
+  @@map("vom_prompts")
 }

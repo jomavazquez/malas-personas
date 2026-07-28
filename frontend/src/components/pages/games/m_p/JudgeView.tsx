@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { BlackCard, PlayedCardTile } from "../../../components";
-import { C } from "../../../lib";
-import type { Card, PlayedCard } from "../../../types";
-import styles from "./Game.module.css";
+import { BlackCard, PlayedCardTile } from "../../../../components";
+import { C } from "../../../../lib";
+import type { Card, PlayedCard } from "../../../../types";
+import styles from "./m_p.module.css";
 
 interface RoundResult {
   winner: { userId: string; username: string; score: number };
@@ -36,7 +36,7 @@ export const JudgeView = ({ blackCard, revealedCards, roundResult, showingResult
         revealedCards && (!roundResult || showingResult)
         ?
           <div>
-            <p className={ `my-5 ${ styles.judge_desc } ${ styles.anim }` } style={{ color: C.accent }}>
+            <p className={ `my-5 ${ styles.judge_desc } anim` } style={{ color: C.accent }}>
               { roundResult ? `🏆 ${roundResult.winner.username}` : `${ t("game.pickWinner") } · ${ revealedCards.length } ${ revealedCards.length === 1 ? t("mydecks.white").toLowerCase() : t("game.answers") }` }
             </p>
             <div className={ `mb-10 ${ styles.judge_grid }` }>
@@ -57,7 +57,7 @@ export const JudgeView = ({ blackCard, revealedCards, roundResult, showingResult
         : !roundResult
           ?
             <>
-              <p className={ `my-5 ${ styles.judge_desc } ${ styles.anim }` } style={{ color: C.accent }}>{ t("game.waitingForPlayers") }{" "}({ playedCount } / { totalNeeded })</p>
+              <p className={ `my-5 ${ styles.judge_desc } anim` } style={{ color: C.accent }}>{ t("game.waitingForPlayers") }{" "}({ playedCount } / { totalNeeded })</p>
               {
                 playedCards.length > 0 &&
                 <div className={ `mb-10 ${ styles.judge_grid }` }>

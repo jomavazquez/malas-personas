@@ -1,5 +1,5 @@
-import { C } from "../../../lib";
-import styles from "./Game.module.css";
+import { C } from "../../../../lib";
+import styles from "./m_p.module.css";
 
 interface Props {
   text: string;

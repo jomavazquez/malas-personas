@@ -1,0 +1,10 @@
+{
+  "language": "EN",
+  "prompts": [
+    { "truthOne": "I have lived in three different countries", "truthTwo": "I hold a scuba diving licence", "lie": "I genuinely hate chocolate" },
+    { "truthOne": "I ran a half marathon with no training", "truthTwo": "I can play piano by ear", "lie": "I have never once tried sushi" },
+    { "truthOne": "I once fell asleep in a meeting", "truthTwo": "I have a cat named Wifi", "lie": "I speak four languages fluently" },
+    { "truthOne": "I have met a famous footballer", "truthTwo": "As a kid I wanted to be an astronaut", "lie": "I am allergic to cats" },
+    { "truthOne": "I broke a bone on a skateboard", "truthTwo": "I collect soda bottle caps", "lie": "I have never left my country" }
+  ]
+}

@@ -1,5 +1,5 @@
 import prisma from "../../config/database.js";
-import { setSession } from "./game.state.js";
+import { setSession } from "./games.state.js";
 
 const HAND_SIZE = 5;
 const MIN_PLAYERS_TO_START = 2;
@@ -233,6 +233,7 @@ export const pickWinner = ( session, { judgeUserId, winnerUserId } ) => {
 };
 
 export const serializeSessionForPlayer = ( session, userId ) => ({
+  gameType: "MALAS_PERSONAS",
   roomCode: session.roomCode,
   hostId: session.hostId,
   status: session.status,

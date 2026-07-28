@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { BlackCard, PlayedCardTile, PlayerHand } from "../../../components";
-import { C } from "../../../lib";
-import type { Card, PlayedCard } from "../../../types";
-import styles from "./Game.module.css";
+import { BlackCard, PlayedCardTile, PlayerHand } from "../../../../components";
+import { C } from "../../../../lib";
+import type { Card, PlayedCard } from "../../../../types";
+import styles from "./m_p.module.css";
 
 interface RoundResult {
   winner: { userId: string; username: string; score: number };
@@ -44,7 +44,7 @@ export const PlayerView = ({ blackCard, playedCount, totalNeeded, roundResult, s
         }
         {
           playedCount > 0 && (!roundResult || showingResult) &&
-          <p className={ `my-5 ${ styles.judge_desc } ${ styles.anim }` } style={{ color: C.accent }}>
+          <p className={ `my-5 ${ styles.judge_desc } anim` } style={{ color: C.accent }}>
             { roundResult ? `🏆 ${roundResult.winner.username}` : revealedCards ? t("game.waitingForJudge") : t("game.played", { count: playedCount, total: totalNeeded }) }
           </p>
         }

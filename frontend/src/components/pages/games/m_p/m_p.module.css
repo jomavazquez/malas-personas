@@ -119,6 +119,7 @@
     font-size: 15px;
     font-weight: 600;
     justify-content: center;
+    margin-bottom: 10px;
     min-height: 160px;
     padding: 30px;
     text-align: center
@@ -160,13 +161,4 @@
     flex-shrink: 0;
     height: 8px;
     width: 8px
-}
-
-.anim {
-    animation: pulse 1.5s ease-in-out infinite
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1 }
-    50% { opacity: 0.6 }
 }

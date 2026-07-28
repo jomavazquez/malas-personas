@@ -15,21 +15,27 @@ const generateRoomCode = async () => {
   return code;
 };
 
-export const createRoom = async( hostId, { deckId, maxPlayers, pointsToWin, name } ) => {
-  const deck = await prisma.deck.findUnique({ where: { id: deckId } });
-  if( !deck ){
-    const error = new Error("SELECTED_DECK_NOT_EXISTS");
-    error.status = 404;
-    throw error;
+export const createRoom = async( hostId, { gameType, deckId, maxPlayers, pointsToWin, name } ) => {
+  if( gameType === "MALAS_PERSONAS" ){
+    const deck = await prisma.deck.findUnique({ where: { id: deckId } });
+    if( !deck ){
+      const error = new Error("SELECTED_DECK_NOT_EXISTS");
+      error.status = 404;
+      throw error;
+    }
   }
 
   const code = await generateRoomCode();
 
   const room = await prisma.room.create({
-    data: { code, hostId, deckId, maxPlayers, pointsToWin, ...(name && { name }) },
+    data: {
+      code, hostId, gameType, maxPlayers, pointsToWin,
+      deckId: gameType === "MALAS_PERSONAS" ? deckId : null,
+      ...(name && { name }),
+    },
     select: {
       id: true, code: true, name: true, status: true, isActive: true,
-      maxPlayers: true, pointsToWin: true, createdAt: true,
+      maxPlayers: true, pointsToWin: true, gameType: true, createdAt: true,
       deck: { select: { id: true, name: true, language: true } },
     },
   });
@@ -42,7 +48,7 @@ export const getRoomByCode = async( code ) => {
     where: { code: code.toUpperCase() },
     select: {
       id: true, code: true, status: true, isActive: true,
-      maxPlayers: true, pointsToWin: true, createdAt: true,
+      maxPlayers: true, pointsToWin: true, gameType: true, createdAt: true,
       host: { select: { id: true, username: true } },
       deck: { select: { id: true, name: true, language: true } },
     },
@@ -88,7 +94,7 @@ export const getMyRooms = async( userId ) => {
     where: { hostId: userId },
     select: {
       id: true, code: true, name: true, status: true, isActive: true,
-      maxPlayers: true, pointsToWin: true, createdAt: true, finishedAt: true,
+      maxPlayers: true, pointsToWin: true, gameType: true, createdAt: true, finishedAt: true,
       deck: { select: { id: true, name: true, language: true } },
     },
     orderBy: { createdAt: "desc" },

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { Logo } from "../../../components";
-import { C } from "../../../lib";
-import styles from "./Game.module.css";
+import { Logo } from "../../../../components";
+import { C } from "../../../../lib";
+import styles from "./m_p.module.css";
 
 interface Props {
   isJudge: boolean;

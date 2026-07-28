@@ -1,0 +1,174 @@
+.card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px -20px rgba(0, 0, 0, .25);
+    padding: 30px
+}
+
+.title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px
+}
+
+.sub {
+    font-size: 16px;
+    margin-bottom: 20px
+}
+
+.write_row {
+    align-items: center;
+    background: #fff;
+    border-radius: 16px;
+    display: flex;
+    gap: 12px;
+    padding: 6px 6px 6px 16px
+}
+
+.write_input {
+    background: transparent;
+    border: none;
+    flex: 1;
+    font-size: 15px;
+    padding: 12px 0
+}
+
+.write_input:focus {
+    outline: none
+}
+
+.lie_btn {
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 10px 14px;
+    white-space: nowrap
+}
+
+.statement_row {
+    align-items: center;
+    border-radius: 16px;
+    display: flex;
+    gap: 14px;
+    padding: 18px 20px;
+    transition: border-color .15s ease
+}
+
+.statement_dot {
+    align-items: center;
+    border-radius: 50%;
+    display: flex;
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 700;
+    height: 26px;
+    justify-content: center;
+    width: 26px
+}
+
+.statement_text {
+    font-size: 15px;
+    font-weight: 500
+}
+
+.tag {
+    border-radius: 999px;
+    flex-shrink: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .05em;
+    padding: 5px 10px;
+    text-transform: uppercase
+}
+
+.voters {
+    font-size: 12px;
+    margin-left: auto;
+    white-space: nowrap
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.sidebar_box {
+    border-radius: 20px;
+    padding: 18px 20px
+}
+
+.sidebar_row {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    padding: 8px 0
+}
+
+.sidebar_row + .sidebar_row {
+    border-top: 1px solid rgba(255, 255, 255, .08)
+}
+
+.sidebar_name {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600
+}
+
+.status_pill {
+    border-radius: 999px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    padding: 4px 9px;
+    white-space: nowrap
+}
+
+.board_row {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0
+}
+
+.board_row + .board_row {
+    border-top: 1px solid rgba(0, 0, 0, .06)
+}
+
+.board_score {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 800
+}
+
+.waiting_box {
+    align-items: center;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+    min-height: 220px;
+    padding: 40px;
+    text-align: center
+}
+
+.preparing_round {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    margin-top: 10px;
+    text-transform: uppercase
+}

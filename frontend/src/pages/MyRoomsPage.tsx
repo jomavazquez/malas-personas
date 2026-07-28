@@ -197,14 +197,18 @@ export const MyRoomsPage = () => {
                     }
                   </div>
                   {/* ROOM INFO */}
-                  <div>
+                  <div className="flex flex-col">
                     <div className={`${styles.room_info} justify-center md:justify-start`}>
                       <span className={ styles.room_name } style={{ color: C.base }}>{ room.name ?? room.code }</span>
                       <Badge marginBottom={ 0 } dot={ room.isActive } color={ room.isActive ? undefined : C.muted }>{ t(room.isActive ? "myroom.active" : "myroom.finished") }</Badge>
+                      <Badge marginBottom={ 0 } dot={ false } color={ room.gameType === "V_O_M" ? "#3C6FB0" : C.faint }>{ t(`myroom.gameType_${room.gameType}`) }</Badge>
                     </div>
-                    <div className="text-center md:text-left mt-0.5 md:mt-2.5" style={{ color: C.faint, fontSize: 14 }}>
+                    {
+                      room.gameType !== "V_O_M" &&
+                      <div className="text-center md:text-left mt-0.5 md:mt-2.5" style={{ color: C.faint, fontSize: 14 }}>
                       { room.deck?.language === "ES" ? "Español" : "English" }{" "}·{" "}{ room.deck?.name === "All" ? t("myroom.forEveryone") : (room.deck?.name === "No Filter" || room.deck?.name === "Sin filtro") ? t("myroom.noFilter") : room.deck?.name ?? "—" }
-                    </div>
+                      </div>
+                    }
                   </div>
                   <div className="text-center" style={{ fontSize: 15, color: C.muted }}>
                     { room.maxPlayers }<span className="inline md:hidden">{" "}{ t("room.players") }</span>

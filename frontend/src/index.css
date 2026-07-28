@@ -15,11 +15,6 @@ html, body {
     overflow-x: hidden
 }
 
-@keyframes floaty {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
 :root {
     --primary: #f39c12
 }
@@ -330,4 +325,18 @@ html, body {
     max-width: 375px;
     position: relative;
     z-index: 1
+}
+
+.anim {
+    animation: pulse 1.5s ease-in-out infinite
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1 }
+    50% { opacity: 0.6 }
+}
+
+@keyframes floaty {
+    0%, 100% { transform: translateY(0) }
+    50% { transform: translateY(-10px) }
 }

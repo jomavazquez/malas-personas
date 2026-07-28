@@ -6,7 +6,7 @@ import { C, connectSocket } from "../lib";
 import { Footer, GameNav, GameOver, JudgeView, LoadingRoom, PlayerView, Scoreboard } from "../components";
 import type { GameState, PlayedCard, Card } from "../types";
 
-export const GamePage = () => {
+export const Game_M_P_Page = () => {
 
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -155,7 +155,7 @@ export const GamePage = () => {
     if( !selectedCard || hasPlayed || isJudge ) return;
     const socket = connectSocket();
     socket.emit("round:playCard", { roomCode: code, cardId: selectedCard }, (res: { error?: string }) => {
-      if( res.error ){ showToast(res.error, "error"); return; }
+      if( res.error ){ showToast(t(`errors.${res.error}`, res.error), "error"); return; }
       setHasPlayed(true);
     });
   };
@@ -164,7 +164,7 @@ export const GamePage = () => {
     if( hasRedrawn || isJudge || isSpectator ) return;
     const socket = connectSocket();
     socket.emit("hand:redraw", { roomCode: code }, (res: { error?: string; hand?: Card[] }) => {
-      if( res.error ){ showToast(res.error, "error"); return; }
+      if( res.error ){ showToast(t(`errors.${res.error}`, res.error), "error"); return; }
       setHand(res.hand!);
       setSelectedCard(null);
       setHasRedrawn(true);
@@ -177,7 +177,7 @@ export const GamePage = () => {
     setSelectedWinner(winnerUserId);
     const socket = connectSocket();
     socket.emit("round:pickWinner", { roomCode: code, winnerUserId }, (res: { error?: string }) => {
-      if( res.error ){ showToast(res.error, "error"); setSelectedWinner(null); }
+      if( res.error ){ showToast(t(`errors.${res.error}`, res.error), "error"); setSelectedWinner(null); }
     });
   };
 

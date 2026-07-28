@@ -1,0 +1,10 @@
+{
+  "language": "ES",
+  "prompts": [
+    { "truthOne": "He vivido en tres países distintos", "truthTwo": "Tengo el carnet de submarinismo", "lie": "Odio profundamente el chocolate" },
+    { "truthOne": "Corrí una media maratón sin entrenar", "truthTwo": "Sé tocar el piano de oído", "lie": "Nunca en mi vida he probado el sushi" },
+    { "truthOne": "Una vez me quedé dormido en una reunión", "truthTwo": "Tengo un gato que se llama Wifi", "lie": "Hablo cuatro idiomas con fluidez" },
+    { "truthOne": "He conocido a un futbolista famoso", "truthTwo": "De pequeño quería ser astronauta", "lie": "Soy alérgico a los gatos" },
+    { "truthOne": "He roto un hueso montando en monopatín", "truthTwo": "Colecciono chapas de refresco", "lie": "Nunca he salido de mi país" }
+  ]
+}

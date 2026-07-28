@@ -16,7 +16,7 @@ const seedDeck = async (deckData) => {
     where: { name: deckData.name, language: deckData.language },
   });
 
-  if (existing) {
+  if( existing ){
     console.log(`⏭️  Skipping "${deckData.name}" (${deckData.language}) — already exists`);
     return;
   }
@@ -37,12 +37,29 @@ const seedDeck = async (deckData) => {
   console.log(`✅ Seeded "${deck.name}" (${deck.language}) — ${deckData.blacks.length} black, ${deckData.whites.length} white`);
 };
 
+const seedVomPrompts = async (promptData) => {
+  const existingCount = await prisma.vomPrompt.count({ where: { language: promptData.language } });
+
+  if( existingCount > 0 ){
+    console.log(`⏭️  Skipping VoM prompts (${promptData.language}) — already exists`);
+    return;
+  }
+
+  await prisma.vomPrompt.createMany({
+    data: promptData.prompts.map((p) => ({ ...p, language: promptData.language })),
+  });
+
+  console.log(`✅ Seeded VoM prompts (${promptData.language}) — ${promptData.prompts.length} prompts`);
+};
+
 const main = async () => {
   console.log("🌱 Starting seed...\n");
   await seedDeck(loadDeck("deck-all-en.json"));
   await seedDeck(loadDeck("deck-all-es.json"));
   await seedDeck(loadDeck("deck-no-filter-en.json"));
-  await seedDeck(loadDeck("deck-no-filter-es.json"));  
+  await seedDeck(loadDeck("deck-no-filter-es.json"));
+  await seedVomPrompts(loadDeck("vom-prompts-es.json"));
+  await seedVomPrompts(loadDeck("vom-prompts-en.json"));
   console.log("\n🎉 Seed complete");
 };
 

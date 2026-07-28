@@ -8,6 +8,7 @@ import authRoutes from "./modules/auth/auth.routes.js";
 import usersRoutes from "./modules/users/users.routes.js";
 import roomsRoutes from "./modules/rooms/rooms.routes.js";
 import decksRoutes from "./modules/decks/decks.routes.js";
+import vomPromptsRoutes from "./modules/games/v_o_m.routes.js";
 import contactRoutes from "./modules/contact/contact.routes.js";
 
 const app = express();
@@ -45,6 +46,7 @@ app.use("/api/auth", authLimiter, authRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/rooms", roomsRoutes);
 app.use("/api/decks", decksRoutes);
+app.use("/api/vom-prompts", vomPromptsRoutes);
 app.use("/api/contact", contactRoutes);
 
 app.get("/health", (_req, res) => res.json({ status: "ok", project: "malas-personas" }));
