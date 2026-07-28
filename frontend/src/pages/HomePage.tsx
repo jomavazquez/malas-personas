@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth, useJoinModal } from "../context";
 import { getLenis } from "../hooks";
 import { Avatar, Blob, Button, UnderlineLink, Footer, TopMenu, Badge, FloatingQuestion, BlackCard } from "../components";
-import { C, F } from "../lib";
+import { C, F, goToSection } from "../lib";
 import styles from "./HomePage.module.css";
 
 export const HomePage = () => {
@@ -13,6 +13,7 @@ export const HomePage = () => {
   const { user } = useAuth();
   const { openJoinModal } = useJoinModal();
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const id = location.state?.scrollTo;
@@ -111,11 +112,56 @@ export const HomePage = () => {
           ))}
         </div>
       </div>
+      {/* ── VOM PROMO ── */}
+      <div className={`py-16 md:py-20 px-8 md:px-14 ${ styles.vom }`} style={{ background: C.base }}>
+        <div className="max-w-360 mx-auto grid grid-cols-1 md:grid-cols-[1.05fr_0.95fr] gap-10 items-center relative">
+          <div>
+            <Badge>{ t("vomPromo.badge") }</Badge>
+            <h3 className="text-[32px] md:text-[40px] heading_1" style={{ color: "#fff" }}>
+              { t("lobby.gameVOM") }<span style={{ color: C.accent }}>.</span>
+            </h3>
+            <p className={ styles.eyebrow_sub } style={{ color: C.faint }}>{ t("vomPromo.desc") }</p>
+            <div className="flex flex-wrap gap-3">
+              <Button to={ user ? "/lobby" : "/register" } bgColor={ C.accent } textColor={ C.base }>
+                { t("vomPromo.cta") } →
+              </Button>
+              <Button textColor="#fff" onClick={ () => goToSection(navigate, "how") }>
+                { t("how.eyebrow") }
+              </Button>
+            </div>
+          </div>
+          <div>
+            {
+              [
+                { letter: "A", text: t("vomPromo.statement1") },
+                { letter: "B", text: t("vomPromo.statement2"), lie: true },
+                { letter: "C", text: t("vomPromo.statement3") },
+              ].map((s) => (
+                <div 
+                  key={ s.letter } 
+                  className={`flex items-center gap-3 mb-3 ${ styles.vom_letter }`} 
+                  style={{ 
+                    background: s.lie ? C.accent : "#fff", 
+                    transform: s.lie ? "rotate(-2deg)" : "none", 
+                    boxShadow: s.lie ? "0 14px 28px -12px rgba(0,0,0,.45)" : "none" 
+                  }}
+                >
+                  <Avatar label={ s.letter } bgColor={ s.lie ? "#fff" : C.surface } textColor={ C.base } size={ 32 } />
+                  <span className={ styles.vom_options } style={{ color: C.base }}>{ s.text }</span>
+                </div>
+              ))
+            }
+            <div className={ styles.sub } style={{ textAlign: "right", color: C.faint, marginTop: 10 }}>
+              { t("vomPromo.question") }
+            </div>
+          </div>
+        </div>
+      </div>
       {/* ── HOW IT WORKS ── */}
       <div id="how" style={{ background: "#fff" }} className="py-15 md:py-20 px-8 md:px-14">
         <div className="max-w-360 mx-auto">
           <div className="text-center mb-15">
-            <div style={{ fontFamily: F.display, fontWeight: 700, fontSize: 13, letterSpacing: "0.09em", textTransform: "uppercase", color: C.accentDeep, marginBottom: 10 }}>{ t("how.eyebrow") }</div>
+            <div className={ styles.sub } style={{ color: C.accentDeep, marginBottom: 10 }}>{ t("how.eyebrow") }</div>
             <h3 className="heading_1" style={{ color: C.base }}>{ t("how.title") }</h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">

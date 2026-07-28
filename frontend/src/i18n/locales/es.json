@@ -159,6 +159,15 @@
     "players": "Jugadores por sala (juez incluido)",
     "time": "Para montar una partida"
   },
+  "vomPromo": {
+    "badge": "Nuevo juego",
+    "desc": "Dos verdades y una mentira sobre cada persona del equipo. Todos votan, nadie juzga. El que engaña suma, el que caza también.",
+    "cta": "Probar Verdad o mentira",
+    "statement1": "He vivido en tres países distintos",
+    "statement2": "Odio profundamente el chocolate",
+    "statement3": "Tengo el carnet de submarinismo",
+    "question": "¿Cuál es la mentira?"
+  },
   "pricing": {
     "eyebrow": "Tu cuenta · opcional",
     "title": "Guarda tus partidas. Vuelve cuando quieras.",

@@ -110,3 +110,28 @@
     line-height: 1.2em;
     padding: 12px
 }
+
+.vom {
+    border-top: solid 1px #3C424A;
+    overflow: hidden;
+    position: relative
+}
+
+.vom_letter {
+    border-radius: 14px;
+    padding: 14px 18px
+}
+
+.vom_options {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700
+}
+
+.sub {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase
+}

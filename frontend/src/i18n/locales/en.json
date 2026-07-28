@@ -159,6 +159,15 @@
     "players": "Players per room (judge included)",
     "time": "To set up a game"
   },
+  "vomPromo": {
+    "badge": "New game",
+    "desc": "Two truths and a lie about each person on the team. Everyone votes, no one judges. The one who fools scores, and so does the one who catches the lie.",
+    "cta": "Try Truth or Lie",
+    "statement1": "I've lived in three different countries",
+    "statement2": "I deeply hate chocolate",
+    "statement3": "I'm a certified scuba diver",
+    "question": "Which one is the lie?"
+  },
   "pricing": {
     "eyebrow": "Your account · optional",
     "title": "Save your games. Come back anytime.",
