@@ -21,10 +21,15 @@ export const scrollToTop = () => {
   }
 };
 
-export const goToSection = ( navigate: Function, id: string ) => {
+export const SECTION_NAV_EVENT = "section-nav";
+
+export const goToSection = ( navigate: Function, id: string, extraState?: Record<string, unknown> ) => {
   if( window.location.pathname === "/" ){
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    if( extraState ){
+      window.dispatchEvent(new CustomEvent(SECTION_NAV_EVENT, { detail: { id, ...extraState } }));
+    }
   }else{
-    navigate("/", { state: { scrollTo: id } });
+    navigate("/", { state: { scrollTo: id, ...extraState } });
   }
 };

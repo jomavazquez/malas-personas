@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth, useJoinModal } from "../context";
 import { getLenis } from "../hooks";
 import { Avatar, Blob, Button, UnderlineLink, Footer, TopMenu, Badge, FloatingQuestion, BlackCard, PillToggle, StepCard } from "../components";
-import { C, F, goToSection } from "../lib";
+import { C, F, goToSection, SECTION_NAV_EVENT } from "../lib";
 import type { GameType } from "../types";
 import styles from "./HomePage.module.css";
 
@@ -18,9 +18,12 @@ export const HomePage = () => {
   const [ howGameType, setHowGameType ] = useState<GameType>("MALAS_PERSONAS");
 
   useEffect(() => {
-    const id = location.state?.scrollTo;
+    const state = location.state as { scrollTo?: string; gameType?: GameType } | null;
+    if( state?.gameType ) setHowGameType(state.gameType);
+
+    const id = state?.scrollTo;
     if( !id ) return;
-    
+
     const attempt = () => {
       const el = document.getElementById(id);
       const lenis = getLenis();
@@ -30,9 +33,18 @@ export const HomePage = () => {
         setTimeout(attempt, 100);
       }
     };
-    
+
     setTimeout(attempt, 200);
   }, [ location.state ]);
+
+  useEffect(() => {
+    const handler = ( e: Event ) => {
+      const detail = (e as CustomEvent<{ id?: string; gameType?: GameType }>).detail;
+      if( detail?.id === "how" && detail.gameType ) setHowGameType(detail.gameType);
+    };
+    window.addEventListener(SECTION_NAV_EVENT, handler);
+    return () => window.removeEventListener(SECTION_NAV_EVENT, handler);
+  }, []);
 
   return (
     <div style={{ background: C.surface, position: "relative" }}>
@@ -127,7 +139,7 @@ export const HomePage = () => {
               <Button to={ user ? "/lobby" : "/register" } state={ user ? { gameType: "V_O_M" } : undefined } bgColor={ C.accent } textColor={ C.base }>
                 { t("vomPromo.cta") } →
               </Button>
-              <Button textColor="#fff" onClick={ () => goToSection(navigate, "how") }>
+              <Button textColor="#fff" onClick={ () => goToSection(navigate, "how", { gameType: "V_O_M" }) }>
                 { t("how.eyebrow") }
               </Button>
             </div>

@@ -95,7 +95,7 @@ export const Footer = () => {
                     </div>
                     <div>
                         <div className={ styles.column_label }>{ t("footer.product") }</div>
-                        <FooterLink onClick={ () => goToSection(navigate, "how") }>{ t("nav.howItWorks") }</FooterLink>
+                        <FooterLink onClick={ () => goToSection(navigate, "how", { gameType: "MALAS_PERSONAS" }) }>{ t("nav.howItWorks") }</FooterLink>
                         <FooterLink to={ user ? "/lobby" : "/register" }>{ t("nav.createRoom") }</FooterLink>
                         {
                             user &&

@@ -22,7 +22,7 @@ export const TopMenu = () => {
                             <Logo />
                             <div className="hidden md:flex items-center gap-6" style={{ fontFamily: F.display, fontWeight: 600, fontSize: 16, color: C.subtle }}>
                                 <div className="min-[768px]:hidden min-[901px]:block">
-                                    <UnderlineLink onClick={() => goToSection(navigate, "how")}>{ t("nav.howItWorks") }</UnderlineLink>
+                                    <UnderlineLink onClick={() => goToSection(navigate, "how", { gameType: "MALAS_PERSONAS" })}>{ t("nav.howItWorks") }</UnderlineLink>
                                 </div>
                                 <UnderlineLink to={ user ? "/my-rooms" : "/login" }>
                                     { t( user ? "nav.myAccount" : "nav.login") }
