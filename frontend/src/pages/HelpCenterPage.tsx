@@ -18,7 +18,7 @@ interface FaqCategory {
 
 export const HelpCenterPage = () => {
   
-  const { t } = useTranslation();
+  const { t } = useTranslation(["translation", "help"]);
   const navigate = useNavigate();
   const [ activeCategory, setActiveCategory ] = useState("start");
   const [ openItem, setOpenItem ] = useState<string | null>(null);
@@ -26,47 +26,47 @@ export const HelpCenterPage = () => {
   const categories: FaqCategory[] = [
     {
       id: "start",
-      label: t("help.cat_start"),
+      label: t("help:cat_start"),
       items: [
-        { q: t("help.q1"), a: t("help.a1") },
-        { q: t("help.q2"), a: t("help.a2") },
-        { q: t("help.q3"), a: t("help.a3") },
-        { q: t("help.q4"), a: t("help.a4") },
+        { q: t("help:q1"), a: t("help:a1") },
+        { q: t("help:q2"), a: t("help:a2") },
+        { q: t("help:q3"), a: t("help:a3") },
+        { q: t("help:q4"), a: t("help:a4") },
       ],
     },
     {
       id: "rooms",
-      label: t("help.cat_rooms"),
+      label: t("help:cat_rooms"),
       items: [
-        { q: t("help.q5"), a: t("help.a5") },
-        { q: t("help.q6"), a: t("help.a6") },
-        { q: t("help.q7"), a: t("help.a7") },
-        { q: t("help.q8"), a: t("help.a8") },
+        { q: t("help:q5"), a: t("help:a5") },
+        { q: t("help:q6"), a: t("help:a6") },
+        { q: t("help:q7"), a: t("help:a7") },
+        { q: t("help:q8"), a: t("help:a8") },
       ],
     },
     {
       id: "decks",
-      label: t("help.cat_decks"),
+      label: t("help:cat_decks"),
       items: [
-        { q: t("help.q9"), a: t("help.a9") },
-        { q: t("help.q10"), a: t("help.a10") },
-        { q: t("help.q11"), a: t("help.a11") },
+        { q: t("help:q9"), a: t("help:a9") },
+        { q: t("help:q10"), a: t("help:a10") },
+        { q: t("help:q11"), a: t("help:a11") },
       ],
     },
     {
       id: "account",
-      label: t("help.cat_account"),
+      label: t("help:cat_account"),
       items: [
-        { q: t("help.q12"), a: t("help.a12") },
-        { q: t("help.q13"), a: t("help.a13") },
-        { q: t("help.q14"), a: t("help.a14") },
+        { q: t("help:q12"), a: t("help:a12") },
+        { q: t("help:q13"), a: t("help:a13") },
+        { q: t("help:q14"), a: t("help:a14") },
       ],
     },
     {
       id: "price",
-      label: t("help.cat_price"),
+      label: t("help:cat_price"),
       items: [
-        { q: t("help.q15"), a: t("help.a15") },
+        { q: t("help:q15"), a: t("help:a15") },
       ],
     },
   ];
@@ -82,7 +82,7 @@ export const HelpCenterPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-10 items-start">
         {/* ── SIDEBAR ── */}
           <div>
-            <div className="player_pick_answer" style={{ color: C.faint }}>{ t("help.categories") }</div>
+            <div className="player_pick_answer" style={{ color: C.faint }}>{ t("help:categories") }</div>
             <div className={ styles.sidebar_container }>
               {
                 categories.map((cat) => (
@@ -103,7 +103,7 @@ export const HelpCenterPage = () => {
             </div>
             {/* CONTACT CTA */}
             <div className={ styles.sidebar_contact } style={{ background: C.base }}>
-              <div className={ styles.sidebar_contact_title }>{ t("help.ctaTitle") }</div>
+              <div className={ styles.sidebar_contact_title }>{ t("help:ctaTitle") }</div>
               <p className={ styles.sidebar_contact_p }>{ t("contact.sentDesc") }</p>
               <Button
                 size="sm"
@@ -112,7 +112,7 @@ export const HelpCenterPage = () => {
                 onClick={ () => navigate("/contact") }
                 style={{ width: "100%" }}
               >
-                { t("help.ctaBtn") }
+                { t("help:ctaBtn") }
               </Button>
             </div>
           </div>
