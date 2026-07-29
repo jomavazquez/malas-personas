@@ -13,6 +13,10 @@ import contactRoutes from "./modules/contact/contact.routes.js";
 
 const app = express();
 
+// Behind Nginx Proxy Manager (single reverse-proxy hop) — needed so
+// express-rate-limit can trust X-Forwarded-For instead of rejecting it.
+app.set("trust proxy", 1);
+
 // ── Security headers
 app.use( helmet() );
 
