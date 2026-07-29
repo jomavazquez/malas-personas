@@ -97,7 +97,7 @@ export const HomePage = () => {
       <div style={{ background: C.base, position: 'relative', zIndex: 10 }}>
         <div className="max-w-360 mx-auto grid grid-cols-1 sm:grid-cols-3 px-8 md:px-14" style={{ zIndex: 1, position: 'relative' }}>
           {[
-            { value: "12,400+", label: t("stats.teams") },
+            { value: t("stats.number"), label: t("stats.teams") },
             { value: "20", label: t("stats.players") },
             { value: "2 min", label: t("stats.time") },
           ].map((s, i) => (

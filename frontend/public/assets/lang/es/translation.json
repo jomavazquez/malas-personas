@@ -188,6 +188,7 @@
     }
   },
   "stats": {
+    "number": "12.400+",
     "teams": "Equipos jugando",
     "players": "Jugadores por sala (juez incluido)",
     "time": "Para montar una partida"
