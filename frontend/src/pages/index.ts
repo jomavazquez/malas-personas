@@ -13,3 +13,4 @@ export * from "./MyDecksPage";
 export * from "./MyRoomsPage";
 export * from "./RegisterPage";
 export * from "./RoomPage";
+export * from "./TeamIdeasPage";

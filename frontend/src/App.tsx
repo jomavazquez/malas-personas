@@ -16,6 +16,7 @@ const RoomPage = lazy(() => import("./pages/RoomPage").then((m) => ({ default: m
 const LegalPage = lazy(() => import("./pages/LegalPage").then((m) => ({ default: m.LegalPage })));
 const ContactPage = lazy(() => import("./pages/ContactPage").then((m) => ({ default: m.ContactPage })));
 const HelpCenterPage = lazy(() => import("./pages/HelpCenterPage").then((m) => ({ default: m.HelpCenterPage })));
+const TeamIdeasPage = lazy(() => import("./pages/TeamIdeasPage").then((m) => ({ default: m.TeamIdeasPage })));
 const MyDecksPage = lazy(() => import("./pages/MyDecksPage").then((m) => ({ default: m.MyDecksPage })));
 const MyCardsPage = lazy(() => import("./pages/MyCardsPage").then((m) => ({ default: m.MyCardsPage })));
 
@@ -46,6 +47,7 @@ const AppInner = () => {
           <Route path="/register" element={ <RegisterPage /> } />
           <Route path="/forgot-password" element={ <ForgotPasswordPage /> } />
           <Route path="/help-center" element={ <HelpCenterPage /> } />
+          <Route path="/team-ideas" element={ <TeamIdeasPage /> } />
           <Route path="/contact" element={ <ContactPage /> } />
           <Route path="/lobby" element={ <ProtectedRoute><LobbyPage /></ProtectedRoute> } />
           <Route path="/room/:code" element={ <RoomPage /> } />

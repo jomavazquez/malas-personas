@@ -1,0 +1,22 @@
+{
+  "eyebrow": "Ideas para tus equipos",
+  "title": "Dime cómo está tu equipo y te digo a qué jugar",
+  "desc": "Con dos juegos ya hay que elegir. Estas son las situaciones donde cada uno rinde mejor.",
+  "filterAll": "Todas",
+  "cta": "Crear sala",
+  "min": "min",
+  "item1_title": "Alguien nuevo entra al equipo",
+  "item1_desc": "Nadie sabe nada de esa persona y preguntar en la bienvenida da pereza. En tres rondas el equipo ya tiene algo que recordar de quien acaba de llegar.",
+  "item2_title": "La retro se ha hecho eterna",
+  "item2_desc": "Diez minutos de descompresión al cerrar la sesión. Sin preparar nada: código, mazo y a jugar.",
+  "item3_title": "Equipo repartido en cuatro países",
+  "item3_desc": "Funciona igual por videollamada: cada uno escribe desde su móvil y el resto vota a la vez.",
+  "item4_title": "Dos squads que se acaban de fusionar",
+  "item4_desc": "Doce personas que no se conocen. La vía más rápida para aprender nombres y ponerles una historia.",
+  "item5_title": "Comida de empresa con silencios",
+  "item5_desc": "El clásico. Saca el mazo sin filtros solo si conoces bien la mesa que tienes delante.",
+  "item6_title": "Viernes por la tarde y nadie arranca",
+  "item6_desc": "Una partida corta antes de cerrar el portátil, con la respuesta más bestia que se te ocurra.",
+  "item7_title": "En las reuniones grandes nadie habla",
+  "item7_desc": "Votar es anónimo hasta que se revela. Cuesta mucho menos participar que levantar la mano."
+}

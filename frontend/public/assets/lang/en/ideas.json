@@ -1,0 +1,22 @@
+{
+  "eyebrow": "Ideas for your teams",
+  "title": "Tell me how your team is doing and I'll tell you what to play",
+  "desc": "With two games to pick from, here are the situations where each one works best.",
+  "filterAll": "All",
+  "cta": "Create room",
+  "min": "min",
+  "item1_title": "Someone new joins the team",
+  "item1_desc": "Nobody knows anything about them, and asking during the welcome round feels awkward. In three rounds the team already has something to remember about the newcomer.",
+  "item2_title": "The retro has run forever",
+  "item2_desc": "Ten minutes to unwind before closing the session. Nothing to prepare: code, deck, and play.",
+  "item3_title": "Team split across four countries",
+  "item3_desc": "Works the same over video call: everyone writes from their phone and the rest votes at the same time.",
+  "item4_title": "Two squads that just merged",
+  "item4_desc": "Twelve people who don't know each other yet. The fastest way to learn names and give them a story.",
+  "item5_title": "Company lunch full of silence",
+  "item5_desc": "The classic. Pull out the no-filter deck only if you know the table in front of you well.",
+  "item6_title": "Friday afternoon and nobody's starting anything",
+  "item6_desc": "A quick round before closing the laptop, with the wildest answer you can think of.",
+  "item7_title": "Nobody speaks up in big meetings",
+  "item7_desc": "Voting is anonymous until it's revealed. It costs a lot less to take part than to raise your hand."
+}

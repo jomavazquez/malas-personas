@@ -1,0 +1,62 @@
+.eyebrow {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    margin-bottom: 15px
+}
+
+.desc {
+    font-size: 16px;
+    line-height: 1.6em;
+    margin-bottom: 25px
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px
+}
+
+.row {
+    align-items: flex-start;
+    border-bottom: 1px solid;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    padding: 25px 0
+}
+
+.row:last-child {
+    border-bottom: none
+}
+
+.row_main {
+    max-width: 480px
+}
+
+.row_title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px
+}
+
+.row_desc {
+    font-size: 16px;
+    line-height: 1.6em
+}
+
+.row_meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+    text-align: right
+}
+
+.row_time {
+    font-size: 14px;
+    font-weight: 600
+}
