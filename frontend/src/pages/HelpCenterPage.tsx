@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, Dot, Footer, TopMenu } from "../components";
-import { C } from "../lib";
+import { C, TextWithBreaks } from "../lib";
 import styles from "./HelpCenterPage.module.css";
 
 interface FaqItem {
@@ -32,6 +32,7 @@ export const HelpCenterPage = () => {
         { q: t("help:q2"), a: t("help:a2") },
         { q: t("help:q3"), a: t("help:a3") },
         { q: t("help:q4"), a: t("help:a4") },
+        { q: t("help:q16"), a: t("help:a16") },
       ],
     },
     {
@@ -138,7 +139,7 @@ export const HelpCenterPage = () => {
                         onClick={ () => toggleItem(q) }
                         className={ styles.toggle_btn }
                       >
-                        <span className={ styles.toggle_question } style={{ color: C.base }}>{ q }</span>
+                        <span className={ styles.toggle_question } style={{ color: C.base }}><TextWithBreaks text={ q } /></span>
                         <span 
                           className={ styles.toggle_icon } 
                           style={{ 
@@ -152,7 +153,7 @@ export const HelpCenterPage = () => {
                       </button>
                       {
                         isOpen && a &&
-                        <div className={ styles.toggle_answer } style={{ color: C.muted }}>{ a }</div>
+                        <div className={ styles.toggle_answer } style={{ color: C.muted }}><TextWithBreaks text={ a } /></div>
                       }
                     </div>
                   );
