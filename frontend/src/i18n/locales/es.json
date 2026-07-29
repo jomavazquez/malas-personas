@@ -150,9 +150,16 @@
   "how": {
     "eyebrow": "Cómo se juega",
     "title": "Una partida en tres pasos",
-    "step1": { "title": "Crea la sala", "desc": "Elige el idioma de la partida (español o inglés) y recibe un código de 6 caracteres al instante." },
-    "step2": { "title": "Reúne al equipo", "desc": "Comparte el código y hasta 20 personas entran con su nombre desde el móvil o el navegador. Sin instalar nada." },
-    "step3": { "title": "Juega y vota", "desc": "Cada ronda sale una carta‑pregunta, todos juegan su respuesta y el juez de turno corona la más graciosa.", "card": "El motivo del retraso: ______.", "answer": "Un Slack de 47 mensajes" }
+    "mp": {
+      "step1": { "title": "Crea la sala", "desc": "Elige el idioma de la partida (español o inglés) y recibe un código de 6 caracteres al instante." },
+      "step2": { "title": "Reúne al equipo", "desc": "Comparte el código y hasta 20 personas entran con su nombre desde el móvil o el navegador. Sin instalar nada." },
+      "step3": { "title": "Juega y vota", "desc": "Cada ronda sale una carta‑pregunta, todos juegan su respuesta y el juez de turno corona la más graciosa.", "card": "El motivo del retraso: ______.", "answer": "Un Slack de 47 mensajes" }
+    },
+    "vom": {
+      "step1": { "title": "Crea la sala", "desc": "Elige \"Verdad o mentira\", el idioma y los puntos para ganar. Recibes un código de 6 caracteres." },
+      "step2": { "title": "Escribe tus frases", "desc": "Cuando te toca el foco, escribes dos verdades y una mentira sobre ti — o tiras del mazo.", "statement1": "He vivido en tres países distintos", "statement2": "Tengo el carnet de submarinismo", "statement3": "Odio el chocolate" },
+      "step3": { "title": "Todos votan", "desc": "El resto adivina cuál es la falsa. Punto por cada persona a la que engañas, punto por cada mentira que cazas.", "optionA": "He vivido en tres países", "optionB": "Odio el chocolate", "votes": "3 votos" }
+    }
   },
   "stats": {
     "teams": "Equipos jugando",

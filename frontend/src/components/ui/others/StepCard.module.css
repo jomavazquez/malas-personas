@@ -1,0 +1,30 @@
+.sc {
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px
+}
+
+.sn {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 64px;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    margin-bottom: 20px
+}
+
+.st {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px
+}
+
+.sb {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: inherit;
+    margin-bottom: 20px
+}

@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth, useJoinModal } from "../context";
 import { getLenis } from "../hooks";
-import { Avatar, Blob, Button, UnderlineLink, Footer, TopMenu, Badge, FloatingQuestion, BlackCard } from "../components";
+import { Avatar, Blob, Button, UnderlineLink, Footer, TopMenu, Badge, FloatingQuestion, BlackCard, PillToggle, StepCard } from "../components";
 import { C, F, goToSection } from "../lib";
+import type { GameType } from "../types";
 import styles from "./HomePage.module.css";
 
 export const HomePage = () => {
@@ -14,6 +15,7 @@ export const HomePage = () => {
   const { openJoinModal } = useJoinModal();
   const location = useLocation();
   const navigate = useNavigate();
+  const [ howGameType, setHowGameType ] = useState<GameType>("MALAS_PERSONAS");
 
   useEffect(() => {
     const id = location.state?.scrollTo;
@@ -133,12 +135,12 @@ export const HomePage = () => {
           <div>
             {
               [
-                { letter: "A", text: t("vomPromo.statement1") },
-                { letter: "B", text: t("vomPromo.statement2"), lie: true },
-                { letter: "C", text: t("vomPromo.statement3") },
-              ].map((s) => (
+                { text: t("vomPromo.statement1") },
+                { text: t("vomPromo.statement2"), lie: true },
+                { text: t("vomPromo.statement3") }
+              ].map((s, i) => (
                 <div 
-                  key={ s.letter } 
+                  key={ `vom_${i}` } 
                   className={`flex items-center gap-3 mb-3 ${ styles.vom_letter }`} 
                   style={{ 
                     background: s.lie ? C.accent : "#fff", 
@@ -146,7 +148,6 @@ export const HomePage = () => {
                     boxShadow: s.lie ? "0 14px 28px -12px rgba(0,0,0,.45)" : "none" 
                   }}
                 >
-                  <Avatar label={ s.letter } bgColor={ s.lie ? "#fff" : C.surface } textColor={ C.base } size={ 32 } />
                   <span className={ styles.vom_options } style={{ color: C.base }}>{ s.text }</span>
                 </div>
               ))
@@ -160,51 +161,91 @@ export const HomePage = () => {
       {/* ── HOW IT WORKS ── */}
       <div id="how" style={{ background: "#fff" }} className="py-15 md:py-20 px-8 md:px-14">
         <div className="max-w-360 mx-auto">
-          <div className="text-center mb-15">
+          <div className="text-center mb-8">
             <div className={ styles.sub } style={{ color: C.accentDeep, marginBottom: 10 }}>{ t("how.eyebrow") }</div>
             <h3 className="heading_1" style={{ color: C.base }}>{ t("how.title") }</h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {/* STEP 1 */}
-            <div style={{ background: C.surface, borderRadius: 20, padding: "30px" }}>
-              <div className={ styles.step_number } style={{ color: C.accent }}>1</div>
-              <div className={ styles.step_title } style={{ color: C.base }}>{ t("how.step1.title") }</div>
-              <div className={ styles.step_body } style={{ color: C.muted }}>{ t("how.step1.desc") }</div>
-              <div style={{ background: C.base, borderRadius: 12, padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <div className="min-[768px]:hidden min-[950px]:block">
-                  <span className={ styles.step1_code_label } style={{ color: C.accent }}>{ t("lobby.code") }</span>
-                </div>
-                <span className={ styles.step1_code }>9XK7Q2</span>
-              </div>
-            </div>
-            {/* Step 2 */}
-            <div style={{ background: C.surface, borderRadius: 20, padding: "30px" }}>
-              <div className={ styles.step_number} style={{ color: C.accent }}>2</div>
-              <div className={ styles.step_title } style={{ color: C.base }}>{ t("how.step2.title") }</div>
-              <div className={ styles.step_body } style={{ color: C.muted }}>{ t("how.step2.desc") }</div>
-              <div className="flex gap-2">
-                <Avatar label="M" bgColor={ C.accent } textColor={ C.base } size={ 40 } />
-                <Avatar label="D" bgColor="#556987" textColor="#fff" size={ 40 } />
-                <div className="min-[768px]:hidden min-[900px]:block">
-                  <Avatar label="A" bgColor="#194068" textColor="#fff" size={ 40 } />
-                </div>
-                <div className="min-[768px]:hidden min-[1024px]:block">
-                  <Avatar label="L" bgColor="#50545A" textColor="#fff" size={ 40 } />
-                </div>
-                <span className={ styles.avatar_plus } style={{ color: C.faint }}>+</span>
-              </div>
-            </div>
-            {/* Step 3 */}
-            <div style={{ background: C.surface, borderRadius: 20, padding: "30px" }}>
-              <div className={ styles.step_number} style={{ color: C.accent }}>3</div>
-              <div className={ styles.step_title } style={{ color: C.base }}>{ t("how.step3.title") }</div>
-              <div className={ styles.step_body } style={{ color: C.muted }}>{ t("how.step3.desc") }</div>
-              <div className="flex gap-2 flex-2">
-                <BlackCard question={ t("how.step3.card") } fontSize={ 13 } />
-                <div className={ `min-[768px]:hidden min-[995px]:block ${ styles.white_card }`} style={{ border: `2px solid ${C.border}`, color: C.base }}>{ t("how.step3.answer") }</div>
-              </div>
-            </div>
+          <div className="flex justify-center mb-15">
+            <PillToggle
+              options={ [
+                { value: "MALAS_PERSONAS", label: t("lobby.gameMP") },
+                { value: "V_O_M", label: t("lobby.gameVOM") },
+              ] }
+              value={ howGameType }
+              onChange={ (v) => setHowGameType(v as GameType) }
+              showActiveDot={ false }
+            />
           </div>
+          {
+            howGameType === "MALAS_PERSONAS"
+            ?
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <StepCard number={ 1 } title={ t("how.mp.step1.title") } description={ t("how.mp.step1.desc") }>
+                  <div className={ styles.sc_code } style={{ background: C.base }}>
+                    <div className="min-[768px]:hidden min-[950px]:block">
+                      <span className={ styles.step1_code_label } style={{ color: C.accent }}>{ t("lobby.code") }</span>
+                    </div>
+                    <span className={ styles.step1_code }>9XK7Q2</span>
+                  </div>
+                </StepCard>
+                <StepCard number={ 2 } title={ t("how.mp.step2.title") } description={ t("how.mp.step2.desc") }>
+                  <div className="flex gap-2">
+                    <Avatar label="M" bgColor={ C.accent } textColor={ C.base } size={ 40 } />
+                    <Avatar label="D" bgColor="#556987" textColor="#fff" size={ 40 } />
+                    <div className="min-[768px]:hidden min-[900px]:block">
+                      <Avatar label="A" bgColor="#194068" textColor="#fff" size={ 40 } />
+                    </div>
+                    <div className="min-[768px]:hidden min-[1024px]:block">
+                      <Avatar label="L" bgColor="#50545A" textColor="#fff" size={ 40 } />
+                    </div>
+                    <span className={ styles.avatar_plus } style={{ color: C.faint }}>+</span>
+                  </div>
+                </StepCard>
+                <StepCard number={ 3 } title={ t("how.mp.step3.title") } description={ t("how.mp.step3.desc") }>
+                  <div className="flex gap-2 flex-2">
+                    <BlackCard question={ t("how.mp.step3.card") } fontSize={ 13 } />
+                    <div className={ `min-[768px]:hidden min-[995px]:block ${ styles.white_card }`} style={{ border: `2px solid ${C.border}`, color: C.base }}>{ t("how.mp.step3.answer") }</div>
+                  </div>
+                </StepCard>
+              </div>
+            :
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <StepCard number={ 1 } title={ t("how.vom.step1.title") } description={ t("how.vom.step1.desc") }>
+                  <div className={ styles.sc_code } style={{ background: C.base }}>
+                    <div className="min-[768px]:hidden min-[950px]:block">
+                      <span className={ styles.step1_code_label } style={{ color: C.accent }}>{ t("lobby.code") }</span>
+                    </div>
+                    <span className={ styles.step1_code }>2FVCJF</span>
+                  </div>
+                </StepCard>
+                <StepCard number={ 2 } title={ t("how.vom.step2.title") } description={ t("how.vom.step2.desc") }>
+                  <div className="flex flex-col gap-2">
+                    {
+                      [
+                        { text: t("how.vom.step2.statement1") },
+                        { text: t("how.vom.step2.statement2") },
+                        { text: t("how.vom.step2.statement3"), lie: true },
+                      ].map((s, i) => (
+                        <div key={ i } className={ styles.statement_row } style={{ background: s.lie ? C.accent : "#fff", color: C.base }}>
+                          { s.text }
+                        </div>
+                      ))
+                    }
+                  </div>
+                </StepCard>
+                <StepCard number={ 3 } title={ t("how.vom.step3.title") } description={ t("how.vom.step3.desc") }>
+                  <div className="flex flex-col gap-2" style={{ marginTop: "auto" }}>
+                    <div className={ `${ styles.statement_row } ${ styles.vote_row }` } style={{ background: "#fff", color: C.base }}>
+                      <span>{ t("how.vom.step3.optionA") }</span>
+                    </div>
+                    <div className={ `${ styles.statement_row } ${ styles.vote_row }` } style={{ background: C.base, color: "#fff" }}>
+                      <span>{ t("how.vom.step3.optionB") }</span>
+                      <span className={ styles.vote_count } style={{ color: "#8BC34A" }}>{ t("how.vom.step3.votes") }</span>
+                    </div>
+                  </div>
+                </StepCard>
+              </div>
+          }
         </div>
       </div>
       {/* ── Register CTA ── */}
