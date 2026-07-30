@@ -210,9 +210,12 @@ export const RoomPage = () => {
             </div>
           </div>
           <div style={{ textAlign: "center", marginBottom: 25, marginTop: -10 }}>
-            <Badge marginBottom={ 0 } color={ C.accent }>
-              { t(`myroom.gameType_${gameType}`) }
-            </Badge>
+            {
+              gameType &&
+              <Badge marginBottom={ 0 } color={ gameType === "V_O_M" ? "#3C6FB0" : C.faint } fadeIn>
+                { t(`myroom.gameType_${gameType}`) }
+              </Badge>
+            }
           </div>
           <div className={ styles.players_box } style={{ border: `1.5px solid ${ C.borderMid }`}}>
             <div className={ styles.players_th } style={{ color: C.faint }}>{ t("room.players") }{" "}({ players.length })</div>

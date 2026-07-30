@@ -7,11 +7,12 @@ interface BadgeProps {
     color?: string;
     dot?: boolean;
     marginBottom?: number;
+    fadeIn?: boolean;
 }
 
-export const Badge = ({ children, color = C.accent, dot = true, marginBottom = 20 }: BadgeProps) => (
-    <div 
-        className={ styles.badge_stick }
+export const Badge = ({ children, color = C.accent, dot = true, marginBottom = 20, fadeIn = false }: BadgeProps) => (
+    <div
+        className={ `${ styles.badge_stick } ${ fadeIn ? styles.badge_fade_in : "" }` }
         style={{
             background: `color-mix(in srgb, ${ color } 14%, #ffffff)`,
             border: `1px solid color-mix(in srgb, ${ color } 40%, transparent)`,
@@ -19,7 +20,7 @@ export const Badge = ({ children, color = C.accent, dot = true, marginBottom = 2
         }}
     >
         {
-            dot && <Dot />
+            dot && <Dot color={ color } />
         }
         <span className={ styles.badge_label } style={{ color: C.accentDeep }}>
             { children }
