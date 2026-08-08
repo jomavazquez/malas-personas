@@ -353,7 +353,7 @@ export const LobbyPage = () => {
               <input
                 className="input"
                 style={{ color: C.base, background: "#fff" }}
-                placeholder="Marina"
+                placeholder="Elena"
                 value={ guestName }
                 onChange={ (e) => setGuestName(e.target.value) }
                 maxLength={ 20 }

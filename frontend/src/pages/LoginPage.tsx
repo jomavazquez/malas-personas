@@ -77,7 +77,7 @@ export const LoginPage = () => {
                     className="input" 
                     name="identifier" 
                     type={ isEmail ? "email" : "text" }
-                    placeholder="marina@email.com" 
+                    placeholder="elena@email.com" 
                     value={ form.identifier } 
                     onChange={ handleChange } 
                     required 

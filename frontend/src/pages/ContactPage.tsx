@@ -107,7 +107,7 @@ export const ContactPage = () => {
                           <input
                             className="input"
                             name="name"
-                            placeholder="Marina"
+                            placeholder="Elena"
                             value={ form.name }
                             onChange={ handleChange }
                             style={{ border: `1.5px solid ${C.border}`, color: C.base }}
@@ -119,7 +119,7 @@ export const ContactPage = () => {
                             className="input"
                             name="email"
                             type="email"
-                            placeholder="marina@email.com"
+                            placeholder="elena@email.com"
                             value={ form.email }
                             onChange={ handleChange }
                             required

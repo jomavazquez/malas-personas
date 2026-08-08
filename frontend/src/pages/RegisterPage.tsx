@@ -84,7 +84,7 @@ export const RegisterPage = () => {
                     className="input" 
                     name="username" 
                     type="text" 
-                    placeholder="Marina" 
+                    placeholder="Elena" 
                     value={ form.username } 
                     onChange={ handleChange } 
                     required 
@@ -97,7 +97,7 @@ export const RegisterPage = () => {
                     className="input" 
                     name="email" 
                     type="email" 
-                    placeholder="marina@email.com" 
+                    placeholder="elena@email.com" 
                     value={ form.email } 
                     onChange={ handleChange } 
                     required 

@@ -210,7 +210,7 @@ export const ForgotPasswordPage = () => {
                                         <input
                                             className="input"
                                             type="email"
-                                            placeholder="marina@email.com"
+                                            placeholder="elena@email.com"
                                             value={ email }
                                             onChange={ (e) => setEmail(e.target.value) }
                                             onKeyDown={ (e) => e.key === "Enter" && handleSendCode() }

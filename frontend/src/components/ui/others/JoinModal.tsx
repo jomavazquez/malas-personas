@@ -61,7 +61,7 @@ export const JoinModal = ({ isOpen, onClose }: JoinModalProps) => {
                     <input
                         className="input"
                         style={{ border: `1.5px solid ${C.border}`, color: C.base }}
-                        placeholder="Marina"
+                        placeholder="Elena"
                         value={ name }
                         onChange={ (e) => setName(e.target.value) }
                         maxLength={ 20 }

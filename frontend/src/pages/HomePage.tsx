@@ -280,7 +280,7 @@ export const HomePage = () => {
             <Badge>{ t("pricing.free") }</Badge>
             <div className="cta_title" style={{ color: C.base }}>{ t("auth.register") }</div>
             <div className="form_label" style={{ color: C.muted }}>{ t("auth.username") }</div>
-            <div className="input" style={{ border: `1.5px solid ${C.border}`, color: C.faint, marginBottom: 15 }}>Marina</div>
+            <div className="input" style={{ border: `1.5px solid ${C.border}`, color: C.faint, marginBottom: 15 }}>Elena</div>
             <div className="form_label" style={{ color: C.muted }}>{ t("auth.email") }</div>
             <div className="input" style={{ border: `1.5px solid ${C.border}`, color: C.faint, marginBottom: 25 }}>{ t("auth.emailPlaceholder") }</div>
             <Button
