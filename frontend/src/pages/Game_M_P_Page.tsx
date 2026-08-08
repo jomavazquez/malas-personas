@@ -75,12 +75,19 @@ export const Game_M_P_Page = () => {
     if( !code || !myId || !myName ) return;
     const socket = connectSocket();
 
-    socket.emit("room:join", { roomCode: code, userId: myId, username: myName, isGuest: !user }, (res: { error?: string; state?: GameState }) => {
-      if( res.error ){ navigate("/"); return; }
-      setGameState(res.state!);
-      setHand(res.state!.hand ?? []);
-      setHasRedrawn(res.state!.hasRedrawn ?? false);
-    });
+    const joinRoom = () => {
+      socket.emit("room:join", { roomCode: code, userId: myId, username: myName, isGuest: !user }, (res: { error?: string; state?: GameState }) => {
+        if( res.error ){ navigate("/"); return; }
+        setGameState(res.state!);
+        setHand(res.state!.hand ?? []);
+        setHasRedrawn(res.state!.hasRedrawn ?? false);
+      });
+    };
+
+    joinRoom();
+    // Si el socket se reconecta solo tras un corte de red, volvemos a unirnos a la sala
+    // antes de que expire el margen de gracia del servidor.
+    socket.io.on("reconnect", joinRoom);
 
     socket.on("hand:update", ({ hand: h }: { hand: Card[] }) => { setHand(h); setSelectedCard(null); });
 
@@ -135,6 +142,7 @@ export const Game_M_P_Page = () => {
     });
 
     return () => {
+      socket.io.off("reconnect", joinRoom);
       socket.off("hand:update");
       socket.off("round:new");
       socket.off("round:cardPlayed");

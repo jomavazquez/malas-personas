@@ -2,7 +2,7 @@ import prisma from "../../config/database.js";
 import { getSession, deleteSession, getSocketMeta } from "./games.state.js";
 import { startGame, nextRound, submitStatements, castVote, autoResolveExpiredVotes, resolveReveal, isRoundFullyVoted, serializeStatementsForVoter, serializeStatementsForReveal, serializePlayerStatuses } from "./v_o_m.service.js";
 
-const ROUND_BREATHER_MS = 3000;
+const ROUND_BREATHER_MS = 10000;
 
 const emitRoundNew = ( io, code, session ) => {
   const protagonist = session.players.find((p) => p.userId === session.round.protagonistUserId);
@@ -15,6 +15,7 @@ const emitRoundNew = ( io, code, session ) => {
 
 const finishVoting = ( io, code, session ) => {
   const { fooledCount, gameOver } = resolveReveal(session);
+  const nextRoundAt = Date.now() + ROUND_BREATHER_MS;
 
   io.to(code).emit("vom:round:reveal", {
     statements: serializeStatementsForReveal(session.round.statements),
@@ -27,6 +28,8 @@ const finishVoting = ( io, code, session ) => {
     })),
     protagonistUserId: session.round.protagonistUserId,
     fooledCount,
+    gameOver,
+    nextRoundAt,
   });
   io.to(code).emit("vom:playerStatus", serializePlayerStatuses(session));
 

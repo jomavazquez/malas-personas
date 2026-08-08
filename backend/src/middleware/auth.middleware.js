@@ -27,7 +27,7 @@ export const optionalAuthMiddleware = ( req, res, next ) => {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     req.user = payload;
   }catch{
-    // Token inválido — continuamos sin usuario
+    // Invalid token — continue without a user
   }
   next();
 };

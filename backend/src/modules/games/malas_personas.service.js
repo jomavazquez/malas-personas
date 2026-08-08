@@ -67,7 +67,7 @@ export const addPlayer = (session, { socketId, userId, username, isGuest }) => {
     throw error;
   }
 
-  // Si la partida ya está en marcha, entra como espectador: sin mano hasta la siguiente ronda
+  // If the game is already underway, join as a spectator: no hand until the next round
   const isSpectator = session.status === "playing";
   const { dealt, whiteDeck } = isSpectator
     ? { dealt: [], whiteDeck: session.whiteDeck }

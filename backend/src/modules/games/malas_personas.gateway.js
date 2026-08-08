@@ -1,10 +1,14 @@
 import prisma from "../../config/database.js";
-import { getSession, deleteSession, getSocketMeta, setSocketMeta, deleteSocketMeta } from "./games.state.js";
+import { getSession, deleteSession, getSocketMeta, setSocketMeta, deleteSocketMeta, setDisconnectTimer, clearDisconnectTimer } from "./games.state.js";
 import { buildSession, addPlayer, removePlayer, startGame, nextRound, playCard, pickWinner, redrawHand, serializeSessionForPlayer, serializeReveal } from "./malas_personas.service.js";
 import { buildSession as buildVomSession, addPlayer as addVomPlayer, removePlayer as removeVomPlayer, serializeSessionForPlayer as serializeVomSessionForPlayer } from "./v_o_m.service.js";
 import { handleVomPlayerLeft } from "./v_o_m.gateway.js";
 
 export { getSocketMeta };
+
+// Grace period before removing a player from the room after a socket drop (unstable network).
+// If they reconnect and do room:join again within this time, they recover their spot (score, hand, etc).
+const DISCONNECT_GRACE_MS = 20000;
 
 export const registerGameHandlers = ( io, socket ) => {
 
@@ -31,7 +35,7 @@ export const registerGameHandlers = ( io, socket ) => {
         return callback({ error: "GAME_IS_OVER" });
       }
 
-      // Determina isGuest en el backend consultando la BD
+      // Determine isGuest on the backend by querying the DB
       const userRecord = await prisma.user.findUnique({ where: { id: userId }, select: { id: true } }).catch(() => null);
       const resolvedIsGuest = !userRecord;
 
@@ -42,6 +46,9 @@ export const registerGameHandlers = ( io, socket ) => {
 
       setSocketMeta(socket.id, { roomCode: code, userId, username });
       socket.join(code);
+
+      // If they reconnected in time, cancel the removal scheduled by the previous disconnect
+      if( isReconnect ) clearDisconnectTimer(`${code}:${userId}`);
 
       const state = isVom ? serializeVomSessionForPlayer(updated, userId) : serializeSessionForPlayer(updated, userId);
       callback({ success: true, state, isReconnect });
@@ -174,7 +181,7 @@ export const registerGameHandlers = ( io, socket ) => {
           winner: { userId: winner.userId, username: winner.username, score: winner.score },
         });
 
-        // La sala se mantiene activa — el anfitrión puede volver a jugar
+        // The room stays active — the host can start a new game
         deleteSession(code);
         return callback({ success: true });
       }
@@ -208,28 +215,47 @@ export const registerGameHandlers = ( io, socket ) => {
   });
 
   // ─── room:leave ──────────────────────────────────────────────────────────────
+  // Explicit leave (the player closes the room on purpose): removed instantly.
   socket.on("room:leave", ({ roomCode }, callback ) => {
-    handlePlayerLeave(io, socket, roomCode?.toUpperCase());
+    const code = roomCode?.toUpperCase();
+    const meta = getSocketMeta(socket.id);
+    if( meta ) clearDisconnectTimer(`${code}:${meta.userId}`);
+    handlePlayerLeave(io, code, socket.id);
+    deleteSocketMeta(socket.id);
+    socket.leave(code);
     callback?.({ success: true });
   });
 
   // ─── disconnect ──────────────────────────────────────────────────────────────
+  // Socket drop (possibly a momentary network outage): a grace period is given
+  // before removing the player, in case they reconnect and do room:join again in time.
   socket.on("disconnect", () => {
     const meta = getSocketMeta(socket.id);
-    if( meta ) handlePlayerLeave(io, socket, meta.roomCode);
+    if( !meta ) return;
+    deleteSocketMeta(socket.id);
+
+    const { roomCode, userId } = meta;
+    const key = `${roomCode}:${userId}`;
+    const timeoutId = setTimeout(() => {
+      clearDisconnectTimer(key);
+      const session = getSession(roomCode);
+      if( !session ) return;
+      const player = session.players.find((p) => p.userId === userId);
+      // If the player already reconnected, their socketId will have changed: don't remove them.
+      if( !player || player.socketId !== socket.id ) return;
+      handlePlayerLeave(io, roomCode, socket.id);
+    }, DISCONNECT_GRACE_MS);
+    setDisconnectTimer(key, timeoutId);
   });
 };
 
-const handlePlayerLeave = ( io, socket, roomCode ) => {
+const handlePlayerLeave = ( io, roomCode, socketId ) => {
   if( !roomCode ) return;
   const session = getSession(roomCode);
-  const meta = getSocketMeta(socket.id);
-  if( !session || !meta ) return;
+  if( !session ) return;
 
   const isVom = session.gameType === "V_O_M";
-  const { session: updated, removed } = isVom ? removeVomPlayer(session, socket.id) : removePlayer(session, socket.id);
-  deleteSocketMeta(socket.id);
-  socket.leave(roomCode);
+  const { session: updated, removed } = isVom ? removeVomPlayer(session, socketId) : removePlayer(session, socketId);
 
   if( !removed ) return;
 

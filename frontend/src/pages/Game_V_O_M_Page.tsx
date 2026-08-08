@@ -49,22 +49,29 @@ export const Game_V_O_M_Page = () => {
     if( !code || !myId || !myName ) return;
     const socket = connectSocket();
 
-    socket.emit("room:join", { roomCode: code, userId: myId, username: myName, isGuest: !user }, (res: { error?: string; state?: VomAckState }) => {
-      if( res.error ){ navigate("/"); return; }
-      const state = res.state!;
-      setPlayers(state.players);
-      setProtagonistUserId(state.protagonistUserId);
-      setRoundNumber(state.roundNumber);
-      setPointsToWin(state.pointsToWin);
+    const joinRoom = () => {
+      socket.emit("room:join", { roomCode: code, userId: myId, username: myName, isGuest: !user }, (res: { error?: string; state?: VomAckState }) => {
+        if( res.error ){ navigate("/"); return; }
+        const state = res.state!;
+        setPlayers(state.players);
+        setProtagonistUserId(state.protagonistUserId);
+        setRoundNumber(state.roundNumber);
+        setPointsToWin(state.pointsToWin);
 
-      if( state.phase === "writing" ){
-        setPhase({ kind: "writing", isProtagonist: state.isProtagonist });
-      }else if( state.phase === "voting" && state.statements ){
-        if( state.isProtagonist ) setMyStatements(state.statements);
-        setPhase({ kind: "voting", statements: state.statements, voteDeadlineAt: state.voteDeadlineAt ?? Date.now(), isProtagonist: state.isProtagonist, myVote: state.myVote });
-      }
-      // Reconnect just during a reveal (short window of ~3s) — player waits to the next round (coming inmediatly)
-    });
+        if( state.phase === "writing" ){
+          setPhase({ kind: "writing", isProtagonist: state.isProtagonist });
+        }else if( state.phase === "voting" && state.statements ){
+          if( state.isProtagonist ) setMyStatements(state.statements);
+          setPhase({ kind: "voting", statements: state.statements, voteDeadlineAt: state.voteDeadlineAt ?? Date.now(), isProtagonist: state.isProtagonist, myVote: state.myVote });
+        }
+        // Reconnect just during a reveal (short window of ~3s) — player waits to the next round (coming inmediatly)
+      });
+    };
+
+    joinRoom();
+    // Si el socket se reconecta solo tras un corte de red, volvemos a unirnos a la sala
+    // antes de que expire el margen de gracia del servidor.
+    socket.io.on("reconnect", joinRoom);
 
     socket.on("vom:playerStatus", ({ players: p, protagonistUserId: protId }: { players: VomPlayer[]; protagonistUserId: string | null }) => {
       setPlayers(p);
@@ -89,8 +96,8 @@ export const Game_V_O_M_Page = () => {
       }));
     });
 
-    socket.on("vom:round:reveal", ({ statements, votes, fooledCount }: { statements: VomStatement[]; votes: VomVote[]; fooledCount: number }) => {
-      setPhase({ kind: "reveal", statements, votes, fooledCount });
+    socket.on("vom:round:reveal", ({ statements, votes, fooledCount, nextRoundAt, gameOver }: { statements: VomStatement[]; votes: VomVote[]; fooledCount: number; nextRoundAt: number; gameOver: boolean }) => {
+      setPhase({ kind: "reveal", statements, votes, fooledCount, nextRoundAt, gameOver });
     });
 
     socket.on("vom:round:aborted", () => {
@@ -112,6 +119,7 @@ export const Game_V_O_M_Page = () => {
     });
 
     return () => {
+      socket.io.off("reconnect", joinRoom);
       socket.off("vom:playerStatus");
       socket.off("vom:round:new");
       socket.off("vom:round:voting");
@@ -180,6 +188,8 @@ export const Game_V_O_M_Page = () => {
               protagonistUserId={ protagonistUserId ?? "" }
               protagonistName={ protagonistName }
               myId={ myId }
+              nextRoundAt={ phase.nextRoundAt }
+              gameOver={ phase.gameOver }
             />
           }
         </div>

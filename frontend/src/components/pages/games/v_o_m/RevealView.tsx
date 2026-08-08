@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { C } from "../../../../lib";
 import type { VomStatement, VomVote } from "../../../../types";
@@ -10,20 +11,30 @@ interface Props {
   protagonistUserId: string;
   protagonistName: string;
   myId: string;
+  nextRoundAt: number;
+  gameOver: boolean;
 }
 
-export const RevealView = ({ statements, votes, fooledCount, protagonistUserId, protagonistName, myId }: Props) => {
+export const RevealView = ({ statements, votes, fooledCount, protagonistUserId, protagonistName, myId, nextRoundAt, gameOver }: Props) => {
 
   const { t } = useTranslation();
+  const [ now, setNow ] = useState(() => Date.now());
+
+  useEffect(() => {
+    const interval = setInterval(() => setNow(Date.now()), 200);
+    return () => clearInterval(interval);
+  }, [ nextRoundAt ]);
+
+  const secondsLeft = Math.max(0, Math.ceil((nextRoundAt - now) / 1000));
   const isProtagonist = myId === protagonistUserId;
   const lieStatement = statements.find((s) => s.isLie);
   const myVote = votes.find((v) => v.userId === myId);
   const gotIt = myVote && lieStatement && myVote.statementId === lieStatement.id;
 
   const headline = isProtagonist
-    ? t("vom.youFooled", { count: fooledCount })
+    ? `${ t("vom.youFooled", { count: fooledCount }) }. ${ fooledCount === 1 ? t("vom.youWonPoint", { count: fooledCount }) : t("vom.youWonPoints", { count: fooledCount }) }`
     : gotIt
-      ? t("vom.youCaughtTheLie")
+      ? `${ t("vom.youCaughtTheLie") } (${ t("vom.wonOnePoint") })`
       : t("vom.youGotFooled");
 
   return (
@@ -59,6 +70,11 @@ export const RevealView = ({ statements, votes, fooledCount, protagonistUserId, 
             );
           })
         }
+      </div>
+      <div style={{ textAlign: "center", marginTop: 20 }}>
+        <span className={ styles.preparing_round } style={{ color: C.accent }}>
+          { t(gameOver ? "vom.gameEndingIn" : "vom.nextRoundIn", { seconds: secondsLeft }) }
+        </span>
       </div>
     </div>
   );

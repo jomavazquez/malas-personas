@@ -93,7 +93,7 @@ export type VomPhase =
   | { kind: "loading" }
   | { kind: "writing"; isProtagonist: boolean }
   | { kind: "voting"; statements: VomStatement[]; voteDeadlineAt: number; isProtagonist: boolean; myVote: string | null }
-  | { kind: "reveal"; statements: VomStatement[]; votes: VomVote[]; fooledCount: number }
+  | { kind: "reveal"; statements: VomStatement[]; votes: VomVote[]; fooledCount: number; nextRoundAt: number; gameOver: boolean }
   | { kind: "gameOver"; winner: { userId: string; username: string; score: number } };
 
 export interface VomPrompt {

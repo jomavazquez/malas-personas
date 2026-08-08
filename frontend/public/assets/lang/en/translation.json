@@ -138,14 +138,19 @@
     "votesCast": "votes cast",
     "result": "Result",
     "youFooled": "You fooled {{count}} of the team",
+    "youWonPoint": "You won {{count}} point",
+    "youWonPoints": "You won {{count}} points",
     "youCaughtTheLie": "You caught the lie!",
+    "wonOnePoint": "You've won 1 point",
     "youGotFooled": "You got fooled this time",
     "aboutPlayer": "About {{username}}",
     "truth": "Truth",
     "vote": "vote",
     "votes": "votes",
     "youAreInFocus": "It's your turn! You're in the spotlight",
-    "protagonistLeft": "The protagonist left the room. Starting a new round..."
+    "protagonistLeft": "The protagonist left the room. Starting a new round...",
+    "nextRoundIn": "Next round starts in {{seconds}}...",
+    "gameEndingIn": "Final results in {{seconds}}..."
   },
   "how": {
     "eyebrow": "How to play",

@@ -92,27 +92,34 @@ export const RoomPage = () => {
     if( !code || !resolvedId || !resolvedName ) return;
     const socket = connectSocket();
 
-    socket.emit("room:join", { roomCode: code, userId: resolvedId, username: resolvedName, isGuest: isGuestResolved }, (res: { error?: string; state?: GameState & { gameType?: GameType } }) => {
-      if( res.error ){
-        // Name already user by other player in the room: going back to the form to choose another one
-        if( res.error === "DUPLICATE_PLAYER" && !user ){
-          setNameError(t("errors.DUPLICATE_PLAYER"));
-          setConfirmed(false);
+    const joinRoom = () => {
+      socket.emit("room:join", { roomCode: code, userId: resolvedId, username: resolvedName, isGuest: isGuestResolved }, (res: { error?: string; state?: GameState & { gameType?: GameType } }) => {
+        if( res.error ){
+          // Name already user by other player in the room: going back to the form to choose another one
+          if( res.error === "DUPLICATE_PLAYER" && !user ){
+            setNameError(t("errors.DUPLICATE_PLAYER"));
+            setConfirmed(false);
+            return;
+          }
+          setError(res.error);
           return;
         }
-        setError(res.error);
-        return;
-      }
-      // Game already started: entering like observer
-      if( res.state!.status === "playing" ){
-        navigate(`/game/${code}`, { state: { guestId: resolvedId, guestName: resolvedName } });
-        return;
-      }
-      setConnected(true);
-      setHostId(res.state!.hostId ?? null);
-      setPlayers(res.state!.players);
-      setGameType(res.state!.gameType ?? "MALAS_PERSONAS");
-    });
+        // Game already started: entering like observer
+        if( res.state!.status === "playing" ){
+          navigate(`/game/${code}`, { state: { guestId: resolvedId, guestName: resolvedName } });
+          return;
+        }
+        setConnected(true);
+        setHostId(res.state!.hostId ?? null);
+        setPlayers(res.state!.players);
+        setGameType(res.state!.gameType ?? "MALAS_PERSONAS");
+      });
+    };
+
+    joinRoom();
+    // Si el socket se reconecta solo tras un corte de red, volvemos a unirnos a la sala
+    // antes de que expire el margen de gracia del servidor.
+    socket.io.on("reconnect", joinRoom);
 
     socket.on("room:playerJoined", ({ userId, username, isGuest: g }: { userId: string; username: string; isGuest: boolean }) => {
       setPlayers((prev) => prev.find((p) => p.userId === userId) ? prev : [...prev, { userId, username, score: 0, isGuest: g, isJudge: false, isSpectator: false }]);
@@ -125,6 +132,7 @@ export const RoomPage = () => {
     socket.on("game:started", () => navigate(`/game/${code}`, { state: { guestId: resolvedId, guestName: resolvedName } }));
 
     return () => {
+      socket.io.off("reconnect", joinRoom);
       socket.off("room:playerJoined");
       socket.off("room:playerLeft");
       socket.off("game:started");
@@ -143,7 +151,7 @@ export const RoomPage = () => {
               <input
                 className="input"
                 style={{ border: `1.5px solid ${C.border}`, color: C.base, marginBottom: 20 }}
-                placeholder="Marina"
+                placeholder="Elena"
                 value={ nameInput }
                 onChange={ (e) => { setNameInput(e.target.value); setNameError(""); } }
                 maxLength={ 20 }

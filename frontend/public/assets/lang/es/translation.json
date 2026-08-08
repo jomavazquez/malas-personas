@@ -138,14 +138,19 @@
     "votesCast": "votos emitidos",
     "result": "Resultado",
     "youFooled": "Engañaste a {{count}} del equipo",
+    "youWonPoint": "Ganaste {{count}} punto",
+    "youWonPoints": "Ganaste {{count}} puntos",
     "youCaughtTheLie": "¡Cazaste la mentira!",
+    "wonOnePoint": "Has ganado 1 punto",
     "youGotFooled": "Te la colaron esta vez",
     "aboutPlayer": "Sobre {{username}}",
     "truth": "Verdad",
     "vote": "voto",
     "votes": "votos",
     "youAreInFocus": "¡Es tu turno! Estás en el foco",
-    "protagonistLeft": "El protagonista abandonó la sala. Empezando una nueva ronda..."
+    "protagonistLeft": "El protagonista abandonó la sala. Empezando una nueva ronda...",
+    "nextRoundIn": "La siguiente ronda empieza en {{seconds}}...",
+    "gameEndingIn": "El resultado final aparece en {{seconds}}..."
   },
   "how": {
     "eyebrow": "Cómo se juega",
