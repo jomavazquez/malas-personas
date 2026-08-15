@@ -124,6 +124,7 @@
     "markAsLie": "Mark as lie",
     "sendStatements": "Send my statements",
     "useExample": "Use an example",
+    "clearField": "Clear statement",
     "writeHint": "Fill the three and mark the lie",
     "preparingRound": "Preparing round",
     "playerIsInFocus": "{{username}} is in the spotlight",

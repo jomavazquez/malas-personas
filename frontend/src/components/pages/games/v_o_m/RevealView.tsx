@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { Avatar } from "../../../../components";
 import { C } from "../../../../lib";
 import type { VomStatement, VomVote } from "../../../../types";
 import styles from "./v_o_m.module.css";
@@ -52,20 +53,45 @@ export const RevealView = ({ statements, votes, fooledCount, protagonistUserId, 
       <div className="flex flex-col gap-3">
         {
           statements.map((s) => {
-            const voterCount = votes.filter((v) => v.statementId === s.id).length;
+            const statementVoters = votes.filter((v) => v.statementId === s.id);
             return (
               <div
                 key={ s.id }
                 className={ styles.statement_row }
-                style={{ background: s.isLie ? "#FFF8EE" : "#fff", border: `2px solid ${ s.isLie ? C.accent : "#E4EAEA" }` }}
+                style={{
+                  background: s.isLie ? "#FFF8EE" : "#fff",
+                  border: `2px solid ${ s.isLie ? C.accent : "#E4EAEA" }`,
+                  flexDirection: "column",
+                  alignItems: "stretch",
+                }}
               >
-                <span className={ styles.tag } style={{ background: s.isLie ? C.accent : "#EAF3DD", color: s.isLie ? C.base : "#4C7A16" }}>
-                  { s.isLie ? t("vom.theLie") : t("vom.truth") }
-                </span>
-                <span className={ styles.statement_text } style={{ color: C.base }}>{ s.text }</span>
-                <span className={ styles.voters } style={{ color: C.faint }}>
-                  { voterCount }{" "}{ voterCount === 1 ? t("vom.vote") : t("vom.votes") }
-                </span>
+                <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                  <span className={ styles.tag } style={{ background: s.isLie ? C.accent : "#EAF3DD", color: s.isLie ? C.base : "#4C7A16" }}>
+                    { s.isLie ? t("vom.theLie") : t("vom.truth") }
+                  </span>
+                  <span className={ styles.statement_text } style={{ color: C.base }}>{ s.text }</span>
+                  <span className={ styles.voters } style={{ color: C.faint }}>
+                    { statementVoters.length }{" "}{ statementVoters.length === 1 ? t("vom.vote") : t("vom.votes") }
+                  </span>
+                </div>
+                {
+                  statementVoters.length > 0 &&
+                  <div className={ styles.voter_list }>
+                    {
+                      statementVoters.map((v) => {
+                        const isMe = v.userId === myId;
+                        return (
+                          <div key={ v.userId } className={ styles.voter_chip } style={{ color: isMe ? C.accent : C.base }}>
+                            <Avatar user={ v.username } bgColor={ isMe ? C.accent : "#EAF0F0" } textColor={ isMe ? C.base : C.muted } />
+                            <span style={ isMe ? { color: C.accent, fontWeight: 700 } : undefined }>
+                              { isMe ? t("room.you") : v.username }
+                            </span>
+                          </div>
+                        );
+                      })
+                    }
+                  </div>
+                }
               </div>
             );
           })

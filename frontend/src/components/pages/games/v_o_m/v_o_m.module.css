@@ -51,6 +51,25 @@
     white-space: nowrap
 }
 
+.clear_btn {
+    align-items: center;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    color: #8A9199;
+    cursor: pointer;
+    display: flex;
+    flex-shrink: 0;
+    font-size: 15px;
+    height: 26px;
+    justify-content: center;
+    width: 26px
+}
+
+.clear_btn:hover {
+    background: #F1F5F5
+}
+
 .statement_row {
     align-items: center;
     border-radius: 16px;
@@ -92,6 +111,23 @@
     font-size: 12px;
     margin-left: auto;
     white-space: nowrap
+}
+
+.voter_list {
+    border-top: 1px solid rgba(0, 0, 0, .06);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    margin-top: 4px;
+    padding-top: 12px
+}
+
+.voter_chip {
+    align-items: center;
+    display: flex;
+    font-size: 13px;
+    font-weight: 600;
+    gap: 6px
 }
 
 .sidebar {

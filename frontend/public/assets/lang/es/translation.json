@@ -124,6 +124,7 @@
     "markAsLie": "Es la mentira",
     "sendStatements": "Enviar mis frases",
     "useExample": "Usar ejemplo",
+    "clearField": "Borrar frase",
     "writeHint": "Rellena las tres y marca la mentira.",
     "preparingRound": "Preparando ronda",
     "playerIsInFocus": "{{username}} está en el foco",

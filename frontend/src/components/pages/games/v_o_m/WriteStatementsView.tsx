@@ -22,17 +22,29 @@ export const WriteStatementsView = ({ onSubmit }: Props) => {
     setValues((prev) => { const next = [ ...prev ]; next[i] = e.target.value; return next; });
   };
 
+  const handleClear = ( i: number ) => ( e: React.MouseEvent ) => {
+    e.stopPropagation();
+    setValues((prev) => { const next = [ ...prev ]; next[i] = ""; return next; });
+  };
+
   const handleFillFromPrompt = async () => {
+    const blanks = values.map((_, i) => i).filter((i) => !values[i].trim());
+    if( blanks.length === 0 ) return;
+
     setLoadingPrompt(true);
     try{
       const lang = i18n.language.startsWith("es") ? "ES" : "EN";
       const data = await api.get<{ prompt: VomPrompt | null }>(`/vom-prompts/random?language=${lang}`);
       if( !data.prompt ) return;
-      const order = [ data.prompt.truthOne, data.prompt.truthTwo, data.prompt.lie ]
-        .map((text, i) => ({ text, isLie: i === 2 }))
-        .sort(() => Math.random() - 0.5);
-      setValues(order.map((s) => s.text));
-      setLieIndex(order.findIndex((s) => s.isLie));
+
+      const truths = [ data.prompt.truthOne, data.prompt.truthTwo ].sort(() => Math.random() - 0.5);
+      const lieSlot = lieIndex >= 0 ? lieIndex : blanks[Math.floor(Math.random() * blanks.length)];
+
+      const next = [ ...values ];
+      let truthIndex = 0;
+      blanks.forEach((i) => { next[i] = i === lieSlot ? data.prompt!.lie : truths[truthIndex++]; });
+      setValues(next);
+      if( lieIndex === -1 ) setLieIndex(lieSlot);
     }finally{
       setLoadingPrompt(false);
     }
@@ -67,6 +79,17 @@ export const WriteStatementsView = ({ onSubmit }: Props) => {
                   maxLength={ 140 }
                   style={{ color: C.base }}
                 />
+                {
+                  value.length > 0 &&
+                  <button
+                    type="button"
+                    className={ styles.clear_btn }
+                    onClick={ handleClear(i) }
+                    aria-label={ t("vom.clearField") }
+                  >
+                    ✕
+                  </button>
+                }
                 <button
                   className={ styles.lie_btn }
                   onClick={ ( e ) => { e.stopPropagation(); setLieIndex(i); } }
