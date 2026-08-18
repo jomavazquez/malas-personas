@@ -1,6 +1,6 @@
 # Malas Personas
 
-A free, open web game inspired by Cards Against Humanity — playable online with your team or friends, in Spanish and English.
+A free, open web game platform inspired by Cards Against Humanity — playable online with your team or friends, in Spanish and English. Includes two game modes: **Malas Personas** and **Verdad o Mentira**.
 
 **→ [malaspersonas.com](https://www.malaspersonas.com)**
 
@@ -8,7 +8,11 @@ A free, open web game inspired by Cards Against Humanity — playable online wit
 
 ## What is it?
 
-Malas Personas is a card game played in rounds. Each round a judge draws a black question card with a blank, and the rest of the players pick their funniest white answer card. The judge picks the winner, who earns a point. First to the points goal wins.
+### Malas Personas
+A card game played in rounds. Each round a judge draws a black question card with a blank, and the rest of the players pick their funniest white answer card. The judge picks the winner, who earns a point. First to the points goal wins.
+
+### Verdad o Mentira (VOM)
+A "two truths and a lie" party game. Each round one player (the protagonist, rotating every round) writes three statements about themselves — two true, one false — and everyone else votes on which one they think is the lie. Guessing right earns a point; the protagonist earns a point for every player they fool. First to the points goal wins.
 
 No install needed — just share a room code and play from any browser.
 
@@ -42,6 +46,7 @@ No install needed — just share a room code and play from any browser.
 ## Features
 
 - 🎮 Real-time multiplayer via WebSockets
+- 🃏🤥 Two game modes — Malas Personas (cards) and Verdad o Mentira (two truths and a lie)
 - 👤 Guest play — no account required to join
 - 🔐 User accounts — create rooms, manage decks, view history
 - 🃏 Official decks in Spanish and English (For Everyone / No Filters)
@@ -57,7 +62,8 @@ No install needed — just share a room code and play from any browser.
 
 ```
 malas-personas/
-├── frontend/           # React + TypeScript + Vite
+├── frontend/                # React + TypeScript + Vite
+│   ├── e2e/                 # Playwright end-to-end tests
 │   ├── src/
 │   │   ├── components/
 │   │   ├── context/
@@ -65,20 +71,51 @@ malas-personas/
 │   │   ├── i18n/
 │   │   ├── lib/
 │   │   ├── pages/
+│   │   ├── test/            # Vitest + Testing Library setup/helpers
 │   │   └── types/
-└── backend/            # Node.js + Express + Prisma
+│   ├── vitest.config.ts
+│   └── playwright.config.ts
+└── backend/                  # Node.js + Express + Prisma
     ├── src/
-    │   └── config/
-    │   └── lib/
-    │   └── middleware/
+    │   ├── config/
+    │   ├── lib/
+    │   ├── middleware/
     │   └── modules/
     │       ├── auth/
+    │       ├── contact/
     │       ├── decks/
-    │       ├── game/   # Socket.io game engine
+    │       ├── games/        # Socket.io game engine (Malas Personas + Verdad o Mentira)
     │       ├── rooms/
-    │       └── users/      
-    └── prisma/
+    │       └── users/
+    ├── tests/
+    │   ├── helpers/
+    │   └── integration/
+    ├── prisma/
+    └── vitest.config.js
 ```
+
+Unit tests live co-located with their source (`*.test.js` / `*.test.tsx`); e2e and integration tests live under `frontend/e2e/` and `backend/tests/integration/` respectively — see [Testing](#testing) below.
+
+---
+
+## Testing
+
+- **Vitest** — unit tests for frontend components/hooks/lib and backend services/schemas
+- **Testing Library** — React component tests
+- **Playwright** — end-to-end tests, run against a real backend + a `vite preview` build of the frontend
+- **Backend integration tests** — run against a real PostgreSQL instance
+
+```bash
+npm test               # unit tests (frontend + backend)
+npm run test:frontend
+npm run test:backend
+npm run test:integration   # backend integration tests against Postgres
+npm run e2e             # Playwright e2e
+```
+
+CI (`.github/workflows/ci.yml`) runs lint, frontend/backend unit tests, backend integration tests and e2e on every push, against a real Postgres service.
+
+> **VOM** = *Verdad o Mentira* ("Truth or Lie"), the second game mode alongside the original Malas Personas — hence the `v_o_m.*` / `vom-*` naming in some test files.
 
 ---
 
