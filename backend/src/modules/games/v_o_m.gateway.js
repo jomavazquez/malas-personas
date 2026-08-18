@@ -2,7 +2,9 @@ import prisma from "../../config/database.js";
 import { getSession, deleteSession, getSocketMeta } from "./games.state.js";
 import { startGame, nextRound, submitStatements, castVote, autoResolveExpiredVotes, resolveReveal, isRoundFullyVoted, serializeStatementsForVoter, serializeStatementsForReveal, serializePlayerStatuses } from "./v_o_m.service.js";
 
-const ROUND_BREATHER_MS = 10000;
+// Optional env overrides let integration tests shrink these waits — see backend/env.example.
+const ROUND_BREATHER_MS = Number(process.env.VOM_ROUND_BREATHER_MS) || 10000;
+const VOTE_DURATION_MS = Number(process.env.VOM_VOTE_DURATION_MS) || 60000;
 
 const emitRoundNew = ( io, code, session ) => {
   const protagonist = session.players.find((p) => p.userId === session.round.protagonistUserId);
@@ -145,7 +147,7 @@ export const registerVerdadOMentiraHandlers = ( io, socket ) => {
       });
       io.to(code).emit("vom:playerStatus", serializePlayerStatuses(session));
 
-      session.round.voteTimeoutHandle = setTimeout(() => handleVoteTimeout(io, code), 60000);
+      session.round.voteTimeoutHandle = setTimeout(() => handleVoteTimeout(io, code), VOTE_DURATION_MS);
     }catch( err ){
       callback({ error: err.message });
     }

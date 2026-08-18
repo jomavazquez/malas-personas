@@ -2,7 +2,9 @@ import prisma from "../../config/database.js";
 import { setSession } from "./games.state.js";
 
 const MIN_PLAYERS_TO_START = 2;
-const VOTE_DURATION_MS = 60000;
+// Optional env override lets integration tests shrink the voting window — see backend/env.example.
+// Must stay in sync with the same-named constant read in v_o_m.gateway.js (which actually schedules the timeout).
+const VOTE_DURATION_MS = Number(process.env.VOM_VOTE_DURATION_MS) || 60000;
 
 export const buildSession = ( room ) => {
   const session = {

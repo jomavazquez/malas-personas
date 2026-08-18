@@ -224,6 +224,13 @@ export const pickWinner = ( session, { judgeUserId, winnerUserId } ) => {
   }
 
   const winner = session.players.find((p) => p.userId === winnerUserId);
+  if( !winner ){
+    // The player who played this card is no longer in the room (disconnected
+    // mid-round): the card stays in playedCards, but they can't be crowned winner.
+    const error = new Error("WINNER_NOT_FOUND");
+    error.code = "WINNER_NOT_FOUND";
+    throw error;
+  }
   winner.score += 1;
 
   const gameOver = winner.score >= session.pointsToWin;

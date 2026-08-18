@@ -8,7 +8,12 @@ export { getSocketMeta };
 
 // Grace period before removing a player from the room after a socket drop (unstable network).
 // If they reconnect and do room:join again within this time, they recover their spot (score, hand, etc).
-const DISCONNECT_GRACE_MS = 20000;
+// Applies to both game types (this handler is shared). Optional env override for tests — see backend/env.example.
+const DISCONNECT_GRACE_MS = Number(process.env.GAME_DISCONNECT_GRACE_MS) || 20000;
+
+// Pause between the winner reveal and the next round starting, so players can see the round result.
+// Optional env override for tests — see backend/env.example.
+const MP_ROUND_BREATHER_MS = Number(process.env.MP_ROUND_BREATHER_MS) || 2000;
 
 export const registerGameHandlers = ( io, socket ) => {
 
@@ -206,7 +211,7 @@ export const registerGameHandlers = ( io, socket ) => {
         updated.players.forEach((p) => {
           io.to(p.socketId).emit("hand:update", { hand: p.hand });
         });
-      }, 2000);
+      }, MP_ROUND_BREATHER_MS);
 
       callback({ success: true });
     }catch( err ){

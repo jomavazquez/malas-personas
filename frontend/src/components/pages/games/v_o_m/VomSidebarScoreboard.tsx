@@ -67,7 +67,7 @@ export const VomSidebarScoreboard = ({ players, protagonistUserId, myId, pointsT
                 <Avatar user={ p.username } />
                 { p.username }
               </div>
-              <span className={ styles.board_score } style={{ color: C.base }}>{ p.score }</span>
+              <span data-testid={ `vom-score-${ p.userId }` } className={ styles.board_score } style={{ color: C.base }}>{ p.score }</span>
             </div>
           ))
         }

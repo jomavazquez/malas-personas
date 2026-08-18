@@ -49,6 +49,7 @@ export const JudgeView = ({ blackCard, revealedCards, roundResult, showingResult
                     highlighted={ selectedWinner === userId }
                     clickable={ !roundResult }
                     onClick={ () => onPickWinner(userId) }
+                    testId="judge-reveal-card"
                   />
                 ))
               }

@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(npm -v)",
+      "Bash(npm view *)",
+      "Bash(npx vitest *)",
+      "Bash(node -e \"console.log\\(require\\('./node_modules/i18next/package.json'\\).version\\)\")",
+      "Bash(docker compose *)",
+      "Bash(python3 -c ' *)",
+      "Bash(xargs -I{} echo {})",
+      "Bash(npx dotenv *)",
+      "Bash(cp src/components/pages/games/m_p/JudgeView.tsx /tmp/JudgeView.tsx.bak)",
+      "Bash(cp src/components/pages/games/m_p/JudgeView.tsx /private/tmp/claude-501/-Users-kiwi-Development-react-malas-personas/aa2e84bd-0463-4805-b9ac-2515e14e70b3/scratchpad/JudgeView.tsx.bak)",
+      "Bash(npm pkg *)",
+      "Bash(cd /Users/kiwi/Development/react/malas-personas/frontend && npx playwright --version && npx playwright install --with-deps chromium --dry-run 2>&1 | tail -20; ls -la ~/Library/Caches/ms-playwright 2>/dev/null || ls -la ~/.cache/ms-playwright 2>/dev/null)",
+      "Read(//Users/kiwi/.cache/**)",
+      "Bash(curl -s http://localhost:4173/ -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(lsof -i :4173 -sTCP:LISTEN)",
+      "Bash(DEBUG=pw:webserver npx playwright test e2e/auth.spec.ts --project=chromium --reporter=list --timeout=45000)",
+      "Bash(pkill -f \"node server.js\")",
+      "Bash(unzip -l \"/Users/kiwi/Development/react/malas-personas/frontend/test-results/auth-register-log-out-and--c0564-n-with-the-same-credentials-chromium/trace.zip\")",
+      "Bash(unzip -o -q \"/Users/kiwi/Development/react/malas-personas/frontend/test-results/auth-register-log-out-and--c0564-n-with-the-same-credentials-chromium/trace.zip\" -d .)",
+      "Bash(npm test *)",
+      "Bash(echo \"TSC_EXIT=$?\")",
+      "Bash(git check-ignore *)",
+      "Bash(node -e \"console.log\\(JSON.parse\\(require\\('fs'\\).readFileSync\\('package.json'\\)\\).scripts\\)\")",
+      "Bash(python3 -c \"import yaml,sys; yaml.safe_load\\(open\\('.github/workflows/ci.yml'\\)\\); print\\('YAML OK'\\)\")",
+      "Bash(npx --yes js-yaml .github/workflows/ci.yml)"
+    ]
+  }
+}

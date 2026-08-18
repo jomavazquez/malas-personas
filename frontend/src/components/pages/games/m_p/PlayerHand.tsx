@@ -40,6 +40,7 @@ export const PlayerHand = ({ hand, selectedCard, hasPlayed, hasRedrawn, onPlayCa
             return (
               <div
                 key={ card.id }
+                data-testid="hand-card"
                 onClick={ () => !hasPlayed && onPlayCard(card.id) }
                 className={ styles.player_card }
                 style={{

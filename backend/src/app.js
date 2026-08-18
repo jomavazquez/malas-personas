@@ -41,6 +41,11 @@ const authLimiter = rateLimit({
     standardHeaders: true,
     legacyHeaders: false,
     message: { success: false, message: "RATE_LIMIT_EXCEEDED" },
+    // The e2e suite drives real HTTP registration/login from several browser
+    // contexts per spec (and across repeated local runs while iterating) —
+    // easily more than 10 in a 15 min window. Skip only in NODE_ENV=test,
+    // same testability pattern as the game-timer env overrides above.
+    skip: () => env.NODE_ENV === "test",
 });
 
 app.use( globalLimiter );

@@ -6,12 +6,16 @@
   "scripts": {
     "predev": "[ -d node_modules ] || npm install; [ -d frontend/node_modules ] || npm install --prefix frontend; [ -d backend/node_modules ] || npm install --prefix backend; npm run db:start",
     "dev": "concurrently \"npm run dev --prefix frontend\" \"npm run dev --prefix backend\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "db:start": "docker compose -f backend/docker-compose.yml up -d db",
     "db:migrate": "npm run db:migrate --prefix backend",
     "db:seed": "npm run db:seed --prefix backend",
     "db:reset": "npm run db:reset --prefix backend",
-    "setup": "npm install && npm install --prefix frontend && npm install --prefix backend && npm run db:start && npm run db:reset && npm run dev"
+    "setup": "npm install && npm install --prefix frontend && npm install --prefix backend && npm run db:start && npm run db:reset && npm run dev",
+    "test": "npm run test --prefix frontend && npm run test --prefix backend",
+    "test:frontend": "npm run test --prefix frontend",
+    "test:backend": "npm run test --prefix backend",
+    "test:integration": "npm run test:integration --prefix backend",
+    "e2e": "npm run e2e --prefix frontend"
   },
   "keywords": [],
   "author": "",

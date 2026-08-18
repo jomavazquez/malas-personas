@@ -4,14 +4,14 @@ import { api } from "../lib/api";
 import { clearGuestId } from "../lib/guest";
 import type { User } from "../types";
 
-interface AuthContextValue {
+export interface AuthContextValue {
   user: User | null;
   loading: boolean;
   login: (user: User, token: string, keep?: boolean) => void;
   logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextValue | null>(null);
+export const AuthContext = createContext<AuthContextValue | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [ user, setUser ] = useState<User | null>(null);

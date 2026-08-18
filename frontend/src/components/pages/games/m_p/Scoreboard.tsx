@@ -54,7 +54,7 @@ export const Scoreboard = ({ players, judgeId, myId, pointsToWin, playedCount, s
                   p.isSpectator &&
                   <span className={ styles.spectator_label } style={{ color: C.faint }}>{ t("game.spectatorLabel").toUpperCase() }</span>
                 }
-                <span className={ styles.score } style={{ color: C.base }}>{ p.score }</span>
+                <span data-testid={ `score-${ p.userId }` } className={ styles.score } style={{ color: C.base }}>{ p.score }</span>
               </div>
             );
           })

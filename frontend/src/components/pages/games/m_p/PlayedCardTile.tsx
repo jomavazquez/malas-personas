@@ -7,15 +7,19 @@ interface Props {
   highlighted?: boolean;
   clickable?: boolean;
   onClick?: () => void;
+  // Only set where no accessible selector exists for e2e (this tile is a plain
+  // clickable <div>, not a <button>) — see JudgeView's reveal grid.
+  testId?: string;
 }
 
-export const PlayedCardTile = ({ text, badge, highlighted = false, clickable = false, onClick }: Props) => {
+export const PlayedCardTile = ({ text, badge, highlighted = false, clickable = false, onClick, testId }: Props) => {
 
   const isWinner = badge === "winner";
 
   return (
     <div
       onClick={ clickable ? onClick : undefined }
+      data-testid={ testId }
       className={ styles.judge_cards }
       style={{
         background: isWinner ? C.accent : highlighted ? `color-mix(in srgb, ${C.accent} 12%, #fff)` : "#fff",
