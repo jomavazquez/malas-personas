@@ -26,7 +26,9 @@
       "Bash(git check-ignore *)",
       "Bash(node -e \"console.log\\(JSON.parse\\(require\\('fs'\\).readFileSync\\('package.json'\\)\\).scripts\\)\")",
       "Bash(python3 -c \"import yaml,sys; yaml.safe_load\\(open\\('.github/workflows/ci.yml'\\)\\); print\\('YAML OK'\\)\")",
-      "Bash(npx --yes js-yaml .github/workflows/ci.yml)"
+      "Bash(npx --yes js-yaml .github/workflows/ci.yml)",
+      "Bash(npm ci *)",
+      "Bash(open -a Docker)"
     ]
   }
 }
