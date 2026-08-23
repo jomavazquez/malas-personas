@@ -20,6 +20,7 @@ export const JoinModalProvider = ({ children }: { children: ReactNode }) => {
     );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components -- hook lives alongside its provider, same pattern as AuthContext/ToastContext
 export const useJoinModal = (): JoinModalContextValue => {
     const ctx = useContext(JoinModalContext);
     if( !ctx ) throw new Error("useJoinModal must be used within JoinModalProvider");

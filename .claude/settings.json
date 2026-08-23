@@ -28,7 +28,31 @@
       "Bash(python3 -c \"import yaml,sys; yaml.safe_load\\(open\\('.github/workflows/ci.yml'\\)\\); print\\('YAML OK'\\)\")",
       "Bash(npx --yes js-yaml .github/workflows/ci.yml)",
       "Bash(npm ci *)",
-      "Bash(open -a Docker)"
+      "Bash(open -a Docker)",
+      "Bash(git fetch *)",
+      "Bash(git rev-list *)",
+      "Bash(gh auth *)",
+      "Bash(curl -s \"https://api.github.com/repos/jomavazquez/malas-personas/actions/runs?branch=main&per_page=5\")",
+      "Bash(curl -s \"https://api.github.com/repos/jomavazquez/malas-personas/actions/runs/32650518932/jobs\")",
+      "Bash(curl -s -L \"https://github.com/jomavazquez/malas-personas/commit/4bed4131730b4c270e60c97934ea77f9af3c5185/checks\" -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(curl -s \"https://api.github.com/repos/jomavazquez/malas-personas/actions/jobs/97221248033\")",
+      "Bash(curl -s \"https://api.github.com/repos/jomavazquez/malas-personas/actions/runs?branch=main&per_page=10\")",
+      "Bash(curl -s \"https://api.github.com/repos/jomavazquez/malas-personas/actions/runs/32650505932/jobs\")",
+      "Bash(curl -s \"https://api.github.com/repos/jomavazquez/malas-personas/actions/runs/32650507245/jobs\")",
+      "Bash(curl -s \"https://api.github.com/repos/jomavazquez/malas-personas/actions/jobs/97221217317\")",
+      "Bash(curl -s \"https://api.github.com/repos/jomavazquez/malas-personas/actions/runs/32650507245\")",
+      "Bash(curl -s \"https://api.github.com/repos/jomavazquez/malas-personas/actions/runs/32650507245/attempts/1/jobs\")",
+      "Bash(curl -s -L \"https://api.github.com/repos/jomavazquez/malas-personas/actions/jobs/97221217317/logs\" -o /tmp/lint_run8.log)",
+      "Bash(curl -s \"https://api.github.com/repos/jomavazquez/malas-personas/actions/runs/32557141173/jobs\")",
+      "Bash(curl -s \"https://api.github.com/repos/jomavazquez/malas-personas/actions/runs?branch=main&per_page=6\")",
+      "Bash(curl -s \"https://api.github.com/repos/jomavazquez/malas-personas/actions/runs/32557141173\")",
+      "Bash(tee /private/tmp/claude-501/-Users-kiwi-Development-react-malas-personas/2918e708-37b3-4d2d-8f3d-c0072fc10597/scratchpad/lint_output.txt)",
+      "Bash(xargs -I{} basename {})",
+      "Bash(sed -i '' \"s/from 'playwright'/from '@playwright\\\\/test'/\" /Users/kiwi/Development/react/malas-personas/frontend/check_pages.mjs)",
+      "Bash(node /Users/kiwi/Development/react/malas-personas/frontend/check_pages.mjs)",
+      "Bash(pkill -f \"vite$\")",
+      "Bash(pkill -f \"node.*vite\")",
+      "Bash(lsof -ti:5173)"
     ]
   }
 }

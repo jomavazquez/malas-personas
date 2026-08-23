@@ -11,17 +11,16 @@ export interface AuthContextValue {
   logout: () => void;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components -- context object lives alongside its provider hook
 export const AuthContext = createContext<AuthContextValue | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [ user, setUser ] = useState<User | null>(null);
-  const [ loading, setLoading ] = useState(true);
+  const [ loading, setLoading ] = useState(() => !!(localStorage.getItem("token") ?? sessionStorage.getItem("token")));
 
   useEffect(() => {
     const token = localStorage.getItem("token") ?? sessionStorage.getItem("token");
-    if( !token ){ 
-      setLoading(false); return; 
-    }
+    if( !token ) return;
 
     api.get<{ user: User }>("/users/me")
       .then((data) => setUser(data.user))
@@ -55,6 +54,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components -- hook lives alongside its provider, same pattern as JoinModalContext/ToastContext
 export const useAuth = (): AuthContextValue => {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error("useAuth must be used within AuthProvider");

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../context/AuthContext";
@@ -19,6 +19,13 @@ export const JoinModal = ({ isOpen, onClose }: JoinModalProps) => {
     const [ joinCode, setJoinCode ] = useState("");
     const [ name, setName ] = useState(user?.username ?? "");
 
+    // Keep the name field in sync if the user resolves/changes after this modal is already mounted.
+    const [ prevUsername, setPrevUsername ] = useState(user?.username);
+    if( user?.username !== prevUsername ){
+        setPrevUsername(user?.username);
+        if( user?.username ) setName(user.username);
+    }
+
     const canJoin = joinCode.length === 6 && name.trim().length > 0;
 
     const handleJoin = () => {
@@ -35,10 +42,6 @@ export const JoinModal = ({ isOpen, onClose }: JoinModalProps) => {
         setName(user?.username ?? "");
         onClose();
     };
-
-    useEffect(() => {
-        if( user?.username ) setName(user.username);
-    }, [ user?.username ]);
 
     if( !isOpen ) return null;
 

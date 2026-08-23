@@ -1,3 +1,4 @@
+import type { NavigateFunction } from "react-router-dom";
 import { getLenis } from "../hooks/useLenis";
 
 export const scrollTo = ( id: string ) => ( e?: React.MouseEvent ) => {
@@ -23,7 +24,7 @@ export const scrollToTop = () => {
 
 export const SECTION_NAV_EVENT = "section-nav";
 
-export const goToSection = ( navigate: Function, id: string, extraState?: Record<string, unknown> ) => {
+export const goToSection = ( navigate: NavigateFunction, id: string, extraState?: Record<string, unknown> ) => {
   if( window.location.pathname === "/" ){
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     if( extraState ){

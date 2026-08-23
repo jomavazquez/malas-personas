@@ -15,7 +15,7 @@ test("Malas Personas: live judge/player round across two browser contexts", asyn
 
   try{
     // ── Context A: registers, creates the room, and (by joining first) becomes judge.
-    const host = await registerUser(pageA, makeUser("mpHost"));
+    await registerUser(pageA, makeUser("mpHost"));
     const code = await createRoom(pageA, { roomName: "MP E2E Room", gameType: "MALAS_PERSONAS" });
 
     await expect(pageA.getByText("You need at least 2 players")).toBeVisible();

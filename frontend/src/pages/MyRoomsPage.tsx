@@ -51,7 +51,8 @@ export const MyRoomsPage = () => {
       }else{
         setRooms((prev) => prev.map((r) => r.code === code ? { ...r, isActive: false, status: "FINISHED" } : r));
       }
-    }catch( err ){
+    }catch{
+      // Silently ignore close/delete failures; the modal simply closes and the list stays unchanged.
     }finally{
       setDeleteCode(null);
     }

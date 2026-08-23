@@ -37,14 +37,16 @@ export const RoomPage = () => {
   const [ isGuestResolved, setIsGuestResolved ] = useState(!user && !!guestId);
 
   // If user loads after first render, update resolvedName/resolvedId
-  useEffect(() => {
+  const [ prevUserUsername, setPrevUserUsername ] = useState(user?.username);
+  if( user?.username !== prevUserUsername ){
+    setPrevUserUsername(user?.username);
     if( user?.username ){
       setResolvedName(user.username);
       setResolvedId(user.id);
       setNameInput(user.username);
       setIsGuestResolved(false);
     }
-  }, [ user?.username ]);
+  }
 
   const isHost = resolvedId === hostId;
   const canStart = players.length >= 2;
@@ -81,12 +83,15 @@ export const RoomPage = () => {
     setConfirmed(true);
   };
 
-  useEffect(() => {
+  // Reset room state whenever the room code changes.
+  const [ prevCode, setPrevCode ] = useState(code);
+  if( code !== prevCode ){
+    setPrevCode(code);
     setError("");
     setPlayers([]);
     setHostId(null);
     setConnected(false);
-  }, [ code ]);
+  }
 
   useEffect(() => {
     if( !code || !resolvedId || !resolvedName ) return;

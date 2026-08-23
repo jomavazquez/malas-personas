@@ -14,6 +14,32 @@ interface FooterPropLink {
     target?: '_self' | '_blank';
 }
 
+const FooterLink = ({ to, onClick, children, target = '_self' }: FooterPropLink ) => {
+    if( onClick ){
+        return (
+            <button
+                className={ styles.link }
+                onClick={ onClick }
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "#9AA3AB")}
+            >
+                { children }
+            </button>
+        );
+    }
+    return (
+        <Link
+            to={ to ?? "#" }
+            className={ styles.link }
+            target={ target }
+            onMouseEnter={ (e) => (e.currentTarget.style.color = "#fff") }
+            onMouseLeave={ (e) => (e.currentTarget.style.color = "#9AA3AB") }
+        >
+            { children }
+        </Link>
+    );
+};
+
 export const Footer = () => {
 
     const { t } = useTranslation();
@@ -29,32 +55,6 @@ export const Footer = () => {
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-
-    const FooterLink = ({ to, onClick, children, target = '_self' }: FooterPropLink ) => {
-        if( onClick ){
-            return (
-                <button 
-                    className={ styles.link } 
-                    onClick={ onClick }
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "#9AA3AB")}
-                >
-                    { children }
-                </button>
-            );
-        }
-        return (
-            <Link 
-                to={ to ?? "#" } 
-                className={ styles.link }
-                target={ target }
-                onMouseEnter={ (e) => (e.currentTarget.style.color = "#fff") }
-                onMouseLeave={ (e) => (e.currentTarget.style.color = "#9AA3AB") }
-            >
-                { children }
-            </Link>
-        );
-    };
 
     return (
         <footer style={{ background: "#000", position: "relative", overflow: "hidden" }}>

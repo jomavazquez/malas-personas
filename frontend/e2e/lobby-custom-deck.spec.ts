@@ -14,7 +14,7 @@ test("custom deck: create it, use it in a room, and see its own card in-game", a
   const pageB = await contextB.newPage();
 
   try{
-    const user = await registerUser(pageA, makeUser("deckOwner"));
+    await registerUser(pageA, makeUser("deckOwner"));
 
     const suffix = Date.now().toString(36);
     const deckName = `E2E Custom Deck ${ suffix }`;

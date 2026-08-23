@@ -17,11 +17,17 @@ export const HomePage = () => {
   const navigate = useNavigate();
   const [ howGameType, setHowGameType ] = useState<GameType>("MALAS_PERSONAS");
 
-  useEffect(() => {
-    const state = location.state as { scrollTo?: string; gameType?: GameType } | null;
-    if( state?.gameType ) setHowGameType(state.gameType);
+  const navState = location.state as { scrollTo?: string; gameType?: GameType } | null;
 
-    const id = state?.scrollTo;
+  // Sync howGameType from navigation state whenever it changes (e.g. clicking a promo CTA from this same page).
+  const [ prevNavGameType, setPrevNavGameType ] = useState(navState?.gameType);
+  if( navState?.gameType !== prevNavGameType ){
+    setPrevNavGameType(navState?.gameType);
+    if( navState?.gameType ) setHowGameType(navState.gameType);
+  }
+
+  useEffect(() => {
+    const id = navState?.scrollTo;
     if( !id ) return;
 
     const attempt = () => {

@@ -24,7 +24,7 @@ export const LegalPage = ({ doc }: LegalPageProps) => {
         }
 
         setContent(await response.text());
-      }catch( error ){
+      }catch{
         setContent("<p>Content not available.</p>");
       }
     };

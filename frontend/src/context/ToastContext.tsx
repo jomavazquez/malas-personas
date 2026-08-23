@@ -55,6 +55,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
     );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components -- hook lives alongside its provider, same pattern as AuthContext/JoinModalContext
 export const useToast = (): ToastContextValue => {
     const ctx = useContext(ToastContext);
     if( !ctx ) throw new Error("useToast must be used within ToastProvider");

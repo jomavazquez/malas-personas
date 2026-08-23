@@ -119,6 +119,7 @@ export const ForgotPasswordPage = () => {
             setResendTimer(MINUTES);
             setCode(Array(6).fill(""));
         }catch{
+            // Resend failures are silent: the button simply stays enabled for the user to retry.
         }finally{
             setLoading(false);
         }

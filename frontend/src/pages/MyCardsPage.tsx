@@ -42,9 +42,15 @@ export const MyCardsPage = () => {
   }, []);
 
   // Load cards
+  const fetchKey = `${ id ?? "" }|${ page }|${ filter }|${ search }`;
+  const [ prevFetchKey, setPrevFetchKey ] = useState(fetchKey);
+  if( fetchKey !== prevFetchKey ){
+    setPrevFetchKey(fetchKey);
+    if( id ) setLoading(true);
+  }
+
   useEffect(() => {
     if( !id ) return;
-    setLoading(true);
     const params = new URLSearchParams({ page: String(page) });
     if( filter !== "ALL" ) params.set("type", filter);
     if( search.trim() ) params.set("search", search.trim());
@@ -89,6 +95,7 @@ export const MyCardsPage = () => {
       }
       closeModal();
     }catch{
+      // Silently ignore save failures; the modal stays open so the user can retry.
     }finally{
       setSaving(false);
     }

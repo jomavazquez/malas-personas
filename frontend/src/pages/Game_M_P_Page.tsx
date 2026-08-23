@@ -40,9 +40,15 @@ export const Game_M_P_Page = () => {
   const isJudge = gameState?.judge?.userId === myId;
   const isSpectator = gameState?.players.find((p) => p.userId === myId)?.isSpectator ?? false;
 
+  // Reset the timer as soon as a new round's black card comes in.
+  const [ prevBlackCardId, setPrevBlackCardId ] = useState(gameState?.currentBlackCard?.id);
+  if( gameState?.currentBlackCard?.id !== prevBlackCardId ){
+    setPrevBlackCardId(gameState?.currentBlackCard?.id);
+    setTimer(clock);
+  }
+
   // Timer
   useEffect(() => {
-    setTimer(clock);
     const interval = setInterval(() => {
       setTimer((prev) => {
         if(prev <= 1 ){

@@ -63,27 +63,25 @@ export const LobbyPage = () => {
     el.scrollBy({ left: dir === "left" ? -200 : 200, behavior: "smooth" });
   };
 
-  const handleCarouselDrag = (() => {
-    let isDown = false;
-    let startX = 0;
-    let scrollLeft = 0;
-    return {
-      onMouseDown: (e: React.MouseEvent) => {
-        isDown = true;
-        startX = e.pageX - (carouselRef.current?.offsetLeft ?? 0);
-        scrollLeft = carouselRef.current?.scrollLeft ?? 0;
-      },
-      onMouseLeave: () => { isDown = false; },
-      onMouseUp: () => { isDown = false; },
-      onMouseMove: (e: React.MouseEvent) => {
-        if (!isDown || !carouselRef.current) return;
-        e.preventDefault();
-        const x = e.pageX - (carouselRef.current.offsetLeft ?? 0);
-        const walk = (x - startX) * 1.5;
-        carouselRef.current.scrollLeft = scrollLeft - walk;
-      },
-    };
-  })();
+  const dragStateRef = useRef({ isDown: false, startX: 0, scrollLeft: 0 });
+  const handleCarouselDrag = {
+    onMouseDown: (e: React.MouseEvent) => {
+      const drag = dragStateRef.current;
+      drag.isDown = true;
+      drag.startX = e.pageX - (carouselRef.current?.offsetLeft ?? 0);
+      drag.scrollLeft = carouselRef.current?.scrollLeft ?? 0;
+    },
+    onMouseLeave: () => { dragStateRef.current.isDown = false; },
+    onMouseUp: () => { dragStateRef.current.isDown = false; },
+    onMouseMove: (e: React.MouseEvent) => {
+      const drag = dragStateRef.current;
+      if (!drag.isDown || !carouselRef.current) return;
+      e.preventDefault();
+      const x = e.pageX - (carouselRef.current.offsetLeft ?? 0);
+      const walk = (x - drag.startX) * 1.5;
+      carouselRef.current.scrollLeft = drag.scrollLeft - walk;
+    },
+  };
 
   const handleCreate = async () => {
     if( !roomName.trim() || (gameType === "MALAS_PERSONAS" && !selectedDeck) ) return;
