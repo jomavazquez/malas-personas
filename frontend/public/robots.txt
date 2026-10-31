@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /lobby
+Disallow: /room/
+Disallow: /game/
+Disallow: /my-rooms
+Disallow: /my-decks
+Disallow: /my-cards
+Disallow: /forgot-password
+
+Sitemap: https://www.malaspersonas.com/sitemap.xml

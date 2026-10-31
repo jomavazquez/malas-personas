@@ -1,0 +1,21 @@
+# Malas Personas
+
+> Free online party games to play with your team or friends from any browser, in Spanish and English. No install needed: create a room, share its 6-character code and play in real time. Guests can join without an account.
+
+## Game modes
+
+- **Malas Personas**: a card game inspired by Cards Against Humanity. Each round a judge draws a black question card with a blank, the other players pick their funniest white answer card, and the judge chooses the winner. First to the points goal wins. Official decks in Spanish and English ("For Everyone" and "No Filters"); registered users can also create their own decks.
+- **Verdad o Mentira** ("Truth or Lie"): a "two truths and a lie" game. Each round one player writes three statements about themselves, two true and one false, and everyone else votes on which one is the lie. Guessing right earns a point; the author earns a point for every player they fool.
+
+## Pages
+
+- [Home](https://www.malaspersonas.com/): what the games are and how to start playing
+- [Help center](https://www.malaspersonas.com/help-center): FAQ about how to play, game length, inviting your team to a room, room codes, disconnections, available decks, languages, accounts, stored data and pricing (free)
+- [Team ideas](https://www.malaspersonas.com/team-ideas): which game fits each team situation, such as welcoming a new teammate, closing a long retro, remote teams across countries, newly merged squads or a quiet team lunch
+- [Contact](https://www.malaspersonas.com/contact)
+
+## Legal
+
+- [Legal notice](https://www.malaspersonas.com/legal-notice)
+- [Privacy policy](https://www.malaspersonas.com/privacy-policy)
+- [Cookies policy](https://www.malaspersonas.com/cookies-policy)
