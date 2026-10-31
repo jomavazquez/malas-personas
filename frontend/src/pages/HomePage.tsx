@@ -64,9 +64,9 @@ export const HomePage = () => {
             <div style={{ fontFamily: F.display, fontWeight: 700, fontSize: 13, letterSpacing: "0.09em", textTransform: "uppercase", color: C.accentDeep, marginBottom: 20 }}>
               {t("hero.eyebrow")}
             </div>
-            <h2 className="text-[48px] md:text-[62px]" style={{ fontFamily: F.display, fontWeight: 800, lineHeight: 0.98, letterSpacing: "-0.04em", color: C.base, margin: "0 0 22px" }}>
+            <h1 className="text-[48px] md:text-[62px]" style={{ fontFamily: F.display, fontWeight: 800, lineHeight: 0.98, letterSpacing: "-0.04em", color: C.base, margin: "0 0 22px" }}>
               {t("hero.headline")}
-            </h2>
+            </h1>
             <p style={{ fontFamily: F.body, fontSize: 17, lineHeight: 1.6, color: C.accentMid, margin: "0 0 34px", maxWidth: 380, fontWeight: 500 }}>
               {t("hero.sub")}
             </p>
@@ -137,9 +137,9 @@ export const HomePage = () => {
         <div className="max-w-360 mx-auto grid grid-cols-1 md:grid-cols-[1.05fr_0.95fr] gap-10 items-center relative">
           <div>
             <Badge>{ t("vomPromo.badge") }</Badge>
-            <h3 className="text-[32px] md:text-[40px] heading_1" style={{ color: "#fff" }}>
+            <h2 className="text-[32px] md:text-[40px] heading_1" style={{ color: "#fff" }}>
               { t("lobby.gameVOM") }<span style={{ color: C.accent }}>.</span>
-            </h3>
+            </h2>
             <p className={ styles.eyebrow_sub } style={{ color: C.faint }}>{ t("vomPromo.desc") }</p>
             <div className="flex flex-wrap gap-3">
               <Button to={ user ? "/lobby" : "/register" } state={ user ? { gameType: "V_O_M" } : undefined } bgColor={ C.accent } textColor={ C.base }>
@@ -181,7 +181,7 @@ export const HomePage = () => {
         <div className="max-w-360 mx-auto">
           <div className="text-center mb-8">
             <div className={ styles.sub } style={{ color: C.accentDeep, marginBottom: 10 }}>{ t("how.eyebrow") }</div>
-            <h3 className="heading_1" style={{ color: C.base }}>{ t("how.title") }</h3>
+            <h2 className="heading_1" style={{ color: C.base }}>{ t("how.title") }</h2>
           </div>
           <div className="flex justify-center mb-15">
             <PillToggle
@@ -271,7 +271,7 @@ export const HomePage = () => {
         <div className="max-w-360 mx-auto grid grid-cols-1 md:grid-cols-[1.05fr_0.95fr] gap-10 items-center relative">
           <div>
             <div className={ styles.eyebrow } style={{ color: C.accentDeep }}>{ t("pricing.eyebrow") }</div>
-            <h3 className="text-[32px] md:text-[40px] heading_1" style={{ color: C.base }}>{ t("pricing.title") }</h3>
+            <h2 className="text-[32px] md:text-[40px] heading_1" style={{ color: C.base }}>{ t("pricing.title") }</h2>
             <p className={ styles.eyebrow_sub } style={{ color: C.muted }}>{ t("pricing.sub") }</p>
             {
               [t("features.1"), t("features.2"), t("features.3"), t("features.4")].map((f) => (

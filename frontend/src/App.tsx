@@ -35,11 +35,19 @@ const ScrollToTop = () => {
   return null;
 };
 
+// index.html is shared by every route, so the canonical URL can't live there: a fixed one
+// would tell search engines that every page is a duplicate of the home page.
+const CanonicalLink = () => {
+  const { pathname } = useLocation();
+  return <link rel="canonical" href={ `https://www.malaspersonas.com${pathname}` } />;
+};
+
 const AppInner = () => {
   useLenis();
   return (
     <>
       <ScrollToTop />
+      <CanonicalLink />
       <Suspense fallback={ null }>
         <Routes>
           <Route path="/" element={ <HomePage /> } />
