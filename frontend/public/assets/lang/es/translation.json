@@ -240,7 +240,11 @@
     "notFoundTitle": "No hay ninguna sala con ese código.",
     "theCode": "El código",
     "theCode2": "no existe o está mal escrito. Revísalo con quien te invitó y vuelve a intentarlo.",
-    "theCodeSub": "Son 6 caracteres · sin espacios."
+    "theCodeSub": "Son 6 caracteres · sin espacios.",
+    "PAGE_NOT_FOUND": "Página no encontrada",
+    "pageNotFoundTitle": "Esta página no existe.",
+    "pageNotFoundDesc": "Puede que el enlace esté mal escrito o que la página se haya movido.",
+    "goHome": "Ir a la portada"
   },
   "footer": {
     "product": "Producto",

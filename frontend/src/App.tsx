@@ -19,6 +19,7 @@ const HelpCenterPage = lazy(() => import("./pages/HelpCenterPage").then((m) => (
 const TeamIdeasPage = lazy(() => import("./pages/TeamIdeasPage").then((m) => ({ default: m.TeamIdeasPage })));
 const MyDecksPage = lazy(() => import("./pages/MyDecksPage").then((m) => ({ default: m.MyDecksPage })));
 const MyCardsPage = lazy(() => import("./pages/MyCardsPage").then((m) => ({ default: m.MyCardsPage })));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage").then((m) => ({ default: m.NotFoundPage })));
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   
@@ -66,7 +67,7 @@ const AppInner = () => {
           <Route path="/legal-notice" element={ <LegalPage doc="legal-notice" /> } />
           <Route path="/privacy-policy" element={ <LegalPage doc="privacy-policy" /> } />
           <Route path="/cookies-policy" element={ <LegalPage doc="cookies-policy" /> } />
-          <Route path="*" element={ <Navigate to="/" replace /> } />
+          <Route path="*" element={ <NotFoundPage /> } />
         </Routes>
       </Suspense>
     </>

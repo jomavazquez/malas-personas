@@ -11,6 +11,7 @@ export * from "./LoginPage";
 export * from "./MyCardsPage";
 export * from "./MyDecksPage";
 export * from "./MyRoomsPage";
+export * from "./NotFoundPage";
 export * from "./RegisterPage";
 export * from "./RoomPage";
 export * from "./TeamIdeasPage";

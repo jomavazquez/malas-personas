@@ -240,7 +240,11 @@
     "notFoundTitle": "There is no room with this code.",
     "theCode": "The code",
     "theCode2": "does not exist or has been entered incorrectly. Please check it with the person who invited you and try again.",
-    "theCodeSub": "6 characters · no spaces."
+    "theCodeSub": "6 characters · no spaces.",
+    "PAGE_NOT_FOUND": "Page not found",
+    "pageNotFoundTitle": "This page doesn't exist.",
+    "pageNotFoundDesc": "The link may be wrong or the page may have moved.",
+    "goHome": "Go to the home page"
   },
   "footer": {
     "product": "Product",
