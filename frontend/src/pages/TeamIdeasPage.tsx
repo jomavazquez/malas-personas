@@ -44,9 +44,9 @@ export const TeamIdeasPage = () => {
           {/* ── SIDEBAR ── */}
           <div>
             <div className={ styles.eyebrow } style={{ color: C.accentDeep }}>{ t("ideas:eyebrow") }</div>
-            <h2 className="heading_1" style={{ fontSize: 32, color: C.base, margin: "0 0 15px" }}>
+            <h1 className="heading_1" style={{ fontSize: 32, color: C.base, margin: "0 0 15px" }}>
               { t("ideas:title") }
-            </h2>
+            </h1>
             <p className={ styles.desc } style={{ color: C.muted }}>{ t("ideas:desc") }</p>
             <div className="right_chips_container" style={{ marginBottom: 25 }}>
               {

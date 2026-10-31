@@ -83,6 +83,8 @@ export const HelpCenterPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-10 items-start">
         {/* ── SIDEBAR ── */}
           <div>
+            {/* The page has no visible title; this one is for search engines and screen readers */}
+            <h1 className="sr-only">{ t("footer.helpCenter") }</h1>
             <div className="player_pick_answer" style={{ color: C.faint }}>{ t("help:categories") }</div>
             <div className={ styles.sidebar_container }>
               {

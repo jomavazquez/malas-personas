@@ -71,7 +71,7 @@ export const ContactPage = () => {
           <div className="max-w-360 mx-auto w-full grid grid-cols-1 md:grid-cols-[45%_55%] gap-0 items-center">
             {/* LEFT */}
             <div className="hidden md:flex flex-col justify-end pr-16 pb-12 relative" style={{ minHeight: 500 }}>
-              <h3 className="heading_1" style={{ color: C.base }}>{ t("contact.leftTitle") }</h3>
+              <p className="heading_1" style={{ color: C.base }}>{ t("contact.leftTitle") }</p>
               <div className={ styles.left_container }>
                 <div>
                   <div className={ styles.left_sub } style={{ color: C.accentDeep }}>{ t("contact.writeUs") }</div>
