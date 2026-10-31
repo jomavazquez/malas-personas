@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export const validate = ( schema ) => {
 
   return ( req, res, next ) => {
@@ -7,7 +9,7 @@ export const validate = ( schema ) => {
       return res.status(400).json({
         success: false,
         message: "INVALID_DATA",
-        errors: result.error.flatten().fieldErrors,
+        errors: z.flattenError(result.error).fieldErrors,
       });
     }
 
