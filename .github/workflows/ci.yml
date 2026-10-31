@@ -23,6 +23,11 @@ jobs:
       - run: npm ci --prefix frontend
       - run: npm run lint --prefix frontend
       - run: npm run build --prefix frontend
+        env:
+          # Public URLs (they end up in the bundle). Required: vite.config.ts aborts
+          # production builds that would point at localhost.
+          VITE_API_URL: https://backend.malaspersonas.com/api
+          VITE_SOCKET_URL: https://backend.malaspersonas.com
 
   frontend-unit:
     runs-on: ubuntu-latest
