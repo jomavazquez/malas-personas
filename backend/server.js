@@ -8,8 +8,8 @@ const httpServer = createServer(app);
 // Initialize Socket.io
 initSocket(httpServer);
 
-// Una excepción no controlada (p.ej. en un setTimeout de una partida) no debe tirar
-// abajo el servidor para todos los usuarios — se registra y el proceso sigue vivo.
+// An uncaught exception (e.g. in a game's setTimeout) must not take the server down
+// for every user: it gets logged and the process keeps running.
 process.on("uncaughtException", (err) => {
   console.error("Uncaught exception:", err);
 });

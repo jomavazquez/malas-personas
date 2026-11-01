@@ -41,7 +41,7 @@ export const LobbyPage = () => {
       const list = filtered.length ? filtered : data.official;
       setDecks(list);
       setMyDecks(data.mine);
-      // Solo cambiar el mazo seleccionado si es uno oficial (no uno propio del usuario)
+      // Only change the selected deck if it's an official one (not one of the user's own)
       const isUserDeck = data.mine.some((d) => d.id === selectedDeck);
       if (!isUserDeck) {
         const preferNoFilter = !selectedDeck || NO_FILTER_NAMES.includes(

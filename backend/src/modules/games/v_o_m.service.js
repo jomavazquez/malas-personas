@@ -90,7 +90,7 @@ export const startGame = ( session ) => {
 };
 
 export const nextRound = ( session ) => {
-  // Los jugadores que se unieron a mitad de partida entran en juego a partir de ahora
+  // Players who joined mid-game start playing from now on
   session.players.forEach((p) => { p.isSpectator = false; });
 
   if( session.round ){

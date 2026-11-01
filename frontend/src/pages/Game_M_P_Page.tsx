@@ -91,8 +91,8 @@ export const Game_M_P_Page = () => {
     };
 
     joinRoom();
-    // Si el socket se reconecta solo tras un corte de red, volvemos a unirnos a la sala
-    // antes de que expire el margen de gracia del servidor.
+    // If the socket reconnects on its own after a network drop, rejoin the room
+    // before the server's grace period expires.
     socket.io.on("reconnect", joinRoom);
 
     socket.on("hand:update", ({ hand: h }: { hand: Card[] }) => { setHand(h); setSelectedCard(null); });
@@ -108,7 +108,7 @@ export const Game_M_P_Page = () => {
       setPlayedCards([]);
       setWinnerCardId(null);
       setTimer(clock);
-      // selectedCard se limpia cuando llegan nuevas cartas (hand:update)
+      // selectedCard is cleared when new cards arrive (hand:update)
       if( judge && judge.userId === myId ) showToast(t("game.youAreJudge"), "info");
     });
 

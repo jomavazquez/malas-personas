@@ -69,8 +69,8 @@ export const Game_V_O_M_Page = () => {
     };
 
     joinRoom();
-    // Si el socket se reconecta solo tras un corte de red, volvemos a unirnos a la sala
-    // antes de que expire el margen de gracia del servidor.
+    // If the socket reconnects on its own after a network drop, rejoin the room
+    // before the server's grace period expires.
     socket.io.on("reconnect", joinRoom);
 
     socket.on("vom:playerStatus", ({ players: p, protagonistUserId: protId }: { players: VomPlayer[]; protagonistUserId: string | null }) => {

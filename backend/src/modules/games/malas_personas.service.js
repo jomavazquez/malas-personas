@@ -118,7 +118,7 @@ export const nextRound = ( session ) => {
     return { session, blackCard: null, finished: true };
   }
 
-  // Los espectadores que se unieron durante la ronda anterior pasan a jugar desde ahora
+  // Spectators who joined during the previous round start playing from now on
   session.players.filter((p) => p.isSpectator).forEach((p) => {
     const { dealt, whiteDeck } = dealCards(session.whiteDeck, HAND_SIZE);
     session.whiteDeck = whiteDeck;

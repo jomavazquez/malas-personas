@@ -122,8 +122,8 @@ export const RoomPage = () => {
     };
 
     joinRoom();
-    // Si el socket se reconecta solo tras un corte de red, volvemos a unirnos a la sala
-    // antes de que expire el margen de gracia del servidor.
+    // If the socket reconnects on its own after a network drop, rejoin the room
+    // before the server's grace period expires.
     socket.io.on("reconnect", joinRoom);
 
     socket.on("room:playerJoined", ({ userId, username, isGuest: g }: { userId: string; username: string; isGuest: boolean }) => {

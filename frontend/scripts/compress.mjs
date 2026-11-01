@@ -1,7 +1,7 @@
 // scripts/compress.mjs
-// Genera una versión .br (Brotli, nivel 11) junto a cada archivo comprimible de dist/.
-// nginx (con brotli_static on) servirá estos .br ya hechos, sin comprimir en cada petición.
-// Uso: node scripts/compress.mjs [carpeta]   (por defecto: dist)
+// Writes a .br version (Brotli, level 11) next to every compressible file in dist/.
+// nginx (with brotli_static on) serves these prebuilt .br files instead of compressing on every request.
+// Usage: node scripts/compress.mjs [folder]   (default: dist)
 
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import { join, extname } from "node:path";
@@ -9,14 +9,14 @@ import { brotliCompressSync, constants } from "node:zlib";
 
 const DIST = process.argv[2] ?? "dist";
 
-// Solo formatos de texto. Las imágenes (png, jpg, webp) y las fuentes woff/woff2
-// ya vienen comprimidas y no ganan nada.
+// Text formats only. Images (png, jpg, webp) and woff/woff2 fonts are already
+// compressed and gain nothing.
 const EXTENSIONS = new Set([
   ".html", ".js", ".mjs", ".css", ".json", ".svg",
   ".xml", ".txt", ".webmanifest", ".ico", ".ttf", ".otf", ".eot",
 ]);
 
-// Igual que brotli_min_length en tu nginx.conf: por debajo no compensa.
+// Same as brotli_min_length in the nginx.conf: below this size it isn't worth it.
 const MIN_SIZE = 300;
 
 async function* walk(dir) {
@@ -44,7 +44,7 @@ for await (const file of walk(DIST)) {
     },
   });
 
-  // Si por algún motivo no reduce el tamaño, no generamos el .br.
+  // If for some reason it doesn't reduce the size, skip the .br file.
   if (compressed.length >= data.length) continue;
 
   await writeFile(`${file}.br`, compressed);
@@ -54,4 +54,4 @@ for await (const file of walk(DIST)) {
 }
 
 const kb = (n) => (n / 1024).toFixed(1);
-console.log(`Brotli: ${count} archivos comprimidos, ${kb(before)} KB -> ${kb(after)} KB`);
+console.log(`Brotli: ${count} files compressed, ${kb(before)} KB -> ${kb(after)} KB`);
