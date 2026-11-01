@@ -43,6 +43,16 @@ const CanonicalLink = () => {
   return <link rel="canonical" href={ `https://www.malaspersonas.com${pathname}` } />;
 };
 
+// Removes the prerendered copy of the page (see scripts/prerender.mjs) once React has painted
+// the real one. It sits inside the same Suspense boundary as the routes, so its effect only runs
+// after the lazy page and its translations have loaded.
+const PrerenderSwap = () => {
+  useEffect(() => {
+    document.querySelectorAll("#prerender, [data-prerender]").forEach(( el ) => el.remove());
+  }, []);
+  return null;
+};
+
 const AppInner = () => {
   useLenis();
   return (
@@ -69,6 +79,7 @@ const AppInner = () => {
           <Route path="/cookies-policy" element={ <LegalPage doc="cookies-policy" /> } />
           <Route path="*" element={ <NotFoundPage /> } />
         </Routes>
+        <PrerenderSwap />
       </Suspense>
     </>
   );

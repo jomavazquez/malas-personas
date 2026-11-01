@@ -28,6 +28,8 @@ jobs:
           # production builds that would point at localhost.
           VITE_API_URL: https://backend.malaspersonas.com/api
           VITE_SOCKET_URL: https://backend.malaspersonas.com
+          # CI only checks that the app builds; prerendering is done when building for deployment.
+          SKIP_PRERENDER: "1"
 
   frontend-unit:
     runs-on: ubuntu-latest

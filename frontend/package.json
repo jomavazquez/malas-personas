@@ -15,7 +15,7 @@
     "e2e": "playwright test",
     "e2e:ui": "playwright test --ui",
     "e2e:report": "playwright show-report",
-    "postbuild": "node scripts/compress.mjs"
+    "postbuild": "node scripts/prerender.mjs && node scripts/compress.mjs"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",
