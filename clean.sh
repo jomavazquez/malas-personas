@@ -31,4 +31,4 @@ for path in "${PATHS[@]}"; do
 done
 
 [ "$removed" -eq 0 ] && echo "   nothing to remove"
-echo "✅ Done. Reinstall with: npm install && npm install --prefix frontend && npm install --prefix backend"
+echo "✅ Done. Reinstall and start with: npm run dev"
